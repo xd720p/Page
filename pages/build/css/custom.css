@@ -187,11 +187,15 @@
   .nav_menu {
     position: static; } }
 .nav-md .container.body .col-md-3.left_col {
-  width: 230px;
+  width: 235px;
   padding: 0;
   position: absolute;
-  display: -ms-flexbox;
-  display: flex;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /*display: -ms-flexbox;
+  display: flex;*/
   z-index: 9999; }
 
 .nav-md .container.body .col-md-3.left_col.menu_fixed {
@@ -203,7 +207,12 @@ body .container.body .right_col {
 
 .nav-md .container.body .right_col {
   padding: 10px 20px 0;
-  margin-left: 230px; }
+  margin-left: 230px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
 
 .nav_title {
   width: 230px;
@@ -495,6 +504,10 @@ a:hover, a:focus {
 
 .nav.child_menu {
   display: none; }
+
+.nav.child_menu--opened {
+  display: block;
+}
 
 .nav.child_menu li:hover,
 .nav.child_menu li.active {

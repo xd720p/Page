@@ -1,0 +1,86 @@
+	<div class="main_container clearfix">
+		<div class="col-md-3 left_col">
+			<div class="left_col scroll-view">
+				<div class="navbar nav_title" style="border: 0;">
+					<a href="#"><i ></i> <span></span></a>
+				</div>
+
+				<div class="clearfix"></div>
+
+				<br />
+
+				<!-- sidebar menu -->
+				<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+					<div class="menu_section">
+						<h3>Навигация по сайту</h3>
+						<ul class="nav side-menu">
+							<!-- Кафедра -->
+							<li><a ng-click="faculty = !faculty"><i class="fa fa-home"></i> Кафедра <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav" ng-class="faculty ? 'child_menu--opened'  : 'child_menu'"> <!--child_menu-->
+									<li><a ui-sref="root.discipline">Дисциплины</a></li>
+									<li><a ui-sref="root.teachers">Преподаватели</a></li>
+								</ul>
+							</li>
+							<!-- Кафедра -->
+
+							<!-- Списки -->
+							<li><a ng-click="students = !students"><i class="fa fa-table"></i> Списки <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav" ng-class="students ? 'child_menu--opened'  : 'child_menu'">
+									<li><a ui-sref="root.students">Студенты</a></li>
+									<li><a ui-sref="root.norm">Нормативы</a></li>
+									<li><a ui-sref="root.group">Группы</a></li>
+								</ul>
+							</li>
+							<!-- Списки -->
+							<!-- Успеваемость-->
+							<li><a ng-click="progress = !progress"><i class="fa fa-bar-chart-o"></i> Успеваемость <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav" ng-class="progress ? 'child_menu--opened'  : 'child_menu'">
+									<li><a ui-sref="root.studentdate">Журнал посещаемости</a></li>
+									<li><a ui-sref="root.normpass">Сдача нормативов</a></li>
+								</ul>
+							</li>
+							<!-- Успеваемость-->
+
+						</ul>
+					</div>
+					<!-- ЛК-->
+					<div class="menu_section">
+
+						<h3>Личный кабинет</h3>
+						<ul class="nav side-menu">
+							<li><a><i></i> Войти <span></span></a>
+
+							</li>
+							<li><a href="discipline.html"><i></i> Зарегистрироваться <span></span></a>
+
+							</li>
+
+						</ul>
+					</div>
+				</div>
+				<!-- ЛК-->
+				<!-- /sidebar menu -->
+
+				<!-- /menu footer buttons -->
+				<!--<div class="sidebar-footer hidden-small">
+					<a data-toggle="tooltip" data-placement="top" title="Settings">
+						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+					</a>
+					<a data-toggle="tooltip" data-placement="top" title="FullScreen">
+						<span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+					</a>
+					<a data-toggle="tooltip" data-placement="top" title="Lock">
+						<span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+					</a>
+					<a data-toggle="tooltip" data-placement="top" title="Logout">
+						<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+					</a>
+				</div>-->
+				<!-- /menu footer buttons -->
+
+
+			</div>
+		</div>
+
+		<div ui-view class="right_col" role="main"></div>
+	</div>
