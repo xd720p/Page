@@ -26,11 +26,24 @@ var studentDate = sequelize.define('studentDate', {
 
 }, {
     timestamps: false,
-    freezeTableName: true // Model tableName will be the same as the model name
+    freezeTableName: true, // Model tableName will be the same as the model name
+
+    classMethods: {
+        getTable: function (callback) {
+            this.findAll().then(function (data) {
+                var dataval = [];
+                data.forEach(function (item, i, data) {
+                    dataval.unshift(data[i].dataValues)
+                });
+                if (data == null) callback(null, "USERNAME OR PASSWORD NOT MATCH");
+                else callback(dataval, null);
+            })
+        }
+    }
 });
 
 studentDate.sync({force: false});
-
+module.exports = studentDate;
 /*studentDate.sync({force: false}).then( function () {
  return studentDate.create({
  uniqID: 230406,

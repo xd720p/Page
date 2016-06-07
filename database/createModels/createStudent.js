@@ -31,8 +31,27 @@ var student = sequelize.define('student', {
 
 }, {
     timestamps: false,
-    freezeTableName: true // Model tableName will be the same as the model name
+    freezeTableName: true, // Model tableName will be the same as the model name
+
+    classMethods: {
+        getTable: function (callback) {
+            this.findAll().then(function (data) {
+                var dataval = [];
+                data.forEach(function (item, i, data) {
+                    dataval.unshift(data[i].dataValues)
+                });
+                if (data == null) callback(null, "USERNAME OR PASSWORD NOT MATCH");
+                else callback(dataval, null);
+            })
+        }
+    }
 });
+/*
+student.getTable(function (data, err) {
+ if (err) console.log(err);
+ else console.log(data);
+ })*/
+
 
 /*student.sync({force: false}).then( function () {
     return student.create({
@@ -45,3 +64,5 @@ var student = sequelize.define('student', {
 });*/
 
 student.sync({force: false});
+
+module.exports = student;

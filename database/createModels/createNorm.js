@@ -36,12 +36,23 @@ var norm = sequelize.define('norm', {
 
 }, {
     timestamps: false,
-    freezeTableName: true // Model tableName will be the same as the model name
+    freezeTableName: true, // Model tableName will be the same as the model name
+    classMethods: {
+        getTable: function (callback) {
+            this.findAll().then(function (data) {
+                var dataval = [];
+                data.forEach(function (item, i, data) {
+                    dataval.unshift(data[i].dataValues)
+                });
+                if (data == null) callback(null, "USERNAME OR PASSWORD NOT MATCH");
+                else callback(dataval, null);
+            })
+        }
+    }
 });
 
 norm.sync({force: false});
-
-
+module.exports = norm;
 /*
  norm.sync({force: false}).then( function () {
  return norm.create({

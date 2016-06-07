@@ -24,7 +24,14 @@ var Sequelize = require('sequelize');
 var sequelize = require('./database/createModels/connect');
 var ses = require('./database/createModels/createSession');
 var us = require('./database/createModels/createUser');
+
 var teacher = require('./database/createModels/createTeacher');
+var discipline = require('./database/createModels/createDiscipline');
+var group = require('./database/createModels/createGroup');
+var norm = require('./database/createModels/createNorm');
+var normPass = require('./database/createModels/createNormPass');
+var student = require('./database/createModels/createStudent');
+var studentDate = require('./database/createModels/createStudentDate');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -84,6 +91,65 @@ app.get('/teachers', function(req, res, next) {
     })
    // res.sendFile(path.join(__dirname, './pages', 'teachers.html'));
 });
+
+app.get('/discipline', function(req, res, next) {
+    //res.sendFile('Development/Projects/web/OPHPprotver/pages/index');
+    discipline.getTable(function (data, err) {
+        if (err)res.send(err);
+        else res.send(data);
+    })
+    // res.sendFile(path.join(__dirname, './pages', 'teachers.html'));
+});
+
+
+app.get('/group', function(req, res, next) {
+    //res.sendFile('Development/Projects/web/OPHPprotver/pages/index');
+    group.getTable(function (data, err) {
+        if (err)res.send(err);
+        else res.send(data);
+    })
+    // res.sendFile(path.join(__dirname, './pages', 'teachers.html'));
+});
+
+
+app.get('/norm', function(req, res, next) {
+    //res.sendFile('Development/Projects/web/OPHPprotver/pages/index');
+    norm.getTable(function (data, err) {
+        if (err)res.send(err);
+        else res.send(data);
+    })
+    // res.sendFile(path.join(__dirname, './pages', 'teachers.html'));
+});
+
+
+app.get('/normpass', function(req, res, next) {
+    //res.sendFile('Development/Projects/web/OPHPprotver/pages/index');
+    normPass.getTable(function (data, err) {
+        if (err)res.send(err);
+        else res.send(data);
+    })
+    // res.sendFile(path.join(__dirname, './pages', 'teachers.html'));
+});
+
+
+app.get('/students', function(req, res, next) {
+    //res.sendFile('Development/Projects/web/OPHPprotver/pages/index');
+   student.getTable(function (data, err) {
+        if (err)res.send(err);
+        else res.send(data);
+    })
+    // res.sendFile(path.join(__dirname, './pages', 'teachers.html'));
+});
+
+app.get('/studentdate', function(req, res, next) {
+    //res.sendFile('Development/Projects/web/OPHPprotver/pages/index');
+    studentDate.getTable(function (data, err) {
+        if (err)res.send(err);
+        else res.send(data);
+    })
+    // res.sendFile(path.join(__dirname, './pages', 'teachers.html'));
+});
+
 app.get('/login', function (req, res, next) {
     res.render('login');
 });
