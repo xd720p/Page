@@ -18,7 +18,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
 				controller: 'RootController'
 			})
 
-				.state('root.teachers', {         //Используем ui-sref="root.students"
+				.state('root.teachers', {
 					url: '/teachers',
 					controller: 'TeachersController',
 					templateUrl: 'partials/teachers.html'

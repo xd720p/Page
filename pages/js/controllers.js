@@ -26,25 +26,32 @@ myApp.controller('TeachersController', [
 
 		$scope.title = 'Преподаватели';
 		$scope.table = {};
+		$scope.teachers = [];
+		$scope.formShown = false;
 
-		/*TeachersService.query().$promise.then(function (resp) {
+
+
+		TeachersService.query().$promise.then(function (resp) {
 			$scope.teachers = resp;
-		});*/
 
-		$scope.tableParams = new NgTableParams({
-			sorting: {
-				name: 'asc'
-			}
-		}, {
-			getData: function (params) {
-				var sorting = params.sorting();
-				return TeachersService.query(sorting).$promise.then(function (data) {
-					params.total(data.inlineCount);
-					data = sorting ? $filter('orderBy')(data, params.orderBy()) : data;
-					return data;
-				});
-			}
+			$scope.tableParams = new NgTableParams({
+				sorting: {
+					name: 'asc'
+				},
+				filter: { name: ''}
+			}, { dataset: $scope.teachers}
+			);
 		});
+
+		$scope.addTeacher = function (teacher) {
+			TeachersService.save(teacher).$promise.then(function (resp) {
+				$scope.teachers.push(resp);
+				$scope.tableParams.reload();
+				console.log($scope.teachers);
+			});
+		};
+		console.log($scope.teachers);
+
 
 }]);
 
@@ -61,12 +68,16 @@ myApp.controller('DisciplinesController', [
 
 myApp.controller('GroupsController', [
 	'$scope',
+		'GroupService',
 	'$rootScope',
 	'$http',
 	'$timeout',
-	function($scope, $rootScope, $http, $timeout) {
+	function($scope, GroupService, $rootScope, $http, $timeout) {
 
 		$scope.title = 'Groups page';
+		GroupService.query().$promise.then(function (resp) {
+			$scope.groups = resp;
+		});
 
 }]);
 

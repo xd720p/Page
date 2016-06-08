@@ -10,7 +10,6 @@
     </div>
 </div>
 
-{{teachers | json}}
 <div class="clearfix"></div>
 
 <!-- таблицы -->
@@ -29,16 +28,69 @@
                 <table ng-table="tableParams" id="datatable" class="table table-striped table-bordered">
 
                     <tr ng-repeat="teacher in $data">
-                        <td data-title="'ФИО'" filter="{name: 'text'}" sortable="'name'">{{teacher.name}}</td>
+                        <td data-title="'ФИО'" sortable="'name'">{{teacher.name}}</td>
                         <td data-title="'Должность'" sortable="'post'">{{teacher.post}}</td>
                         <td data-title="'Квалификация'" sortable="'qualification'">{{teacher.qualification}}</td>
                         <td data-title="'Дисциплина'" sortable="'discipline'">{{teacher.discipline}}</td>
                         <td data-title="'Руководство'" sortable="'authority'">{{teacher.authority ? 'Да' : 'Нет'}}</td>
                     </tr>
                 </table>
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Добавить преподавателя</button>
-                </span>
+
+                <a class="btn btn-default" ng-click="formShown = !formShown">
+                    <span ng-hide="formShown">Добавить преподавателя</span>
+                    <span ng-show="formShown">Скрыть форму</span>
+                </a>
+
+                <form ng-show="formShown" class="form-horizontal" ng-submit="addTeacher(teacher)">
+                    <div class="form-group">
+                        <label for="name"></label>
+                        <div class="col-xs-6">
+                            <input ng-model="teacher.name" type="text" class="form-control" id="name"
+                                   placeholder="ФИО полностью"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="post"></label>
+                        <div class="col-xs-6">
+                            <input ng-model="teacher.post" type="text" class="form-control" id="post"
+                                   placeholder="Должность"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="qualification"></label>
+                        <div class="col-xs-6">
+                            <input ng-model="teacher.qualification" type="text" class="form-control" id="qualification"
+                                   placeholder="Квалификация"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="discipline"></label>
+                        <div class="col-xs-6">
+                            <input ng-model="teacher.discipline" type="text" class="form-control" id="discipline"
+                                   placeholder="Дисциплина"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p>Осуществляет руководство?</p>
+                        <label class="radio-inline">
+                            <input ng-model="teacher.authority" type="radio" name="authority"
+                                   value="true"
+                                   required> Да
+                        </label>
+                        <label class="radio-inline">
+                            <input ng-model="teacher.authority" type="radio" name="authority"
+                                   value="false"
+                                   required>
+                            Нет
+                        </label>
+                    </div>
+
+                    <input type="submit" class="btn btn-primary" value="Добавить преподавателя">
+                </form>
             </div>
         </div>
     </div>

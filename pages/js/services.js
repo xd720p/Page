@@ -8,6 +8,26 @@ myApp.factory('TeachersService', ['$resource',
 				method: 'GET',
 				isArray: true,
 				responseType: 'json'
+			},
+
+			post: {
+				url: path + '/add',
+				method: 'POST',
+				isArray: false,
+				responseType: 'json'
+			}
+		});
+	}
+]);
+
+myApp.factory('GroupService', ['$resource',
+	function ($resource) {
+		var path = '/group';
+		return $resource(path, {
+			query: {
+				method: 'GET',
+				isArray: true,
+				responseType: 'json'
 			}
 		});
 	}
