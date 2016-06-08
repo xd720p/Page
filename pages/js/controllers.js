@@ -28,8 +28,7 @@ myApp.controller('TeachersController', [
 		$scope.table = {};
 		$scope.teachers = [];
 		$scope.formShown = false;
-
-
+		$scope.teacher = {};
 
 		TeachersService.query().$promise.then(function (resp) {
 			$scope.teachers = resp;
@@ -44,10 +43,13 @@ myApp.controller('TeachersController', [
 		});
 
 		$scope.addTeacher = function (teacher) {
-			TeachersService.save(teacher).$promise.then(function (resp) {
+			TeachersService.add(teacher).$promise.then(function (resp) {
 				$scope.teachers.push(resp);
 				$scope.tableParams.reload();
-				console.log($scope.teachers);
+				$scope.teacher = {};
+				$scope.formShown = false;
+			}, function (error) {
+				console.log('error', error);
 			});
 		};
 		console.log($scope.teachers);

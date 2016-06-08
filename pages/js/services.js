@@ -3,14 +3,14 @@
 myApp.factory('TeachersService', ['$resource',
 	function ($resource) {
 		var path = '/teachers';
-		return $resource(path, {
+		return $resource(path, {}, {
 			query: {
 				method: 'GET',
 				isArray: true,
 				responseType: 'json'
 			},
 
-			post: {
+			add: {
 				url: path + '/add',
 				method: 'POST',
 				isArray: false,
