@@ -45,9 +45,12 @@ myApp.controller('TeachersController', [
 
 		$scope.addTeacher = function (teacher) {
 			TeachersService.save(teacher).$promise.then(function (resp) {
-				$scope.teachers.push(resp);
-				$scope.tableParams.reload();
-				console.log($scope.teachers);
+					$scope.teachers.push(resp);
+					$scope.tableParams.reload();
+					console.log($scope.teachers);
+
+			}, function (err) {
+				console.log('Ошибка', err);
 			});
 		};
 		console.log($scope.teachers);

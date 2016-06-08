@@ -79,27 +79,27 @@ app.get('/', function(req, res, next) {
 //allForTeachers
 app.get('/teachers', function(req, res, next) {
     teacher.getTable(function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 app.post('/teachers/add', function(req, res, next) {
     teacher.insertRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/teachers/remove', function(req, res, next) {
     teacher.deleteRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/teachers/update', function(req, res, next) {
     teacher.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
@@ -109,7 +109,7 @@ app.post('/teachers/update', function(req, res, next) {
 //allForDisciplines
 app.get('/discipline', function(req, res, next) {
     discipline.getTable(function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
@@ -122,14 +122,14 @@ app.post('/discipline/add', function(req, res, next) {
 
 app.post('/discipline/remove', function(req, res, next) {
     discipline.deleteRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/discipline/update', function(req, res, next) {
     discipline.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
@@ -138,28 +138,28 @@ app.post('/discipline/update', function(req, res, next) {
 //allForGroup
 app.get('/group', function(req, res, next) {
     group.getTable(function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/group/add', function(req, res, next) {
     group.insertRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/group/remove', function(req, res, next) {
     group.deleteRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/group/update', function(req, res, next) {
     group.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
@@ -168,28 +168,28 @@ app.post('/group/update', function(req, res, next) {
 //allForNorm
 app.get('/norm', function(req, res, next) {
     norm.getTable(function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/norm/add', function(req, res, next) {
     norm.insertRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/norm/remove', function(req, res, next) {
     norm.deleteRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/norm/update', function(req, res, next) {
     norm.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
@@ -200,7 +200,7 @@ app.post('/norm/update', function(req, res, next) {
 app.get('/normpass', function(req, res, next) {
     //res.sendFile('Development/Projects/web/OPHPprotver/pages/index');
     normPass.getTable(function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
     // res.sendFile(path.join(__dirname, './pages', 'teachers.html'));
@@ -208,21 +208,21 @@ app.get('/normpass', function(req, res, next) {
 
 app.post('/normpass/add', function(req, res, next) {
     normPass.insertRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/normpass/remove', function(req, res, next) {
     normPass.deleteRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/normpass/update', function(req, res, next) {
     normPass.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
@@ -232,7 +232,7 @@ app.post('/normpass/update', function(req, res, next) {
 app.get('/students', function(req, res, next) {
     //res.sendFile('Development/Projects/web/OPHPprotver/pages/index');
     student.getTable(function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
     // res.sendFile(path.join(__dirname, './pages', 'teachers.html'));
@@ -240,21 +240,21 @@ app.get('/students', function(req, res, next) {
 
 app.post('/students/add', function(req, res, next) {
     student.insertRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/students/remove', function(req, res, next) {
     student.deleteRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/students/update', function(req, res, next) {
     student.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
@@ -264,7 +264,7 @@ app.post('/students/update', function(req, res, next) {
 app.get('/studentdate', function(req, res, next) {
     //res.sendFile('Development/Projects/web/OPHPprotver/pages/index');
     studentDate.getTable(function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
     // res.sendFile(path.join(__dirname, './pages', 'teachers.html'));
@@ -273,21 +273,21 @@ app.get('/studentdate', function(req, res, next) {
 
 app.post('/studentdate/add', function(req, res, next) {
     studentDate.insertRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/studentdate/remove', function(req, res, next) {
     studentDate.deleteRow(req.body, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
 app.post('/studentdate/update', function(req, res, next) {
     studentDate.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
-        if (err)res.send(err);
+        if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
