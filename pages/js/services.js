@@ -3,6 +3,7 @@
 myApp.factory('TeachersService', ['$resource',
 	function ($resource) {
 		var path = '/teachers';
+
 		return $resource(path, {}, {
 			query: {
 				method: 'GET',

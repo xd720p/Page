@@ -48,8 +48,8 @@ myApp.controller('TeachersController', [
 				$scope.tableParams.reload();
 				$scope.teacher = {};
 				$scope.formShown = false;
-			}, function (error) {
-				console.log('error', error);
+			}, function (err) {
+				console.log('Ошибка', err);
 			});
 		};
 		console.log($scope.teachers);
