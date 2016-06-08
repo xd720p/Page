@@ -40,28 +40,94 @@ var teacher = sequelize.define('teacher', {
                 data.forEach(function (item, i, data) {
                     dataval.unshift(data[i].dataValues)
                 });
-                if (data == null) callback(null, "USERNAME OR PASSWORD NOT MATCH");
+                if (data == null) callback(null, "Таблица пустая");
                 else callback(dataval, null);
+            })
+        },
+        insertRow: function (data, callback) {
+            this.create({
+                name: data.name,
+                post: data.post,
+                qualification: data.qualification,
+                authority: data.authority,
+                discipline: data.discipline
+            }).then(function (data) {
+                if (data)callback(data.dataValues, null);
+            }).catch(function (err) {
+                if (err.message.indexOf("key constraint fails") != -1)
+                    callback(null, "Нельзя добавить преподавателя с несуществующей дисциплиной");
+                if (err.message.indexOf("Validation error") != -1)
+                    callback(null, "Такой преподаватель уже есть");
+            })
+        },
+        deleteRow: function (row, callback) {
+            this.findById(row.name).then(function (data) {
+                if (!data) callback(null, "Такая запись уже удалена");
+                else data.destroy().then(function (data) {
+                    callback(data.dataValues, null);
+                });
+            })
+        },
+        updateRow: function (row, newRow, callback) {
+            this.findById(row.name).then(function (data) {
+                if (!data) callback(null, "Нет такой записи");
+                else data.update({
+                    post: newRow.post,
+                    qualification: newRow.qualification,
+                    authority: newRow.authority,
+                    discipline: newRow.discipline
+                }).then( function (data) {
+                    if (data) callback(data.dataValues, null);
+                    else callback(null, "Ошибочка");
+                })
             })
         }
     }
 });
 
 teacher.sync({force: false});
-
-/*teacher.getTable(function (data, err) {
-    if (err) console.log(err);
-    else console.log(data);
-})
-*/
-/*teacher.sync({force: false}).then(function () {
-    return teacher.create({
-        name: "Фомичева Татьяна Генриховна",
-        post: "Старший преподаватель",
-        qualification: "Доцент",
-        authority: 1,
-        discipline: "Волейбол"
-    });
-});*/
-
 module.exports = teacher;
+
+
+/*
+ var l = {name: "Васиbcf",
+ post:"Старший преподаватель",
+ qualification: "Доцент",
+ authority: true,
+ discipline:"Баскетбол"};
+ var newRow = {
+ name:"Tdhtq",
+ post:"Старш преподаватель",
+ qualification: "Доцент",
+ authority: true,
+ discipline:"Баскетбол"};
+
+ teacher.updateRow(l , newRow, function (callback,err) {
+ if (err) console.log(err);
+ else console.log(callback);
+ });
+
+ teacher.deleteRow(l, function (callback, err) {
+ if (err) console.log(err);
+ else console.log(callback);
+ });
+
+ teacher.insertRow(l, function (callback, err) {
+ if (err) console.log(err);
+ else console.log(callback);
+ });
+
+ teacher.getTable(function (data, err) {
+ if (err) console.log(err);
+ else console.log(data);
+ })
+
+ /*teacher.sync({force: false}).then(function () {
+ return teacher.create({
+ name: "Фомичева Татьяна Генриховна",
+ post: "Старший преподаватель",
+ qualification: "Доцент",
+ authority: 1,
+ discipline: "Волейбол"
+ });
+ });*/

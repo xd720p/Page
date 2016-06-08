@@ -31,17 +31,95 @@ var student = sequelize.define('student', {
 
 }, {
     timestamps: false,
-    freezeTableName: true // Model tableName will be the same as the model name
+    freezeTableName: true, // Model tableName will be the same as the model name
+
+    classMethods: {
+        getTable: function (callback) {
+            this.findAll().then(function (data) {
+                var dataval = [];
+                data.forEach(function (item, i, data) {
+                    dataval.unshift(data[i].dataValues)
+                });
+                if (data == null) callback(null, "В таблице нет данных");
+                else callback(dataval, null);
+            })
+        },
+        insertRow: function (data, callback) {
+            this.create({
+                uniqID: data.uniqID,
+                name: data.name,
+                medAccess: data.medAccess,
+                groupNumber: data.groupNumber,
+                teacherName: data.teacherName
+            }).then(function (data) {
+                if (data)callback(data.dataValues, null);
+            }).catch(function (err) {
+                if (err.message.indexOf("key constraint fails") != -1)
+                    callback(null, "Нельзя добавить стулента несуществующей группы или с несуществующим преподавателем");
+                if (err.message.indexOf("Validation error") != -1)
+                    callback(null, "Такой студент уже есть");
+            })
+        },
+        deleteRow: function (row, callback) {
+            this.findById(row.uniqID).then(function (data) {
+                if (!data) callback(null, "Такая запись уже удалена");
+                else data.destroy().then(function (data) {
+                    callback(data.dataValues, null);
+                });
+            })
+        },
+        updateRow: function (row, newRow, callback) {
+            this.findById(row.uniqID).then(function (data) {
+                if (!data) callback(null, "Нет такой записи");
+                else data.update({
+                    name: newRow.name,
+                    medAccess: newRow.medAccess,
+                    groupNumber: newRow.groupNumber,
+                    teacherName: newRow.teacherName
+                }).then( function (data) {
+                    if (data) callback(data.dataValues, null);
+                    else callback(null, "Ошибочка");
+                })
+            })
+        }
+
+    }
 });
 
-/*student.sync({force: false}).then( function () {
-    return student.create({
-        uniqID: 230406,
-        name: "Козлов Пётр Вячеславович",
-        medAccess: 'болеет',
-        groupNumber: 2304,
-       teacherName: "Василий"
-    });
-});*/
-
 student.sync({force: false});
+
+module.exports = student;
+
+
+/*
+ var l = {uniqID: 230506,
+ name: "Иван",
+ medAccess: "допущен",
+ groupNumber: 2305,
+ teacherName: "Василий"};
+ var p = {uniqID: 230506,
+ name: "Иванушка",
+ medAccess: "Болеет",
+ groupNumber: 2305,
+ teacherName: "Иван"};
+
+ student.insertRow(l, function (callback, err) {
+ if (err) console.log(err);
+ else console.log(callback);
+ });
+
+
+ student.updateRow(l , p, function (callback,err) {
+ if (err) console.log(err);
+ else console.log(callback);
+ });
+
+
+ student.deleteRow(p, function (callback, err) {
+ if (err) console.log(err);
+ else console.log(callback);
+ });*/
+
+
+
+

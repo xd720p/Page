@@ -36,27 +36,88 @@ var norm = sequelize.define('norm', {
 
 }, {
     timestamps: false,
-    freezeTableName: true // Model tableName will be the same as the model name
+    freezeTableName: true, // Model tableName will be the same as the model name
+    classMethods: {
+        getTable: function (callback) {
+            this.findAll().then(function (data) {
+                var dataval = [];
+                data.forEach(function (item, i, data) {
+                    dataval.unshift(data[i].dataValues)
+                });
+                if (data == null) callback(null, "Таблица пустая");
+                else callback(dataval, null);
+            })
+        },
+        insertRow: function (data, callback) {
+            this.create({
+                name: data.name,
+                definition: data.definition,
+                point1: data.point1,
+                point2: data.point2,
+                point3: data.point3,
+                count: data.count
+            }).then(function (data) {
+                if (data)callback(data.dataValues, null);
+            }).catch(function (err) {
+                if (err.message.indexOf("Validation error") != -1)
+                    callback(null, "Такой норматив уже есть");
+            })
+        },
+        deleteRow: function (row, callback) {
+            this.findById(row.name).then(function (data) {
+                if (!data) callback(null, "Такая запись уже удалена");
+                else data.destroy().then(function (data) {
+                    callback(data.dataValues, null);
+                });
+            })
+        },
+        updateRow: function (row, newRow, callback) {
+            this.findById(row.name).then(function (data) {
+                if (!data) callback(null, "Нет такой записи");
+                else data.update({
+                    definition: newRow.definition,
+                    point1: newRow.point1,
+                    point2: newRow.point2,
+                    point3: newRow.point3,
+                    count: newRow.count
+                }).then( function (data) {
+                    if (data) callback(data.dataValues, null);
+                    else callback(null, "Ошибочка");
+                })
+            })
+        }
+    }
 });
 
 norm.sync({force: false});
-
-
+module.exports = norm;
 /*
- norm.sync({force: false}).then( function () {
- return norm.create({
- name: 'прыжки через костёр',
- definition: "Прыгай или сгори",
- point1: 2,
-     point2: 3,
-     point3: 5,
-     count: true
- });
-});
+ var p = {name: "Бег",
+ definition: "lorem",
+ point1: 5.6,
+ point2: 6.5,
+ point3: 7.5,
+ count: false};
+ var l =  {name: "Бег",
+ definition: "lorem",
+ point1: 55,
+ point2: 65,
+ point3: 75,
+ count: true};
 
-norm.destroy({
-   where: {
-       name: 'прыжки через костёр'
-   }
-});
-*/
+ norm.insertRow(l, function (callback, err) {
+ if (err) console.log(err);
+ else console.log(callback);
+ });
+
+ norm.updateRow(l, p, function (callback, err) {
+ if (err) console.log(err);
+ else console.log(callback);
+ });
+ */
+/*
+ norm.deleteRow(p , function (callback, err) {
+ if (err) console.log(err);
+ else console.log(callback);
+ });*/
+
