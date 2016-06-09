@@ -8,6 +8,11 @@ var normPass = sequelize.define('normPass', {
         primaryKey: true,
         allowNull: false
     },
+    studentName: {
+        type: Sequelize.STRING(120),
+        field: 'studentName', // Will result in an attribute that is firstName when user facing but first_name in the database
+        allowNull: false
+    },
     normName: {
         type: Sequelize.INTEGER(11),
         field: 'normName', // Will result in an attribute that is firstName when user facing but first_name in the database
@@ -47,6 +52,7 @@ var normPass = sequelize.define('normPass', {
         insertRow: function (data, callback) {
             this.create({
                 uniqID: data.uniqID,
+                studentName: data.studentName,
                 normName: data.normName,
                 date: data.date,
                 result: data.result,
