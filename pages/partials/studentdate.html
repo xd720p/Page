@@ -1,11 +1,7 @@
 <div class="">
 	<div class="page-title">
 		<div class="title_left">
-			<h3>{{title}} Журнал посещаемости<small></small></h3>
-		</div>
-
-		<div class="title_right">
-			<h3><small></small></h3>
+			<h3>{{title}}</h3>
 		</div>
 	</div>
 </div>
@@ -17,22 +13,22 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-					<h2>Журнал посещаемости<small></small></h2>
+					<h2>Журнал посещаемости</h2>
 					<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
 				<p class="text-muted font-13 m-b-30">
 				</p>
 				<table ng-table="tableParams" id="datatable" class="table table-stripedtable-bordered">
-					<tr ng-repeat="teacher in $data">
-						<td data-title="'Номер зачётки'" sortable="'name'">{{teacher.name}}</td>
-						<td data-title="'ФИО'" sortable="'post'">{{teacher.post}</td>
-						<td data-title="'Дата'" sortable="'qualification'">{{teacher.qualification}}</td>
-						<td data-title="'Что-то'" sortable="'discipline'">{{teacher.discipline}}</td>
+					<tr ng-repeat="student in $data">
+						<td data-title="'Номер зачётки'" sortable="'uniqID'">{{student.uniqID}}</td>
+						<td data-title="'ФИО'" sortable="'name'">{{student.name}}</td>
+						<td data-title="'Дата'" sortable="'date'">{{student.date | date:'dd/MM/yyyy'}}</td>
+						<td data-title="'Что-то'" sortable="'visit'">{{student.visit}}</td>
 					</tr>
 				</table>
 
-				<a class="btn btn-default" ng-click="formShown = !formShown">
+				<!--<a class="btn btn-default" ng-click="formShown = !formShown">
 					<span ng-hide="formShown">Добавить преподавателя</span>
 					<span ng-show="formShown">Скрыть форму</span>
 				</a>
@@ -78,7 +74,7 @@
 					</div>
 
 					<input type="submit" class="btn btn-primary" value="Добавить преподавателя">
-				</form>
+				</form>-->
 			</div>
 		</div>
 	</div>

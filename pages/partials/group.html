@@ -1,10 +1,7 @@
 <div class="">
 	<div class="page-title">
 		<div class="title_left">
-				<h3>Группы<small></small></h3>
-		</div>
-		<div class="title_right">
-				<h3><small></small></h3>
+				<h3>{{title}}<small></small></h3>
 		</div>
 	</div>
 </div>
@@ -16,17 +13,17 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2><small>Список групп</small></h2>
+				<h2>Список групп</h2>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
 				<p class="text-muted font-13 m-b-30"></p>
 
-				<table ng-table="tableParams" id="datatable" class="table table-stripedtable-bordered">
-					<tr ng-repeat="teacher in $data">
-						<td data-title="'Номер группы'" sortable="'name'">{{teacher.name}}</td>
-						<td data-title="'Факультет'" sortable="'post'">{{teacher.post}</td>
-						<td data-title="'Курс'" sortable="'post'">{{teacher.post}</td>
+				<table ng-table="tableParams" class="table table-stripedtable-bordered">
+					<tr ng-repeat="group in $data">
+						<td data-title="'Номер группы'" sortable="'groupNumber'">{{group.groupNumber}}</td>
+						<td data-title="'Факультет'" sortable="'faculty'">{{group.faculty}}</td>
+						<td data-title="'Курс'" sortable="'course'">{{group.course}}</td>
 					</tr>
 				</table>
 
@@ -35,47 +32,30 @@
 						<span ng-show="formShown">Скрыть форму</span>
 				</a>
 
-				<form ng-show="formShown" class="form-horizontal" ng-submit="addTeacher(teacher)">
+				<form ng-show="formShown" class="form-horizontal" ng-submit="addGroup(group)">
 					<div class="form-group">
 						<label for="name"></label>
 							<div class="col-xs-6">
-								<input ng-model="teacher.name" type="text" class="form-control" id="name" placeholder="ФИО полностью" required>
+								<input ng-model="group.groupNumber" type="text" class="form-control" id="name"
+											 placeholder="Номер группы" required>
 							</div>
 					</div>
 					<div class="form-group">
 							<label for="post"></label>
 							<div class="col-xs-6">
-									<input ng-model="teacher.post" type="text" class="form-control" id="post" placeholder="Должность" required>
+									<input ng-model="group.faculty" type="text" class="form-control" id="post" placeholder="Факультет"
+												 required>
 							</div>
 					</div>
 					<div class="form-group">
 							<label for="qualification"></label>
 							<div class="col-xs-6">
-								<input ng-model="teacher.qualification" type="text" class="forcontrol" id="qualification" placeholder="Квалификация" required>
+								<input ng-model="group.course" type="text" class="form-control" id="qualification" placeholder="Курс"
+											 required>
 							</div>
-					</div>
-					<div class="form-group">
-							<label for="discipline"></label>
-							<div class="col-xs-6">
-									<input ng-model="teacher.discipline" type="text" class="forcontrol" id="discipline" placeholder="Дисциплина" required>
-							</div>
-					</div>
-					<div class="form-group">
-							<p>Осуществляет руководство?</p>
-							<label class="radio-inline">
-									<input ng-model="teacher.authority" type="radio" name="authority"
-															 value="true"
-															 required> Да
-							</label>
-							<label class="radio-inline">
-									<input ng-model="teacher.authority" type="radio" name="authority"
-															 value="false"
-															 required>
-												Нет
-							</label>
 					</div>
 
-					<input type="submit" class="btn btn-primary" value="Добавить преподавателя">
+					<input type="submit" class="btn btn-primary" value="Добавить группу">
 				</form>
 
 			</div>

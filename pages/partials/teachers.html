@@ -23,10 +23,10 @@
 			<div class="x_content">
 				<p class="text-muted font-13 m-b-30">
 				</p>
-				<table ng-table="tableParams" id="datatable" class="table table-stripedtable-bordered">
+				<table ng-table="tableParams" class="table table-stripedtable-bordered">
 					<tr ng-repeat="teacher in $data">
 						<td data-title="'ФИО'" sortable="'name'">{{teacher.name}}</td>
-						<td data-title="'Должность'" sortable="'post'">{{teacher.post}</td>
+						<td data-title="'Должность'" sortable="'post'">{{teacher.post}}</td>
 						<td data-title="'Квалификация'" sortable="'qualification'">{{teacher.qualification}}</td>
 						<td data-title="'Дисциплина'" sortable="'discipline'">{{teacher.discipline}}</td>
 						<td data-title="'Руководство'" sortable="'authority'">{{teacher.authority ? 'Да' : 'Нет'}}</td>

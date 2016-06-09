@@ -1,11 +1,7 @@
 <div class="">
 	<div class="page-title">
 		<div class="title_left">
-			<h3>{{title}}Студенты<small></small></h3>
-		</div>
-
-		<div class="title_right">
-			<h3><small></small></h3>
+			<h3>{{title}}</h3>
 		</div>
 	</div>
 </div>
@@ -17,68 +13,54 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-					<h2>Список студентов<small></small></h2>
+					<h2>Список студентов</h2>
 					<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<p class="text-muted font-13 m-b-30">
-				</p>
 				<table ng-table="tableParams" id="datatable" class="table table-stripedtable-bordered">
-					<tr ng-repeat="teacher in $data">
-						<td data-title="'Номер зачётки'" sortable="'name'">{{teacher.name}}</td>
-						<td data-title="'ФИО'" sortable="'post'">{{teacher.post}</td>
-						<td data-title="'Медицинский допуск'" sortable="'qualification'">{{teacher.qualification}}</td>
-						<td data-title="'Номер группы'" sortable="'discipline'">{{teacher.discipline}}</td>
-						<td data-title="'ФИО преподавателя'" sortable="'authority'">{{teacher.authority ? 'Да' : 'Нет'}}</td>
+					<tr ng-repeat="student in $data">
+						<td data-title="'Номер зачётки'" sortable="'uniqID'">{{student.uniqID}}</td>
+						<td data-title="'ФИО'" sortable="'name'">{{student.name}}</td>
+						<td data-title="'Медицинский допуск'" sortable="'medAccess'">{{student.medAccess}}</td>
+						<td data-title="'Номер группы'" sortable="'groupNumber'">{{student.groupNumber}}</td>
+						<td data-title="'ФИО преподавателя'" sortable="'teacherName'">{{student.teacherName }}</td>
 					</tr>
 				</table>
 
 				<a class="btn btn-default" ng-click="formShown = !formShown">
-					<span ng-hide="formShown">Добавить преподавателя</span>
+					<span ng-hide="formShown">Добавить студента</span>
 					<span ng-show="formShown">Скрыть форму</span>
 				</a>
 
-				<form ng-show="formShown" class="form-horizontal" ng-submit="addTeacher(teacher)">
+				<form ng-show="formShown" class="form-horizontal" ng-submit="addStudent(student)">
 					<div class="form-group">
-						<label for="name"></label>
 						<div class="col-xs-6">
-							<input ng-model="teacher.name" type="text" class="form-control" id="name" placeholder="ФИО полностью" required>
+							<input ng-model="student.uniqID" type="text" class="form-control" placeholder="Номер зачётки" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="post"></label>
 						<div class="col-xs-6">
-								<input ng-model="teacher.post" type="text" class="form-control" id="post" placeholder="Должность" required>
+								<input ng-model="student.name" type="text" class="form-control" placeholder="ФИО полностью" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="qualification"></label>
 						<div class="col-xs-6">
-							<input ng-model="teacher.qualification" type="text" class="form-control" id="qualification" placeholder="Квалификация" required>
+							<input ng-model="student.medAccess" type="text" class="form-control" placeholder="Медицинский допуск"
+										 required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="discipline"></label>
 						<div class="col-xs-6">
-							<input ng-model="teacher.discipline" type="text" class="form-control" id="discipline" placeholder="Дисциплина" required>
+							<input ng-model="student.groupNumber" type="text" class="form-control" placeholder="Номер группы" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<p>Осуществляет руководство?</p>
-							<label class="radio-inline">
-								<input ng-model="teacher.authority" type="radio" name="authority"
-																	 value="true"
-																	 required> Да
-							</label>
-							<label class="radio-inline">
-								<input ng-model="teacher.authority" type="radio" name="authority"
-																	 value="false"
-																	 required>
-														Нет
-							</label>
+						<div class="col-xs-6">
+							<input ng-model="student.teacherName" type="text" class="form-control" placeholder="ФИО преподавателя" required>
+						</div>
 					</div>
 
-					<input type="submit" class="btn btn-primary" value="Добавить преподавателя">
+					<input type="submit" class="btn btn-primary" value="Добавить студента">
 				</form>
 			</div>
 		</div>

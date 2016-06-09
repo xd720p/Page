@@ -1,7 +1,7 @@
 <div class="">
 	<div class="page-title">
 		<div class="title_left">
-			<h3>{{title}} Нормативы<small></small></h3>
+			<h3>{{title}}</h3>
 		</div>
 
 		<div class="title_right">
@@ -17,68 +17,53 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-					<h2>Список преподавателей<small></small></h2>
+					<h2>Список сданных нормативов</h2>
 					<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<p class="text-muted font-13 m-b-30">
-				</p>
-				<table ng-table="tableParams" id="datatable" class="table table-stripedtable-bordered">
-					<tr ng-repeat="teacher in $data">
-						<td data-title="'ФИО студента'" sortable="'name'">{{teacher.name}}</td>
-						<td data-title="'Название норматива'" sortable="'post'">{{teacher.post}</td>
-						<td data-title="'Дата'" sortable="'qualification'">{{teacher.qualification}}</td>
-						<td data-title="'Результат'" sortable="'discipline'">{{teacher.discipline}}</td>
-						<td data-title="'Оценка'" sortable="'authority'">{{teacher.authority ? 'Да' : 'Нет'}}</td>
+				<table ng-table="tableParams" class="table table-stripedtable-bordered">
+					<tr ng-repeat="norm in $data">
+						<td data-title="'Номер зачетки студента'" sortable="'uniqID'">{{norm.uniqID}}</td>
+						<td data-title="'Название норматива'" sortable="'normName'">{{norm.normName}}</td>
+						<td data-title="'Дата'" sortable="'date'">{{norm.date}}</td>
+						<td data-title="'Результат'" sortable="'result'">{{norm.result}}</td>
+						<td data-title="'Оценка'" sortable="'mark'">{{norm.mark}}</td>
 					</tr>
 				</table>
 
 				<a class="btn btn-default" ng-click="formShown = !formShown">
-					<span ng-hide="formShown">Добавить преподавателя</span>
+					<span ng-hide="formShown">Добавить сданный норматив</span>
 					<span ng-show="formShown">Скрыть форму</span>
 				</a>
 
-				<form ng-show="formShown" class="form-horizontal" ng-submit="addTeacher(teacher)">
+				<form ng-show="formShown" class="form-horizontal" ng-submit="addPassedNorm(norm)">
 					<div class="form-group">
-						<label for="name"></label>
 						<div class="col-xs-6">
-							<input ng-model="teacher.name" type="text" class="form-control" id="name" placeholder="ФИО полностью" required>
+							<input ng-model="norm.uniqID" type="text" class="form-control" placeholder="ФИО студента" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="post"></label>
 						<div class="col-xs-6">
-								<input ng-model="teacher.post" type="text" class="form-control" id="post" placeholder="Должность" required>
+								<input ng-model="norm.normName" type="text" class="form-control" placeholder="Название норматива" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="qualification"></label>
 						<div class="col-xs-6">
-							<input ng-model="teacher.qualification" type="text" class="form-control" id="qualification" placeholder="Квалификация" required>
+							<input ng-model="norm.date" type="text" class="form-control" placeholder="Дата" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="discipline"></label>
 						<div class="col-xs-6">
-							<input ng-model="teacher.discipline" type="text" class="form-control" id="discipline" placeholder="Дисциплина" required>
+							<input ng-model="norm.result" type="text" class="form-control" placeholder="Результат" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<p>Осуществляет руководство?</p>
-							<label class="radio-inline">
-								<input ng-model="teacher.authority" type="radio" name="authority"
-																	 value="true"
-																	 required> Да
-							</label>
-							<label class="radio-inline">
-								<input ng-model="teacher.authority" type="radio" name="authority"
-																	 value="false"
-																	 required>
-														Нет
-							</label>
+						<div class="col-xs-6">
+							<input ng-model="norm.mark" type="text" class="form-control" placeholder="Оценка" required>
+						</div>
 					</div>
 
-					<input type="submit" class="btn btn-primary" value="Добавить преподавателя">
+					<input type="submit" class="btn btn-primary" value="Добавить норматив">
 				</form>
 			</div>
 		</div>
