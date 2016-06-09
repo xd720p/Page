@@ -1,0 +1,228 @@
+<!-- UI select -->
+
+<!--<div class="map-search__controls">
+			<div class="ui-search map-search__search">
+				<i class="i-material i-material&#45;&#45;search">search</i>
+				<ui-select ng-model="selectedAddress.value" theme="selectize" on-select="panToSearch(selectedAddress.value)">
+					<ui-select-match placeholder="Поиск по карте">
+						<span ng-bind="$select.selected.GeoObject.name + ', ' + $select.selected.GeoObject.description" class="map-search__result"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="address in addresses track by $index"
+														 refresh="refreshAddresses($select.search)"
+														 refresh-delay="0"
+														 minimum-input-length="5">
+				<span
+						ng-bind-html="address.GeoObject.name + ', ' + address.GeoObject.description | highlight: $select.search"></span>
+					</ui-select-choices>
+				</ui-select>
+				<i class="i-material i-material&#45;&#45;close" ng-show="selectedAddress.value"
+					 ng-click="selectedAddress.value=null; clearSearch()">close</i>
+			</div>
+		</div>-->
+
+		// SEARCH
+
+	$scope.adresses = [];
+	$scope.selectedAddress = {};
+
+	$scope.refreshAddresses = function(address) {
+		var params = {geocode: address, format: 'json'};
+		return $http.get('https://geocode-maps.yandex.ru/1.x/', {params: params})
+				.then(function(response) {
+					$scope.addresses = response.data.response.GeoObjectCollection.featureMember;
+				});
+	};
+
+
+	<!-- Menu -->
+
+	<i id="menu_trigger{{person.id}}" class="i-material" ng-click="menu.open($index);">more_vert</i>
+	<ul ng-if="menu.isOpened($index);" click-outside="menu.close($index);" outside-if-not="menu_trigger{{person.id}}" class="card__nav" card-nav-position>
+
+	// Open/close menu in a card of friend
+-	$scope.menu = {
+-		opened: false,
+-		close: function() {
+-			this.opened = false;
+-		},
+-		open: function(index) {
+-			this.opened = index;
+-		},
+-		isOpened: function(index) {
+-			return this.opened === index;
+-		}
+-	};
+
+
+<!-- UPDATE -->
+<!-- По клику открываем форму, передаем ей друга -->
+<i class="i-material" ng-click="editFriendForm.show(person);"  ng-if="!editFriendForm.isVisible(person.id)">
+			create</i>
+
+
+<!-- В форме сохраняем все в другой объект friendCopy -->
+<form id="<edit-card-form></edit-card-form>" name="editFriendForm.el" class="edit-card" ng-submit="update(friend, friendCopy);"
+				>
+<!-- отменяем изменения -->
+<i class="i-material" ng-click="editFriendForm.hide();">not_interested</i>
+
+
+				// Edit friend info
+	$scope.friendCopy = null;
+	$scope.friend = null;
+
+	$scope.editFriendForm = {
+		visibleId: null,
+		show: function (friend) {
+			this.visibleId = friend.id;
+			$scope.friend = friend;
+			$scope.friendCopy = angular.copy(friend);
+		},
+		hide: function() {
+			this.visibleId = null;
+		},
+		isVisible: function (id) {
+			return this.visibleId === id;
+		}
+	};
+
+	//обновление друга
+		$scope.update = function(friend, friendCopy) {
+			delete friendCopy.lastLocation;
+			FriendsService.update({id: friend.id}, friendCopy).$promise.then(function (resp) {
+				angular.extend(friend, resp);
+				$scope.editFriendForm.hide();
+
+				$scope.refreshPersonMarker(friend);
+
+				Notification.success('Карточка друга обновлена');
+			});
+		};
+
+
+		<!-- DELETE -->
+
+		// удаление друга
+		$scope.deleteFriend = function(id) {
+			FriendsService.delete({id: id}).$promise.then(function() {
+				var index = _.findIndex($scope.friends.list, function(e) { return e.id === id; });
+				$scope.friends.list.splice(index, 1);
+				$scope.refreshPersonMarker();
+				Notification.success('Карточка друга удалена');
+			});
+		};
+
+
+
+<!-- ADDING -->
+		//FORMS
+
+		// Форма создания друга
+		$scope.newFriendForm = {
+			visible: false,
+			errors: false,
+			toggle: function() {
+				$scope.newFriend = new Friend();
+				$scope.newFriendForm.errors = false;
+				this.visible = !this.visible;
+			}
+		};
+
+// создание друга
+		function Friend() {
+			this.friendView = {
+				properties: {
+					iconColor: "#e63935",
+					name: ''
+				}
+			};
+			this.msisdn = '';
+		}
+
+		$scope.newFriend = new Friend();
+
+
+$scope.createNewFriend = function(newFriend) {
+
+			if ($scope.newFriendForm.el.$invalid) {
+				$scope.newFriendForm.errors = true;
+				return;
+			}
+
+			FriendsService.post(newFriend).$promise.then(function(resp) {
+				$scope.friends.list.push(resp);
+
+				//Hide form
+				$scope.newFriendForm.visible = false;
+				//Clear form
+				$scope.newFriend = new Friend();
+				Notification.success('Создана новая карточка друга');
+			});
+		};
+
+
+		<!-- NOTIFICATION -->
+
+		angular.module('m2m-web', ['ngResource', 'ngAnimate', 'ngSanitize',
+	'ui.router', 'ui-notification', 'LocalStorageModule', 'ngTable',
+	'ui.mask', 'ngScrollbars', 'auth-app', 'm2m-friends', 'm2m-requests'])
+
+		angular.module('m2m-friends').controller('FriendListCtrl', ['$scope', '$rootScope', 'LocationsService', '$http', 'FriendsService', 'Notification', '$timeout', '$q',
+	function($scope, $rootScope, LocationsService, $http, FriendsService, Notification, $timeout, $q) {
+
+ in config
+
+NotificationProvider.setOptions({
+			positionX: 'right',
+			positionY: 'bottom',
+			startTop: 20,
+			startRight: 20
+		});
+
+<!-- По условию -->
+
+// обновление координат друга
+		$scope.updateFriendLocation = function(person) {
+			LocationsService.update({friendId: person.id}, null).$promise.then(function(resp) {
+				if ( _.contains(['SUCCESSFUL', 'SUCCESSFUL_FOR_LAST_COORDINATES'], resp.locationStatus) ) {
+					person.lastLocation = resp.location;
+					$scope.refreshPersonMarker(person);
+					Notification.success('Координаты обновлены');
+				}  else {
+					Notification.warning('Не удалось обновить координаты');
+				}
+				$scope.panTo(person);
+			});
+		};
+
+
+
+
+
+		<!-- Валидация -->
+
+		'use strict';
+
+//Директива вешается на первый инпут с календарем, в данный момент неактивна
+angular.module('m2m-friends').directive('dateValidation', function () {
+	return {
+		require: 'ngModel',
+		link: function (scope, elm, attrs, ctrl) {
+			ctrl.$validators.dateValidation = function (modelValue) {
+				if (scope.datePicker.endDate.length === 0) {
+					return true;
+				}
+
+				if (modelValue.startOf('day') <= scope.datePicker.endDate.startOf('day')) {
+					return true;
+				}
+
+				return false;
+			};
+
+			scope.$watch('datePicker.endDate', function () {
+				ctrl.$validate();
+			});
+		}
+	}
+});
