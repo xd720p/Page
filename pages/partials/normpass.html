@@ -23,9 +23,9 @@
 			<div class="x_content">
 				<table ng-table="tableParams" class="table table-stripedtable-bordered">
 					<tr ng-repeat="norm in $data">
-						<td data-title="'Номер зачетки студента'" sortable="'uniqID'">{{norm.uniqID}}</td>
+						<td data-title="'Номер зачетки студента'" sortable="'studentName'">{{norm.studentName}}</td>
 						<td data-title="'Название норматива'" sortable="'normName'">{{norm.normName}}</td>
-						<td data-title="'Дата'" sortable="'date'">{{norm.date}}</td>
+						<td data-title="'Дата'" sortable="'date'">{{norm.date | date: 'dd.MM.yyyy'}}</td>
 						<td data-title="'Результат'" sortable="'result'">{{norm.result}}</td>
 						<td data-title="'Оценка'" sortable="'mark'">{{norm.mark}}</td>
 					</tr>
@@ -36,34 +36,60 @@
 					<span ng-show="formShown">Скрыть форму</span>
 				</a>
 
-				<form ng-show="formShown" class="form-horizontal" ng-submit="addPassedNorm(norm)">
+				<form ng-show="formShown" class="form-horizontal" ng-submit="addPassedNorm(norm)" name="passedNorm" novalidate>
 					<div class="form-group">
 						<div class="col-xs-6">
-							<input ng-model="norm.uniqID" type="text" class="form-control" placeholder="ФИО студента" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-xs-6">
-								<input ng-model="norm.normName" type="text" class="form-control" placeholder="Название норматива" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-xs-6">
-							<input ng-model="norm.date" type="text" class="form-control" placeholder="Дата" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-xs-6">
-							<input ng-model="norm.result" type="text" class="form-control" placeholder="Результат" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-xs-6">
-							<input ng-model="norm.mark" type="text" class="form-control" placeholder="Оценка" required>
+							<ui-select ng-model="selectedStudent.value" theme="bootstrap">
+								<ui-select-match placeholder="Выберите студента">
+									<span ng-bind="$select.selected.name + ', группа:' + $select.selected.groupNumber"></span>
+								</ui-select-match>
+								<ui-select-choices repeat="student in (students | filter: $select.search)">
+									<span ng-bind-html="student.name +  ', группа:' + student.groupNumber | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select>
+							<i class="icon--close fa fa-times" ng-show="selectedStudent.value"
+								 ng-click="selectedStudent.value = null;"></i>
 						</div>
 					</div>
 
-					<input type="submit" class="btn btn-primary" value="Добавить норматив">
+					<div ng-show="selectedStudent.value">
+
+						<div class="form-group">
+							<div class="col-xs-6">
+								<ui-select ng-model="selectedNorm.value" theme="bootstrap" required>
+									<ui-select-match placeholder="Выберите норматив">
+										<span ng-bind="$select.selected.name"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="norm in (norms | filter: $select.search)">
+										<span ng-bind-html="norm.name | highlight: $select.search"></span>
+									</ui-select-choices>
+								</ui-select>
+								<i class="icon--close fa fa-times" ng-show="selectedNorm.value"
+									 ng-click="selectedNorm.value = null;"></i>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-xs-6">
+								<input date-range-picker ng-model="datePicker.date" options="datePicker.options" type="text"
+											 class="form-control"
+											 placeholder="Дата" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-xs-6">
+								<input ng-model="norm.result" type="number" class="form-control" placeholder="Результат">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-xs-6">
+								<input ng-model="norm.mark" type="number" class="form-control" placeholder="Оценка" required>
+							</div>
+						</div>
+					</div>
+
+					<input type="submit" class="btn btn-primary btn-form" value="Добавить норматив"
+								 ng-disabled="passedNorm.$invalid">
 				</form>
 			</div>
 		</div>

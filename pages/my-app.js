@@ -3,7 +3,7 @@
 /* App Module */
 
 var myApp = angular.module('myApp', [
-	'ui.router', 'ngTable', 'ngResource'
+	'ui.router', 'ngTable', 'ngResource', 'ui.select', 'ngSanitize', 'daterangepicker'
 ]);
 
 myApp.config(['$stateProvider', '$urlRouterProvider',
