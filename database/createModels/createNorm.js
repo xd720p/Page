@@ -29,7 +29,7 @@ var norm = sequelize.define('norm', {
         allowNull: true
     },
     count: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.STRING(90),
         field: 'count', // Will result in an attribute that is firstName when user facing but first_name in the database
         allowNull: false
     }

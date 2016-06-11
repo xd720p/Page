@@ -11,7 +11,7 @@ var http = require('http');
 
 var config = require('./config');
 var log = require('./libs/log')(module);
-var favicon = require('serve-favicon');
+//var favicon = require('serve-favicon');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var session = require('express-session');
