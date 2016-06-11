@@ -14,17 +14,17 @@ var norm = sequelize.define('norm', {
         allowNull: true
     },
     point1: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.STRING(90),
         field: 'point1', // Will result in an attribute that is firstName when user facing but first_name in the database
         allowNull: true
     },
     point2: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.STRING(90),
         field: 'point2', // Will result in an attribute that is firstName when user facing but first_name in the database
         allowNull: true
     },
     point3: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.STRING(90),
         field: 'point3', // Will result in an attribute that is firstName when user facing but first_name in the database
         allowNull: true
     },
