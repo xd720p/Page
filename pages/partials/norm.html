@@ -33,7 +33,8 @@
 					<span ng-show="formShown">Скрыть форму</span>
 				</a>
 
-				<form ng-show="formShown" class="form-horizontal" ng-submit="addNorm(norm)">
+				<form ng-show="formShown" class="form-horizontal" ng-submit="addNorm(norm)"
+							name="newNormForm" novalidate>
 					<div class="form-group">
 						<div class="col-xs-6">
 							<input ng-model="norm.name" type="text" class="form-control" placeholder="Название" required>
@@ -60,7 +61,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<p>Количество?</p>
+						<p>Тип</p>
 							<label class="radio-inline">
 								<input ng-model="norm.count" type="radio" name="count"
 																	 value="true"
@@ -74,7 +75,8 @@
 							</label>
 					</div>
 
-					<input type="submit" class="btn btn-primary" value="Добавить норматив">
+					<input type="submit" class="btn btn-primary btn-form" value="Добавить норматив"
+								 ng-disabled="newNormForm.$invalid">
 				</form>
 
 			</div>

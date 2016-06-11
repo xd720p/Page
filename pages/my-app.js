@@ -15,7 +15,8 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
 			.state('root', {
 				url: '',
 				templateUrl: 'partials/root.html',
-				controller: 'RootController'
+				controller: 'RootController',
+				abstract: true
 			})
 
 				.state('root.teachers', {

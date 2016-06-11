@@ -12,7 +12,7 @@ var discipline = sequelize.define('discipline', {
     fullName: {
         type: Sequelize.STRING(150),
         field: 'full_name',
-        allowNull: false
+        allowNull: true
     }
 }, {
     timestamps: false,

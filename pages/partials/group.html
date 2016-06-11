@@ -32,11 +32,12 @@
 						<span ng-show="formShown">Скрыть форму</span>
 				</a>
 
-				<form ng-show="formShown" class="form-horizontal" ng-submit="addGroup(group)">
+				<form ng-show="formShown" class="form-horizontal" ng-submit="addGroup(group)"
+							name="groupForm" novalidate>
 					<div class="form-group">
 						<label for="name"></label>
 							<div class="col-xs-6">
-								<input ng-model="group.groupNumber" type="text" class="form-control" id="name"
+								<input ng-model="group.groupNumber" type="number" class="form-control" id="name"
 											 placeholder="Номер группы" required>
 							</div>
 					</div>
@@ -50,12 +51,12 @@
 					<div class="form-group">
 							<label for="qualification"></label>
 							<div class="col-xs-6">
-								<input ng-model="group.course" type="text" class="form-control" id="qualification" placeholder="Курс"
+								<input ng-model="group.course" type="number" class="form-control" id="qualification" placeholder="Курс"
 											 required>
 							</div>
 					</div>
 
-					<input type="submit" class="btn btn-primary" value="Добавить группу">
+					<input type="submit" class="btn btn-primary btn-form" value="Добавить группу" ng-disabled="groupForm.$invalid">
 				</form>
 
 			</div>
