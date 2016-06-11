@@ -24,11 +24,11 @@
 						<td data-title="'Критерий 1'" sortable="'point1'">{{norm.point1}}</td>
 						<td data-title="'Критерий 2'" sortable="'point2'">{{norm.point2}}</td>
 						<td data-title="'Критерий 3'" sortable="'point3'">{{norm.point3}}</td>
-						<td data-title="'Тип'" sortable="'count'">{{norm.count ? 'На количество' : 'На скорость'}}</td>
+						<td data-title="'Тип'" sortable="'count'">{{norm.count}}</td>
 					</tr>
 				</table>
 
-				<a class="btn btn-default" ng-click="formShown = !formShown">
+				<a class="btn btn-default" ng-click="formShown = !formShown; norm = {}">
 					<span ng-hide="formShown">Добавить норматив</span>
 					<span ng-show="formShown">Скрыть форму</span>
 				</a>
@@ -61,18 +61,27 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<p>Тип</p>
+						<div class="col-xs-6">
+							<p>Тип норматива</p>
 							<label class="radio-inline">
 								<input ng-model="norm.count" type="radio" name="count"
-																	 value="true"
-																	 required> На количество
+											 value="Количественный"
+											 required> Количественный
 							</label>
 							<label class="radio-inline">
 								<input ng-model="norm.count" type="radio" name="count"
-																	 value="false"
-																	 required>
-														На скорость
+											 value="На скорость"
+											 required>
+								На скорость
 							</label>
+							<label class="radio-inline">
+								<input ng-model="norm.count" type="radio" name="count"
+											 value="Качественный"
+											 required>
+								Качественный
+							</label>
+						</div>
+
 					</div>
 
 					<input type="submit" class="btn btn-primary btn-form" value="Добавить норматив"

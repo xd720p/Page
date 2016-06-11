@@ -33,52 +33,61 @@
 					</tr>
 				</table>
 
-				<a class="btn btn-default" ng-click="formShown = !formShown">
+				<a class="btn btn-default" ng-click="formShown = !formShown; teacher = {}">
 					<span ng-hide="formShown">Добавить преподавателя</span>
 					<span ng-show="formShown">Скрыть форму</span>
 				</a>
 
-				<form ng-show="formShown" class="form-horizontal" ng-submit="addTeacher(teacher)">
+				<form ng-show="formShown" class="form-horizontal" ng-submit="addTeacher(teacher)"
+							name="teachersForm" novalidate>
 					<div class="form-group">
-						<label for="name"></label>
 						<div class="col-xs-6">
-							<input ng-model="teacher.name" type="text" class="form-control" id="name" placeholder="ФИО полностью" required>
+							<input ng-model="teacher.name" type="text" class="form-control" placeholder="ФИО полностью" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="post"></label>
 						<div class="col-xs-6">
-								<input ng-model="teacher.post" type="text" class="form-control" id="post" placeholder="Должность" required>
+								<input ng-model="teacher.post" type="text" class="form-control" placeholder="Должность" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="qualification"></label>
 						<div class="col-xs-6">
-							<input ng-model="teacher.qualification" type="text" class="form-control" id="qualification" placeholder="Квалификация" required>
+							<input ng-model="teacher.qualification" type="text" class="form-control" placeholder="Квалификация" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="discipline"></label>
 						<div class="col-xs-6">
-							<input ng-model="teacher.discipline" type="text" class="form-control" id="discipline" placeholder="Дисциплина" required>
+							<ui-select ng-model="selectedDisc.value" theme="bootstrap" required>
+								<ui-select-match placeholder="Выберите дисциплину">
+									<span ng-bind="$select.selected.shortName"></span>
+								</ui-select-match>
+								<ui-select-choices repeat="discipline in (disciplines | filter: $select.search)">
+									<span ng-bind-html="discipline.shortName | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select>
+							<i class="icon--close fa fa-times" ng-show="selectedDisc.value"
+								 ng-click="selectedDisc.value = null;"></i>
 						</div>
 					</div>
 					<div class="form-group">
-						<p>Осуществляет руководство?</p>
+						<div class="col-xs-6">
+							<p>Осуществляет руководство?</p>
 							<label class="radio-inline">
 								<input ng-model="teacher.authority" type="radio" name="authority"
-																	 value="true"
-																	 required> Да
+											 value="true"
+											 required> Да
 							</label>
 							<label class="radio-inline">
 								<input ng-model="teacher.authority" type="radio" name="authority"
-																	 value="false"
-																	 required>
-														Нет
+											 value="false"
+											 required> Нет
 							</label>
+						</div>
+
 					</div>
 
-					<input type="submit" class="btn btn-primary" value="Добавить преподавателя">
+					<input ng-disabled="teachersForm.$invalid" type="submit" class="btn btn-primary btn-form"
+								 value="Добавить преподавателя">
 				</form>
 			</div>
 		</div>

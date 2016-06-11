@@ -2,16 +2,20 @@ myApp.controller('TeachersController', [
 	'$scope',
 	'$filter',
 	'TeachersService',
+	'DisciplineService',
 	'$rootScope',
 	'$http',
 	'$timeout',
 	'NgTableParams',
-	function($scope, $filter, TeachersService, $rootScope, $http, $timeout, NgTableParams) {
+	function($scope, $filter, TeachersService, DisciplineService, $rootScope, $http, $timeout, NgTableParams) {
 
 		$scope.title = 'Преподаватели';
 		$scope.teachers = [];
 		$scope.formShown = false;
 		$scope.teacher = {};
+
+		$scope.disciplines = [];
+		$scope.selectedDisc = { value: '' };
 
 		TeachersService.query().$promise.then(function (resp) {
 			$scope.teachers = resp;
@@ -23,6 +27,14 @@ myApp.controller('TeachersController', [
 					filter: { name: ''}
 				}, { dataset: $scope.teachers}
 			);
+		});
+
+		DisciplineService.query().$promise.then(function (resp) {
+			$scope.disciplines = resp;
+		});
+
+		$scope.$watchCollection('selectedDisc', function (newValue, oldValue, scope) {
+			scope.teacher.discipline = scope.selectedDisc.value.shortName;
 		});
 
 		$scope.addTeacher = function (teacher) {

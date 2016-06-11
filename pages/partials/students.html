@@ -27,7 +27,7 @@
 					</tr>
 				</table>
 
-				<a class="btn btn-default" ng-click="formShown = !formShown">
+				<a class="btn btn-default" ng-click="formShown = !formShown; student = {}">
 					<span ng-hide="formShown">Добавить студента</span>
 					<span ng-show="formShown">Скрыть форму</span>
 				</a>
@@ -45,22 +45,39 @@
 					</div>
 					<div class="form-group">
 						<div class="col-xs-6">
-							<input ng-model="student.medAccess" type="text" class="form-control" placeholder="Медицинский допуск"
-										 required>
+							<input ng-model="student.medAccess" type="text" class="form-control" placeholder="Медицинский допуск">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-xs-6">
-							<input ng-model="student.groupNumber" type="text" class="form-control" placeholder="Номер группы" required>
+							<ui-select ng-model="selectedGroup.value" theme="bootstrap">
+								<ui-select-match placeholder="Выберите номер группы">
+									<span ng-bind="$select.selected.groupNumber"></span>
+								</ui-select-match>
+								<ui-select-choices repeat="group in (groups | filter: $select.search)">
+									<span ng-bind-html="group.groupNumber | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select>
+							<i class="icon--close fa fa-times" ng-show="selectedGroup.value"
+								 ng-click="selectedGroup.value = null;"></i>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-xs-6">
-							<input ng-model="student.teacherName" type="text" class="form-control" placeholder="ФИО преподавателя" required>
+							<ui-select ng-model="selectedTeacher.value" theme="bootstrap">
+								<ui-select-match placeholder="Выберите преподавателя">
+									<span ng-bind="$select.selected.name"></span>
+								</ui-select-match>
+								<ui-select-choices repeat="teacher in (teachers | filter: $select.search)">
+									<span ng-bind-html="teacher.name | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select>
+							<i class="icon--close fa fa-times" ng-show="selectedTeacher.value"
+								 ng-click="selectedTeacher.value = null;"></i>
 						</div>
 					</div>
 
-					<input type="submit" class="btn btn-primary" value="Добавить студента">
+					<input type="submit" class="btn btn-primary btn-form" value="Добавить студента">
 				</form>
 			</div>
 		</div>
