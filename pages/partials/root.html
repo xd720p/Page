@@ -13,35 +13,19 @@
 				<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 					<div class="menu_section">
 						<h3>Навигация по сайту</h3>
+
 						<ul class="nav side-menu">
-							<!-- Кафедра -->
-							<li><a ng-click="faculty = !faculty"><i class="fa fa-home"></i> Кафедра <span class="fa fa-chevron-down"></span></a>
-								<ul class="nav" ng-class="faculty ? 'child_menu--opened'  : 'child_menu'"> <!--child_menu-->
-									<li><a ui-sref="root.discipline">Дисциплины</a></li>
-									<li><a ui-sref="root.teachers">Преподаватели</a></li>
+							<li ng-repeat="item in menu track by $index" ng-class="{active: tab.isOpened($index)}">
+								<a ng-click="tab.open($index)"><i class="fa" ng-class="item.icon"></i>{{item.title}}<span
+										class="fa fa-chevron-down"></span>
+								</a>
+								<!--ng-show="tab.isOpened($index)"-->
+								<ul class="nav child_menu nested-nav" ng-class="{'nav-opened': tab.isOpened($index)}">
+									<li ng-repeat="link in item.content"><a ui-sref="{{link.href}}">{{link.name}}</a></li>
 								</ul>
 							</li>
-							<!-- Кафедра -->
-
-							<!-- Списки -->
-							<li><a ng-click="students = !students"><i class="fa fa-table"></i> Списки <span class="fa fa-chevron-down"></span></a>
-								<ul class="nav" ng-class="students ? 'child_menu--opened'  : 'child_menu'">
-									<li><a ui-sref="root.students">Студенты</a></li>
-									<li><a ui-sref="root.norm">Нормативы</a></li>
-									<li><a ui-sref="root.group">Группы</a></li>
-								</ul>
-							</li>
-							<!-- Списки -->
-							<!-- Успеваемость-->
-							<li><a ng-click="progress = !progress"><i class="fa fa-bar-chart-o"></i> Успеваемость <span class="fa fa-chevron-down"></span></a>
-								<ul class="nav" ng-class="progress ? 'child_menu--opened'  : 'child_menu'">
-									<li><a ui-sref="root.studentdate">Журнал посещаемости</a></li>
-									<li><a ui-sref="root.normpass">Сдача нормативов</a></li>
-								</ul>
-							</li>
-							<!-- Успеваемость-->
-
 						</ul>
+
 					</div>
 					<!-- ЛК-->
 					<div class="menu_section">
@@ -51,7 +35,7 @@
 							<li><a><i></i> Войти <span></span></a>
 
 							</li>
-							<li><a href="discipline.html"><i></i> Зарегистрироваться <span></span></a>
+							<li><a href="#"><i></i> Зарегистрироваться <span></span></a>
 
 							</li>
 

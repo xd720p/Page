@@ -504,8 +504,8 @@ a:hover, a:focus {
   text-decoration: none;
   background: transparent; }
 
-.nav.child_menu {
-  display: none; }
+/*.nav.child_menu {
+  display: none; }*/
 
 .nav.child_menu--opened {
   display: block;
@@ -524,7 +524,7 @@ a:hover, a:focus {
   content: "";
   height: 8px;
   left: 23px;
-  margin-top: 15px;
+  margin-top: 12px;
   position: absolute;
   right: auto;
   width: 8px;

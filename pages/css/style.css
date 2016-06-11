@@ -16,3 +16,26 @@
 	margin-left: 10px;
 	margin-top: 10px;
 }
+
+
+.nested-nav {
+	max-height: 0;
+	overflow: hidden;
+}
+
+.nested-nav.nav-opened-add {
+	-webkit-transition: max-height linear 0.5s;
+	-moz-transition: max-height linear 0.55s;
+	transition: max-height linear 0.55s;
+}
+
+.nested-nav.nav-opened-remove {
+	-webkit-transition: max-height linear 0.4s;
+	-moz-transition: max-height linear 0.4s;
+	transition: max-height linear 0.4s;
+}
+
+.nested-nav.nav-opened {
+	max-height: 135px;
+	overflow: hidden;
+}
