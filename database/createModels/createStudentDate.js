@@ -14,7 +14,7 @@ var studentDate = sequelize.define('studentDate', {
         allowNull: false
     },
     date: {
-        type: Sequelize.DATEONLY(),
+        type: Sequelize.DATE(),
         field: 'date', // Will result in an attribute that is firstName when user facing but first_name in the database
         allowNull: false
     },
