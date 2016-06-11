@@ -16,7 +16,7 @@ var teacher = sequelize.define('teacher', {
     qualification: {
         type: Sequelize.STRING(90),
         field: 'qualification',
-        allowNull: false
+        allowNull: true
     },
     authority: {
         type: Sequelize.BOOLEAN,
