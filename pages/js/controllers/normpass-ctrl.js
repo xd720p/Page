@@ -66,6 +66,7 @@ myApp.controller('NormPassController', [
 		$scope.addPassedNorm = function (norm) {
 			NormPassService.add(norm).$promise.then(function (resp) {
 				$scope.passedNorms.push(resp);
+				$scope.originalData = angular.copy($scope.passedNorms);
 				$scope.tableParams.reload();
 				$scope.norm = {};
 				$scope.formShown = false;
@@ -84,17 +85,23 @@ myApp.controller('NormPassController', [
 		$scope.cancel = function (row, rowForm) {
 			row.isEditing = false;
 			rowForm.$setPristine();
-			var originalRow = _.findWhere($scope.originalData, {uniqID: row.uniqID, normName:row.normName, date:row.date });
+			var originalRow = _.findWhere($scope.originalData,
+					{uniqID: row.uniqID, normName:row.normName, date:row.date });
 			angular.extend(row, originalRow);
 		};
 
 		$scope.del = function del(row) {
 			NormPassService.remove(row).$promise.then(function (resp) {
-				var index = _.findIndex($scope.passedNorms, function (elem) {
-					return elem === resp;
-				});
-				$scope.passedNorms.splice(index, 1);
-				$scope.tableParams.reload();
+
+				var index = _.findIndex($scope.passedNorms, {uniqID: resp.uniqID, normName: resp.normName, date: resp.date });
+
+				if (index >= 0) {
+					$scope.passedNorms.splice(index, 1);
+					$scope.tableParams.reload();
+				} else {
+					console.log('error');
+				}
+
 			});
 		};
 

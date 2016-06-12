@@ -21,7 +21,9 @@
 								</a>
 								<!--ng-show="tab.isOpened($index)"-->
 								<ul class="nav child_menu nested-nav" ng-class="{'nav-opened': tab.isOpened($index)}">
-									<li ng-repeat="link in item.content"><a ui-sref="{{link.href}}">{{link.name}}</a></li>
+									<li ng-repeat="link in item.content" ui-sref-active="current-page">
+										<a ui-sref="{{link.href}}">{{link.name}}</a>
+									</li>
 								</ul>
 							</li>
 						</ul>
