@@ -58,6 +58,20 @@ myApp.factory('GroupService', ['$resource',
 				method: 'POST',
 				isArray: false,
 				responseType: 'json'
+			},
+
+			remove: {
+				url: path + '/remove',
+				method: 'POST',
+				isArray: false,
+				responseType: 'json'
+			},
+
+			update: {
+				url: path + '/update',
+				method: 'POST',
+				isArray: false,
+				responseType: 'json'
 			}
 		});
 	}

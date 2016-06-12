@@ -225,15 +225,15 @@ body .container.body .right_col {
 
 @media (max-width: 991px) {
   .nav-md .container.body .right_col, .nav-md .container.body .top_nav {
-    width: 100%;
-    margin: 0; }
+    /*width: 100%;
+    margin: 0;*/ }
 
   .nav-md .container.body .col-md-3.left_col {
-    display: none; }
+    /*display: none; */}
 
   .nav-md .container.body .right_col {
-    width: 100%;
-    padding-right: 0; }
+    /*width: 100%;
+    padding-right: 0;*/ }
 
   .right_col {
     padding: 10px !important; } }
@@ -991,7 +991,7 @@ table.tile_info td:first-child {
   width: 83%; }
 
 td span {
-  line-height: 28px; }
+  /*line-height: 28px;*/ }
 
 .sidebar-widget {
   overflow: hidden; }
@@ -1959,7 +1959,7 @@ span.section {
   border-bottom: 1px solid #e5e5e5; }
 
 .form-control {
-  border-radius: 0;
+  /*border-radius: 0;*/
   width: 100%; }
 
 .form-horizontal .control-label {
@@ -4090,9 +4090,9 @@ ul.notifications {
 .daterangepicker table.table-condensed th:last-child, .daterangepicker table.table-condensed td:last-child {
   padding-right: 12px; }
 
-.table-condensed > thead > tr > th, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > tbody > tr > td, .table-condensed > tfoot > tr > td {
+/*.table-condensed > thead > tr > th, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > tbody > tr > td, .table-condensed > tfoot > tr > td {
   padding: 5px 7px;
-  text-align: center; }
+  !*text-align: center;*! }*/
 
 .daterangepicker table.table-condensed tbody tr:last-child td {
   padding-bottom: 10px; }

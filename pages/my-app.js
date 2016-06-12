@@ -1,9 +1,13 @@
 'use strict';
 
 /* App Module */
+var underscore = angular.module('underscore', []);
+underscore.factory('_', function() {
+	return window._; //Underscore must already be loaded on the page
+});
 
 var myApp = angular.module('myApp', [
-	'ui.router', 'ngTable', 'ngResource', 'ui.select', 'ngSanitize', 'daterangepicker', 'ngAnimate'
+	'ui.router', 'ngTable', 'ngResource', 'ui.select', 'ngSanitize', 'daterangepicker', 'ngAnimate', 'underscore'
 ]);
 
 myApp.config(['$stateProvider', '$urlRouterProvider',
@@ -67,6 +71,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
 					templateUrl: '/m2m/app/login.html'
 				});*/
 	}]);
+
 
 /*myApp.run(['$rootScope', '$state', function($rootScope, $state) {
 
