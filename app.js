@@ -245,7 +245,7 @@ app.post('/students/add', function(req, res, next) {
     })
 });
 
-app.put('/students/remove', function(req, res, next) {
+app.post('/students/remove', function(req, res, next) {
     student.deleteRow(req.body, function (data, err) {
         if (err) res.status(500).send(err);
         else res.send(data);
