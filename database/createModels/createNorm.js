@@ -71,15 +71,15 @@ var norm = sequelize.define('norm', {
                 });
             })
         },
-        updateRow: function (row, newRow, callback) {
+        updateRow: function (row, callback) {
             this.findById(row.name).then(function (data) {
                 if (!data) callback(null, "Нет такой записи");
                 else data.update({
-                    definition: newRow.definition,
-                    point1: newRow.point1,
-                    point2: newRow.point2,
-                    point3: newRow.point3,
-                    count: newRow.count
+                    definition: row.definition,
+                    point1: row.point1,
+                    point2: row.point2,
+                    point3: row.point3,
+                    count: row.count
                 }).then( function (data) {
                     if (data) callback(data.dataValues, null);
                     else callback(null, "Ошибочка");

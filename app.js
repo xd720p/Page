@@ -97,8 +97,8 @@ app.post('/teachers/remove', function(req, res, next) {
     })
 });
 
-app.post('/teachers/update', function(req, res, next) {
-    teacher.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
+app.put('/teachers/update', function(req, res, next) {
+    teacher.updateRow(req.body, function (data, err) {
         if (err) res.status(500).send(err);
         else res.send(data);
     })
@@ -127,8 +127,8 @@ app.post('/discipline/remove', function(req, res, next) {
     })
 });
 
-app.post('/discipline/update', function(req, res, next) {
-    discipline.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
+app.put('/discipline/update', function(req, res, next) {
+    discipline.updateRow(req.body, function (data, err) {
         if (err) res.status(500).send(err);
         else res.send(data);
     })
@@ -187,8 +187,8 @@ app.post('/norm/remove', function(req, res, next) {
     })
 });
 
-app.post('/norm/update', function(req, res, next) {
-    norm.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
+app.put('/norm/update', function(req, res, next) {
+    norm.updateRow(req.body, function (data, err) {
         if (err) res.status(500).send(err);
         else res.send(data);
     })
@@ -220,8 +220,8 @@ app.post('/normpass/remove', function(req, res, next) {
     })
 });
 
-app.post('/normpass/update', function(req, res, next) {
-    normPass.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
+app.put('/normpass/update', function(req, res, next) {
+    normPass.updateRow(req.body, function (data, err) {
         if (err) res.status(500).send(err);
         else res.send(data);
     })
@@ -245,15 +245,15 @@ app.post('/students/add', function(req, res, next) {
     })
 });
 
-app.post('/students/remove', function(req, res, next) {
+app.put('/students/remove', function(req, res, next) {
     student.deleteRow(req.body, function (data, err) {
         if (err) res.status(500).send(err);
         else res.send(data);
     })
 });
 
-app.post('/students/update', function(req, res, next) {
-    student.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
+app.put('/students/update', function(req, res, next) {
+    student.updateRow(req.body, function (data, err) {
         if (err) res.status(500).send(err);
         else res.send(data);
     })
@@ -285,8 +285,8 @@ app.post('/studentdate/remove', function(req, res, next) {
     })
 });
 
-app.post('/studentdate/update', function(req, res, next) {
-    studentDate.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
+app.put('/studentdate/update', function(req, res, next) {
+    studentDate.updateRow(req.body, function (data, err) {
         if (err) res.status(500).send(err);
         else res.send(data);
     })

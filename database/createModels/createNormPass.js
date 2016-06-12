@@ -74,12 +74,12 @@ var normPass = sequelize.define('normPass', {
                 });
             })
         },
-        updateRow: function (row, newRow, callback) {
+        updateRow: function (row, callback) {
             this.findOne({uniqID: row.uniqID, definition: row.definition, date: row.date}).then(function (data) {
                 if (!data) callback(null, "Нет такой записи");
                 else data.update({
-                    result:  newRow.result,
-                    mark:  newRow.mark
+                    result:  row.result,
+                    mark:  row.mark
                 }).then( function (data) {
                     if (data) callback(data.dataValues, null);
                     else callback(null, "Ошибочка");

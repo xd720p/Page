@@ -68,14 +68,14 @@ var student = sequelize.define('student', {
                 });
             })
         },
-        updateRow: function (row, newRow, callback) {
+        updateRow: function (row, callback) {
             this.findById(row.uniqID).then(function (data) {
                 if (!data) callback(null, "Нет такой записи");
                 else data.update({
-                    name: newRow.name,
-                    medAccess: newRow.medAccess,
-                    groupNumber: newRow.groupNumber,
-                    teacherName: newRow.teacherName
+                    name: row.name,
+                    medAccess: row.medAccess,
+                    groupNumber: row.groupNumber,
+                    teacherName: row.teacherName
                 }).then( function (data) {
                     if (data) callback(data.dataValues, null);
                     else callback(null, "Ошибочка");

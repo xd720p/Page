@@ -62,11 +62,11 @@ var studentDate = sequelize.define('studentDate', {
                 });
             })
         },
-        updateRow: function (row, newRow, callback) {
+        updateRow: function (row, callback) {
             this.findOne({uniqID: row.uniqID, name: row.name, date: row.date}).then(function (data) {
                 if (!data) callback(null, "Нет такой записи");
                 else data.update({
-                    visit: newRow.visit
+                    visit: row.visit
                 }).then( function (data) {
                     if (data) callback(data.dataValues, null);
                     else callback(null, "Ошибочка");

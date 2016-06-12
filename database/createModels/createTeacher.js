@@ -68,14 +68,14 @@ var teacher = sequelize.define('teacher', {
                 });
             })
         },
-        updateRow: function (row, newRow, callback) {
+        updateRow: function (row, callback) {
             this.findById(row.name).then(function (data) {
                 if (!data) callback(null, "Нет такой записи");
                 else data.update({
-                    post: newRow.post,
-                    qualification: newRow.qualification,
-                    authority: newRow.authority,
-                    discipline: newRow.discipline
+                    post: row.post,
+                    qualification: row.qualification,
+                    authority: row.authority,
+                    discipline: row.discipline
                 }).then( function (data) {
                     if (data) callback(data.dataValues, null);
                     else callback(null, "Ошибочка");

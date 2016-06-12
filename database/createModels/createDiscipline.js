@@ -48,11 +48,11 @@ var discipline = sequelize.define('discipline', {
                 });
             })
         },
-        updateRow: function (row, newRow, callback) {
+        updateRow: function (row, callback) {
             this.findById(row.shortName).then(function (data) {
                 if (!data) callback(null, "Нет такой записи");
                 else data.update({
-                    fullName: newRow.fullName
+                    fullName: row.fullName
                 }).then( function (data) {
                     if (data) callback(data.dataValues, null);
                     else callback(null, "Ошибочка");
