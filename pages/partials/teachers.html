@@ -66,14 +66,24 @@
 							</div>
 						</td>
 
-
 						<td data-title="'Дисциплина'" sortable="'discipline'"
 								ng-class="discipline.$dirty ? 'bg-warning' : ''"
 								ng-form="discipline">
 							<span class="editable-text" ng-hide="row.isEditing">{{row.discipline}}</span>
 							<div class="controls" ng-show="row.isEditing" ng-class="discipline.$invalid && discipline.$dirty ? 'has-error' : ''">
+								<ui-select ng-model="row.discipline" theme="bootstrap" required>
+									<ui-select-match>
+										<span ng-bind="$select.selected || row.discipline"></span>
+
+									</ui-select-match>
+									<ui-select-choices repeat="discipline in (disciplines | filter: $select.search)">
+										<span ng-bind-html="discipline | highlight: $select.search"></span>
+									</ui-select-choices>
+								</ui-select>
+
+								<!--
 								<input type="text" name="discipline" ng-model="row.discipline"
-											 class="editable-input form-control input-sm" required />
+											 class="editable-input form-control input-sm" required />-->
 							</div>
 						</td>
 

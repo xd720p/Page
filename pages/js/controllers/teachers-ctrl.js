@@ -19,6 +19,10 @@ myApp.controller('TeachersController', [
 		$scope.disciplines = [];
 		$scope.selectedDisc = { value: '' };
 
+
+		$scope.changedDisc = { value: '' };
+
+
 		TeachersService.query().$promise.then(function (resp) {
 			$scope.teachers = resp;
 			$scope.originalData = angular.copy($scope.teachers);
@@ -35,6 +39,13 @@ myApp.controller('TeachersController', [
 		DisciplineService.query().$promise.then(function (resp) {
 			$scope.disciplines = resp;
 		});
+
+		/*DisciplineService.query().$promise.then(function (resp) {
+			_.each(resp, function (element) {
+				$scope.disciplines.push(element.shortName)
+			});
+			console.log($scope.disciplines);
+		});*/
 
 		$scope.$watchCollection('selectedDisc', function (newValue, oldValue, scope) {
 			scope.teacher.discipline = scope.selectedDisc.value.shortName;
