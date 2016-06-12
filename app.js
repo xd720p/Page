@@ -157,8 +157,8 @@ app.post('/group/remove', function(req, res, next) {
     })
 });
 
-app.post('/group/update', function(req, res, next) {
-    group.updateRow(req.params.oldRow, req.params.newRow, function (data, err) {
+app.put('/group/update', function(req, res, next) {
+    group.updateRow(req.body, function (data, err) {
         if (err) res.status(500).send(err);
         else res.send(data);
     })

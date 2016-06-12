@@ -69,7 +69,7 @@ myApp.factory('GroupService', ['$resource',
 
 			update: {
 				url: path + '/update',
-				method: 'POST',
+				method: 'PUT',
 				isArray: false,
 				responseType: 'json'
 			}

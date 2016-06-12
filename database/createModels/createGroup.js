@@ -53,12 +53,12 @@ var group = sequelize.define('group', {
                 });
             })
         },
-        updateRow: function (row, newRow, callback) {
+        updateRow: function (row, callback) {
             this.findById(row.groupNumber).then(function (data) {
                 if (!data) callback(null, "Нет такой записи");
                 else data.update({
-                    faculty: newRow.faculty,
-                    course: newRow.course
+                    faculty: row.faculty,
+                    course: row.course
                 }).then( function (data) {
                     if (data) callback(data.dataValues, null);
                     else callback(null, "Ошибочка");
