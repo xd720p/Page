@@ -76,4 +76,35 @@ myApp.controller('NormPassController', [
 				$scope.formShown = false;
 			});
 		};
-	}]);
+
+		//Editing and delete
+
+		$scope.cancel = function (row, rowForm) {
+			row.isEditing = false;
+			rowForm.$setPristine();
+			var originalRow = _.findWhere($scope.originalData, {groupNumber: row.groupNumber});
+			angular.extend(row, originalRow);
+		};
+
+		$scope.del = function del(row) {
+			GroupService.remove(row).$promise.then(function (resp) {
+				var index = _.findIndex($scope.groups, function (elem) {
+					return elem.groupNumber === resp.groupNumber;
+				});
+				$scope.groups.splice(index, 1);
+				$scope.tableParams.reload();
+			});
+		};
+
+		$scope.save = function(row, rowForm) {
+			GroupService.update(row).$promise.then(function (resp) {
+				angular.extend(row, resp);
+				row.isEditing = false;
+				rowForm.$setPristine();
+				$scope.tableParams.reload();
+			}, function (err) {
+				console.log('Ошибка', err);
+			});
+		};
+
+}]);

@@ -16,6 +16,20 @@ myApp.factory('TeachersService', ['$resource',
 				method: 'POST',
 				isArray: false,
 				responseType: 'json'
+			},
+
+			remove: {
+				url: path + '/remove',
+				method: 'POST',
+				isArray: false,
+				responseType: 'json'
+			},
+
+			update: {
+				url: path + '/update',
+				method: 'PUT',
+				isArray: false,
+				responseType: 'json'
 			}
 		});
 	}
@@ -35,6 +49,20 @@ myApp.factory('DisciplineService', ['$resource',
 			add: {
 				url: path + '/add',
 				method: 'POST',
+				isArray: false,
+				responseType: 'json'
+			},
+
+			remove: {
+				url: path + '/remove',
+				method: 'POST',
+				isArray: false,
+				responseType: 'json'
+			},
+
+			update: {
+				url: path + '/update',
+				method: 'PUT',
 				isArray: false,
 				responseType: 'json'
 			}
@@ -93,6 +121,20 @@ myApp.factory('NormService', ['$resource',
 				method: 'POST',
 				isArray: false,
 				responseType: 'json'
+			},
+
+			remove: {
+				url: path + '/remove',
+				method: 'POST',
+				isArray: false,
+				responseType: 'json'
+			},
+
+			update: {
+				url: path + '/update',
+				method: 'PUT',
+				isArray: false,
+				responseType: 'json'
 			}
 		});
 	}
@@ -112,6 +154,20 @@ myApp.factory('NormPassService', ['$resource',
 			add: {
 				url: path + '/add',
 				method: 'POST',
+				isArray: false,
+				responseType: 'json'
+			},
+
+			remove: {
+				url: path + '/remove',
+				method: 'POST',
+				isArray: false,
+				responseType: 'json'
+			},
+
+			update: {
+				url: path + '/update',
+				method: 'PUT',
 				isArray: false,
 				responseType: 'json'
 			}
@@ -135,6 +191,20 @@ myApp.factory('StudentsService', ['$resource',
 				method: 'POST',
 				isArray: false,
 				responseType: 'json'
+			},
+
+			remove: {
+				url: path + '/remove',
+				method: 'POST',
+				isArray: false,
+				responseType: 'json'
+			},
+
+			update: {
+				url: path + '/update',
+				method: 'PUT',
+				isArray: false,
+				responseType: 'json'
 			}
 		});
 	}
@@ -154,6 +224,20 @@ myApp.factory('StudentDateService', ['$resource',
 			add: {
 				url: path + '/add',
 				method: 'POST',
+				isArray: false,
+				responseType: 'json'
+			},
+
+			remove: {
+				url: path + '/remove',
+				method: 'POST',
+				isArray: false,
+				responseType: 'json'
+			},
+
+			update: {
+				url: path + '/update',
+				method: 'PUT',
 				isArray: false,
 				responseType: 'json'
 			}

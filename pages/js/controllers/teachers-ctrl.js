@@ -11,6 +11,8 @@ myApp.controller('TeachersController', [
 
 		$scope.title = 'Преподаватели';
 		$scope.teachers = [];
+		$scope.originalData = [];
+
 		$scope.formShown = false;
 		$scope.teacher = {};
 
@@ -19,6 +21,7 @@ myApp.controller('TeachersController', [
 
 		TeachersService.query().$promise.then(function (resp) {
 			$scope.teachers = resp;
+			$scope.originalData = angular.copy($scope.teachers);
 
 			$scope.tableParams = new NgTableParams({
 					sorting: {
@@ -47,6 +50,36 @@ myApp.controller('TeachersController', [
 				console.log('Ошибка', err);
 				$scope.teacher = {};
 				$scope.formShown = false;
+			});
+		};
+
+		//Editing and delete
+
+		$scope.cancel = function (row, rowForm) {
+			row.isEditing = false;
+			rowForm.$setPristine();
+			var originalRow = _.findWhere($scope.originalData, {name: row.name});
+			angular.extend(row, originalRow);
+		};
+
+		$scope.del = function del(row) {
+			TeachersService.remove(row).$promise.then(function (resp) {
+				var index = _.findIndex($scope.teachers, function (elem) {
+					return elem.name === resp.name;
+				});
+				$scope.teachers.splice(index, 1);
+				$scope.tableParams.reload();
+			});
+		};
+
+		$scope.save = function(row, rowForm) {
+			TeachersService.update(row).$promise.then(function (resp) {
+				angular.extend(row, resp);
+				row.isEditing = false;
+				rowForm.$setPristine();
+				$scope.tableParams.reload();
+			}, function (err) {
+				console.log('Ошибка', err);
 			});
 		};
 }]);

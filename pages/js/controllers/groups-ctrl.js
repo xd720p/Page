@@ -50,7 +50,9 @@ myApp.controller('GroupsController', [
 		//Editing and delete
 		
 		$scope.cancel = function (row, rowForm) {
-			var originalRow = resetRow(row, rowForm);
+			row.isEditing = false;
+			rowForm.$setPristine();
+			var originalRow = _.findWhere($scope.originalData, {groupNumber: row.groupNumber});
 			angular.extend(row, originalRow);
 		};
 
@@ -64,28 +66,15 @@ myApp.controller('GroupsController', [
 			});
 		};
 
-		function resetRow(row, rowForm){
-			row.isEditing = false;
-			rowForm.$setPristine();
-			//$scope.tableTracker.untrack(row);
-			return _.findWhere($scope.originalData, {groupNumber: row.groupNumber});
-		}
-
 		$scope.save = function(row, rowForm) {
-			var originalRow = resetRow(row, rowForm);
-
-			GroupService.update(originalRow, row).$promise.then(function (resp) {
+			GroupService.update(row).$promise.then(function (resp) {
 				angular.extend(row, resp);
-				console.log($scope.groups);
+				row.isEditing = false;
+				rowForm.$setPristine();
 				$scope.tableParams.reload();
 			}, function (err) {
 				console.log('Ошибка', err);
 			});
-
-		}
-
-
-
-
+		};
 
 }]);

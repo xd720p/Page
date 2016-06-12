@@ -60,12 +60,18 @@
 .editable-table tbody > tr > td > .controls {
 //width: 100%
 }
+
+.controls .radio-inline {
+	height: 30px;
+	padding-top: 6px;
+}
+
 .editable-input {
 	padding-left: 3px;
 }
 .editable-input.input-sm {
 	height: 30px;
-	font-size: 14px;
+	font-size: 13px;
 	padding-top: 4px;
 	padding-bottom: 4px;
 }

@@ -21,39 +21,39 @@
 
 				<table ng-table="tableParams"
 							 class="table table-bordered table-hover table-condensed editable-table my-table"
-							 ng-form="tableForm" disable-filter="isAdding" tracked-table="tableTracker">
+							 ng-form="tableForm" disable-filter="isAdding">
 					<colgroup>
 						<col width="30%" />
 						<col width="30%" />
 						<col width="20%" />
 						<col width="10%" />
 					</colgroup>
-					<tr ng-repeat="row in $data" ng-form="rowForm" tracked-table-row="row">
+					<tr ng-repeat="row in $data" ng-form="rowForm">
 
-						<td data-title="'Номер группы'" sortable="'groupNumber'" ng-switch="row.isEditing"
+						<td data-title="'Номер группы'" sortable="'groupNumber'"
 								ng-class="groupNumber.$dirty ? 'bg-warning' : ''"
-								ng-form="groupNumber" demo-tracked-table-cell>
-							<span ng-switch-default class="editable-text">{{row.groupNumber}}</span>
-							<div class="controls" ng-class="groupNumber.$invalid && groupNumber.$dirty ? 'has-error' : ''" ng-switch-when="true">
+								ng-form="groupNumber">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.groupNumber}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="groupNumber.$invalid && groupNumber.$dirty ? 'has-error' : ''">
 								<input type="text" name="groupNumber" ng-model="row.groupNumber"
 											 class="editable-input form-control input-sm" disabled required />
 							</div>
 						</td>
 
-						<td data-title="'Факультет'" sortable="'faculty'" ng-switch="row.isEditing"
+						<td data-title="'Факультет'" sortable="'faculty'"
 								ng-class="faculty.$dirty ? 'bg-warning' : ''"
-								ng-form="faculty" demo-tracked-table-cell>
-							<span ng-switch-default class="editable-text">{{row.faculty}}</span>
-							<div class="controls" ng-class="faculty.$invalid && faculty.$dirty ? 'has-error' : ''" ng-switch-when="true">
+								ng-form="faculty">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.faculty}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="faculty.$invalid && faculty.$dirty ? 'has-error' : ''">
 								<input type="text" name="faculty" ng-model="row.faculty" class="editable-input form-control input-sm" required />
 							</div>
 						</td>
 
-						<td data-title="'Курс'" sortable="'course'" ng-switch="row.isEditing"
+						<td data-title="'Курс'" sortable="'course'"
 								ng-class="course.$dirty ? 'bg-warning' : ''"
-								ng-form="course" demo-tracked-table-cell>
-							<span ng-switch-default class="editable-text">{{row.course}}</span>
-							<div class="controls" ng-class="course.$invalid && course.$dirty ? 'has-error' : ''" ng-switch-when="true">
+								ng-form="course">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.course}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="course.$invalid && course.$dirty ? 'has-error' : ''">
 								<input type="text" name="course" ng-model="row.course" class="editable-input form-control input-sm" required />
 							</div>
 						</td>
