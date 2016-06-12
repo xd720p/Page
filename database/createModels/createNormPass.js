@@ -67,7 +67,7 @@ var normPass = sequelize.define('normPass', {
             })
         },
         deleteRow: function (row, callback) {
-            this.findOne({uniqID: row.uniqID, definition: row.definition, date: row.date}).then(function (data) {
+            this.findOne({uniqID: row.uniqID, normName: row.normName, date: row.date}).then(function (data) {
                 if (!data) callback(null, "Такая запись уже удалена");
                 else data.destroy().then(function (data) {
                     callback(data.dataValues, null);
@@ -75,7 +75,7 @@ var normPass = sequelize.define('normPass', {
             })
         },
         updateRow: function (row, callback) {
-            this.findOne({uniqID: row.uniqID, definition: row.definition, date: row.date}).then(function (data) {
+            this.findOne({uniqID: row.uniqID, normName: row.normName, date: row.date}).then(function (data) {
                 if (!data) callback(null, "Нет такой записи");
                 else data.update({
                     result:  row.result,
