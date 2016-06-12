@@ -17,13 +17,98 @@
 					<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<table ng-table="tableParams" id="datatable" class="table table-striped table-bordered">
-					<tr ng-repeat="student in $data">
-						<td data-title="'Номер зачётки'" sortable="'uniqID'">{{student.uniqID}}</td>
-						<td data-title="'ФИО'" sortable="'name'">{{student.name}}</td>
-						<td data-title="'Медицинский допуск'" sortable="'medAccess'">{{student.medAccess}}</td>
-						<td data-title="'Номер группы'" sortable="'groupNumber'">{{student.groupNumber}}</td>
-						<td data-title="'ФИО преподавателя'" sortable="'teacherName'">{{student.teacherName }}</td>
+				<table ng-table="tableParams"
+							 class="table table-bordered table-hover table-condensed editable-table my-table"
+							 ng-form="tableForm" disable-filter="isAdding">
+					<colgroup>
+						<col width="13%" />
+						<col width="25%" />
+						<col width="12%" />
+						<col width="12%" />
+						<col width="25%" />
+						<col width="13%" />
+
+					</colgroup>
+
+					<tr ng-repeat="row in $data" ng-form="rowForm">
+
+						<td data-title="'Номер зачётки'" sortable="'uniqID'"
+								ng-class="uniqID.$dirty ? 'bg-warning' : ''"
+								ng-form="uniqID">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.uniqID}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="uniqID.$invalid && uniqID.$dirty ? 'has-error' : ''">
+								<input type="text" name="uniqID" ng-model="row.uniqID"
+											 class="editable-input form-control input-sm" disabled required />
+							</div>
+						</td>
+
+						<td data-title="'ФИО'" sortable="'name'"
+								ng-class="name.$dirty ? 'bg-warning' : ''"
+								ng-form="name">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.name}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''">
+								<input type="text" name="name" ng-model="row.name"
+											 class="editable-input form-control input-sm" required />
+							</div>
+						</td>
+
+						<td data-title="'Медицинский допуск'" sortable="'medAccess'"
+								ng-class="medAccess.$dirty ? 'bg-warning' : ''"
+								ng-form="medAccess">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.medAccess}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="medAccess.$invalid && medAccess.$dirty ? 'has-error' : ''">
+								<input type="text" name="medAccess" ng-model="row.medAccess"
+											 class="editable-input form-control input-sm" />
+							</div>
+						</td>
+
+						<td data-title="'Номер группы'" sortable="'groupNumber'"
+								ng-class="groupNumber.$dirty ? 'bg-warning' : ''"
+								ng-form="groupNumber">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.groupNumber}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="groupNumber.$invalid && groupNumber.$dirty ? 'has-error' : ''">
+								<ui-select ng-model="row.groupNumber" theme="bootstrap" required>
+									<ui-select-match>
+										<span ng-bind="$select.selected.groupNumber || row.groupNumber"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="group in (groups | filter: $select.search)">
+										<span ng-bind-html="group.groupNumber | highlight: $select.search"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</td>
+
+						<td data-title="'ФИО преподавателя'" sortable="'teacherName'"
+								ng-class="teacherName.$dirty ? 'bg-warning' : ''"
+								ng-form="teacherName">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.teacherName}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="teacherName.$invalid && teacherName.$dirty ? 'has-error' : ''">
+								<ui-select ng-model="row.teacherName" theme="bootstrap" required>
+									<ui-select-match>
+										<span ng-bind="$select.selected.name || row.teacherName"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="teacher in (teachers | filter: $select.search)">
+										<span ng-bind-html="teacher.name | highlight: $select.search"></span>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+						</td>
+
+						<td>
+							<button class="btn btn-primary btn-sm" ng-click="save(row, rowForm)" ng-if="row.isEditing"
+											ng-disabled="rowForm.$pristine || rowForm.$invalid">
+								<span class="glyphicon glyphicon-ok"></span>
+							</button>
+							<button class="btn btn-default btn-sm" ng-click="cancel(row, rowForm)" ng-if="row.isEditing">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+							<button class="btn btn-default btn-sm" ng-click="row.isEditing = true" ng-if="!row.isEditing">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
+							<button class="btn btn-danger btn-sm" ng-click="del(row)" ng-if="!row.isEditing">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</td>
 					</tr>
 				</table>
 
@@ -50,7 +135,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-xs-6">
-							<ui-select ng-model="selectedGroup.value" theme="bootstrap">
+							<ui-select ng-model="selectedGroup.value" theme="bootstrap" required>
 								<ui-select-match placeholder="Выберите номер группы">
 									<span ng-bind="$select.selected.groupNumber"></span>
 								</ui-select-match>

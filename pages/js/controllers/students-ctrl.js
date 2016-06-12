@@ -23,6 +23,7 @@ myApp.controller('StudentsController', [
 
 		StudentsService.query().$promise.then(function (resp) {
 			$scope.students = resp;
+			$scope.originalData = angular.copy($scope.students);
 
 			$scope.tableParams = new NgTableParams({
 					sorting: {
@@ -67,22 +68,29 @@ myApp.controller('StudentsController', [
 		$scope.cancel = function (row, rowForm) {
 			row.isEditing = false;
 			rowForm.$setPristine();
-			var originalRow = _.findWhere($scope.originalData, {groupNumber: row.groupNumber});
+			var originalRow = _.findWhere($scope.originalData, {uniqID: row.uniqID});
 			angular.extend(row, originalRow);
 		};
 
 		$scope.del = function del(row) {
-			GroupService.remove(row).$promise.then(function (resp) {
-				var index = _.findIndex($scope.groups, function (elem) {
-					return elem.groupNumber === resp.groupNumber;
+			StudentsService.remove(row).$promise.then(function (resp) {
+				var index = _.findIndex($scope.students, function (elem) {
+					return elem.uniqID === resp.uniqID;
 				});
-				$scope.groups.splice(index, 1);
+				$scope.students.splice(index, 1);
 				$scope.tableParams.reload();
 			});
 		};
 
 		$scope.save = function(row, rowForm) {
-			GroupService.update(row).$promise.then(function (resp) {
+			var fixedRow = {
+				uniqID: row.uniqID,
+				name: row.name,
+				medAccess: row.medAccess,
+				groupNumber: row.groupNumber.groupNumber,
+				teacherName: row.teacherName.name
+			};
+			StudentsService.update(fixedRow).$promise.then(function (resp) {
 				angular.extend(row, resp);
 				row.isEditing = false;
 				rowForm.$setPristine();

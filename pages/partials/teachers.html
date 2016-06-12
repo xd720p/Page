@@ -73,17 +73,12 @@
 							<div class="controls" ng-show="row.isEditing" ng-class="discipline.$invalid && discipline.$dirty ? 'has-error' : ''">
 								<ui-select ng-model="row.discipline" theme="bootstrap" required>
 									<ui-select-match>
-										<span ng-bind="$select.selected || row.discipline"></span>
-
+										<span ng-bind="$select.selected.shortName || row.discipline"></span>
 									</ui-select-match>
 									<ui-select-choices repeat="discipline in (disciplines | filter: $select.search)">
-										<span ng-bind-html="discipline | highlight: $select.search"></span>
+										<span ng-bind-html="discipline.shortName | highlight: $select.search"></span>
 									</ui-select-choices>
 								</ui-select>
-
-								<!--
-								<input type="text" name="discipline" ng-model="row.discipline"
-											 class="editable-input form-control input-sm" required />-->
 							</div>
 						</td>
 
@@ -91,15 +86,16 @@
 								ng-class="authority.$dirty ? 'bg-warning' : ''"
 								ng-form="authority">
 							<span class="editable-text" ng-hide="row.isEditing">{{row.authority ? 'Да' : 'Нет'}}</span>
-							<div class="controls" ng-show="row.isEditing" ng-class="authority.$invalid && authority.$dirty ? 'has-error' : ''">
+							<div class="controls" ng-show="row.isEditing"
+									 ng-class="authority.$invalid && authority.$dirty ? 'has-error' : ''">
 								<label class="radio-inline">
 									<input ng-model="row.authority" type="radio" name="authority"
-												 value="true"
+												 ng-value="true"
 												 required> Да
 								</label>
 								<label class="radio-inline">
 									<input ng-model="row.authority" type="radio" name="authority"
-												 value="false"
+												 ng-value="false"
 												 required> Нет
 								</label>
 							</div>

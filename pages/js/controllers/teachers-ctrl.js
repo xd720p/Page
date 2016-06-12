@@ -38,14 +38,8 @@ myApp.controller('TeachersController', [
 
 		DisciplineService.query().$promise.then(function (resp) {
 			$scope.disciplines = resp;
-		});
-
-		/*DisciplineService.query().$promise.then(function (resp) {
-			_.each(resp, function (element) {
-				$scope.disciplines.push(element.shortName)
-			});
 			console.log($scope.disciplines);
-		});*/
+		});
 
 		$scope.$watchCollection('selectedDisc', function (newValue, oldValue, scope) {
 			scope.teacher.discipline = scope.selectedDisc.value.shortName;
@@ -84,7 +78,14 @@ myApp.controller('TeachersController', [
 		};
 
 		$scope.save = function(row, rowForm) {
-			TeachersService.update(row).$promise.then(function (resp) {
+			var fixedRow = {
+				name: row.name,
+				post: row.post,
+				qualification: row.qualification,
+				discipline: row.discipline.shortName,
+				authority: row.authority
+			};
+			TeachersService.update(fixedRow).$promise.then(function (resp) {
 				angular.extend(row, resp);
 				row.isEditing = false;
 				rowForm.$setPristine();

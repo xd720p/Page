@@ -64,6 +64,12 @@
 .controls .radio-inline {
 	height: 30px;
 	padding-top: 6px;
+	margin-left: 0;
+	margin-right: 10px;
+}
+
+.controls .btn {
+	font-size: 13px;
 }
 
 .editable-input {

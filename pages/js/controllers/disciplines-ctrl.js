@@ -15,6 +15,7 @@ myApp.controller('DisciplinesController', [
 
 		DisciplineService.query().$promise.then(function (resp) {
 			$scope.disciplines = resp;
+			$scope.originalData = angular.copy($scope.disciplines);
 
 			$scope.tableParams = new NgTableParams({
 					sorting: {
@@ -42,22 +43,22 @@ myApp.controller('DisciplinesController', [
 		$scope.cancel = function (row, rowForm) {
 			row.isEditing = false;
 			rowForm.$setPristine();
-			var originalRow = _.findWhere($scope.originalData, {groupNumber: row.groupNumber});
+			var originalRow = _.findWhere($scope.originalData, {shortName: row.shortName});
 			angular.extend(row, originalRow);
 		};
 
 		$scope.del = function del(row) {
-			GroupService.remove(row).$promise.then(function (resp) {
-				var index = _.findIndex($scope.groups, function (elem) {
-					return elem.groupNumber === resp.groupNumber;
+			DisciplineService.remove(row).$promise.then(function (resp) {
+				var index = _.findIndex($scope.disciplines, function (elem) {
+					return elem.shortName === resp.shortName;
 				});
-				$scope.groups.splice(index, 1);
+				$scope.disciplines.splice(index, 1);
 				$scope.tableParams.reload();
 			});
 		};
 
 		$scope.save = function(row, rowForm) {
-			GroupService.update(row).$promise.then(function (resp) {
+			DisciplineService.update(row).$promise.then(function (resp) {
 				angular.extend(row, resp);
 				row.isEditing = false;
 				rowForm.$setPristine();

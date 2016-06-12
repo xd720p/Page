@@ -17,14 +17,109 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<table ng-table="tableParams" class="table table-striped table-bordered">
-					<tr ng-repeat="norm in $data">
-						<td data-title="'Название'" sortable="'name'">{{norm.name}}</td>
-						<td data-title="'Описание'" sortable="'definition'">{{norm.definition}}</td>
-						<td data-title="'Критерий 1'" sortable="'point1'">{{norm.point1}}</td>
-						<td data-title="'Критерий 2'" sortable="'point2'">{{norm.point2}}</td>
-						<td data-title="'Критерий 3'" sortable="'point3'">{{norm.point3}}</td>
-						<td data-title="'Тип'" sortable="'count'">{{norm.count}}</td>
+				<table ng-table="tableParams"
+							 class="table table-bordered table-hover table-condensed editable-table my-table"
+							 ng-form="tableForm" disable-filter="isAdding">
+					<colgroup>
+						<col width="15%" />
+						<col width="30%" />
+						<col width="10%" />
+						<col width="10%" />
+						<col width="10%" />
+						<col width="15%" />
+						<col width="10%" />
+					</colgroup>
+					<tr ng-repeat="row in $data" ng-form="rowForm">
+
+						<td data-title="'Название'" sortable="'name'"
+								ng-class="name.$dirty ? 'bg-warning' : ''"
+								ng-form="name">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.name}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''">
+								<input type="text" name="name" ng-model="row.name"
+											 class="editable-input form-control input-sm" disabled required />
+							</div>
+						</td>
+
+						<td data-title="'Описание'" sortable="'definition'"
+								ng-class="definition.$dirty ? 'bg-warning' : ''"
+								ng-form="definition">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.definition}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="definition.$invalid && definition.$dirty ? 'has-error' : ''">
+								<input type="text" name="definition" ng-model="row.definition"
+											 class="editable-input form-control input-sm" />
+							</div>
+						</td>
+
+						<td data-title="'Критерий 1'" sortable="'point1'"
+								ng-class="point1.$dirty ? 'bg-warning' : ''"
+								ng-form="point1">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.point1}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="point1.$invalid && point1.$dirty ? 'has-error' : ''">
+								<input type="text" name="point1" ng-model="row.point1"
+											 class="editable-input form-control input-sm" />
+							</div>
+						</td>
+
+						<td data-title="'Критерий 2'" sortable="'point2'"
+								ng-class="point2.$dirty ? 'bg-warning' : ''"
+								ng-form="point2">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.point2}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="point2.$invalid && point2.$dirty ? 'has-error' : ''">
+								<input type="text" name="point2" ng-model="row.point2"
+											 class="editable-input form-control input-sm" />
+							</div>
+						</td>
+
+						<td data-title="'Критерий 3'" sortable="'point3'"
+								ng-class="point3.$dirty ? 'bg-warning' : ''"
+								ng-form="point3">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.point3}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="point3.$invalid && point3.$dirty ? 'has-error' : ''">
+								<input type="text" name="point3" ng-model="row.point3"
+											 class="editable-input form-control input-sm" />
+							</div>
+						</td>
+
+						<td data-title="'Тип'" sortable="'count'"
+								ng-class="count.$dirty ? 'bg-warning' : ''"
+								ng-form="count">
+							<span class="editable-text" ng-hide="row.isEditing">{{row.count}}</span>
+							<div class="controls" ng-show="row.isEditing" ng-class="count.$invalid && count.$dirty ? 'has-error' : ''">
+								<label class="radio-inline">
+									<input ng-model="row.count" type="radio" name="count"
+												 value="Количественный"
+												 required> Количественный
+								</label>
+								<label class="radio-inline">
+									<input ng-model="row.count" type="radio" name="count"
+												 value="На скорость"
+												 required>
+									На скорость
+								</label>
+								<label class="radio-inline">
+									<input ng-model="row.count" type="radio" name="count"
+												 value="Качественный"
+												 required>
+									Качественный
+								</label>
+							</div>
+						</td>
+						<td>
+							<button class="btn btn-primary btn-sm" ng-click="save(row, rowForm)" ng-if="row.isEditing"
+											ng-disabled="rowForm.$pristine || rowForm.$invalid">
+								<span class="glyphicon glyphicon-ok"></span>
+							</button>
+							<button class="btn btn-default btn-sm" ng-click="cancel(row, rowForm)" ng-if="row.isEditing">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+							<button class="btn btn-default btn-sm" ng-click="row.isEditing = true" ng-if="!row.isEditing">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
+							<button class="btn btn-danger btn-sm" ng-click="del(row)" ng-if="!row.isEditing">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</td>
 					</tr>
 				</table>
 

@@ -15,6 +15,7 @@ myApp.controller('NormsController', [
 
 		NormService.query().$promise.then(function (resp) {
 			$scope.norms = resp;
+			$scope.originalData = angular.copy($scope.norms);
 
 			$scope.tableParams = new NgTableParams({
 					sorting: {
@@ -42,22 +43,22 @@ myApp.controller('NormsController', [
 		$scope.cancel = function (row, rowForm) {
 			row.isEditing = false;
 			rowForm.$setPristine();
-			var originalRow = _.findWhere($scope.originalData, {groupNumber: row.groupNumber});
+			var originalRow = _.findWhere($scope.originalData, {name: row.name});
 			angular.extend(row, originalRow);
 		};
 
 		$scope.del = function del(row) {
-			GroupService.remove(row).$promise.then(function (resp) {
-				var index = _.findIndex($scope.groups, function (elem) {
-					return elem.groupNumber === resp.groupNumber;
+			NormService.remove(row).$promise.then(function (resp) {
+				var index = _.findIndex($scope.norms, function (elem) {
+					return elem.name === resp.name;
 				});
-				$scope.groups.splice(index, 1);
+				$scope.norms.splice(index, 1);
 				$scope.tableParams.reload();
 			});
 		};
 
 		$scope.save = function(row, rowForm) {
-			GroupService.update(row).$promise.then(function (resp) {
+			NormService.update(row).$promise.then(function (resp) {
 				angular.extend(row, resp);
 				row.isEditing = false;
 				rowForm.$setPristine();
