@@ -7,7 +7,14 @@ underscore.factory('_', function() {
 });
 
 var myApp = angular.module('myApp', [
-	'ui.router', 'ngTable', 'ngResource', 'ui.select', 'ngSanitize', 'daterangepicker', 'ngAnimate', 'underscore'
+	'ui.router',
+	'ngTable',
+	'ngResource',
+	'ui.select',
+	'ngSanitize',
+	'daterangepicker',
+	'ngAnimate',
+	'underscore'
 ]);
 
 myApp.config(['$stateProvider', '$urlRouterProvider',

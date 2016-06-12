@@ -32,6 +32,8 @@ myApp.controller('NormPassController', [
 
 		NormPassService.query().$promise.then(function (resp) {
 			$scope.passedNorms = resp;
+			$scope.originalData = angular.copy($scope.passedNorms);
+
 			$scope.tableParams = new NgTableParams({
 					sorting: {
 						studentName: 'asc'
@@ -82,22 +84,22 @@ myApp.controller('NormPassController', [
 		$scope.cancel = function (row, rowForm) {
 			row.isEditing = false;
 			rowForm.$setPristine();
-			var originalRow = _.findWhere($scope.originalData, {groupNumber: row.groupNumber});
+			var originalRow = _.findWhere($scope.originalData, {uniqID: row.uniqID, normName:row.normName, date:row.date });
 			angular.extend(row, originalRow);
 		};
 
 		$scope.del = function del(row) {
-			GroupService.remove(row).$promise.then(function (resp) {
-				var index = _.findIndex($scope.groups, function (elem) {
-					return elem.groupNumber === resp.groupNumber;
+			NormPassService.remove(row).$promise.then(function (resp) {
+				var index = _.findIndex($scope.passedNorms, function (elem) {
+					return elem === resp;
 				});
-				$scope.groups.splice(index, 1);
+				$scope.passedNorms.splice(index, 1);
 				$scope.tableParams.reload();
 			});
 		};
 
 		$scope.save = function(row, rowForm) {
-			GroupService.update(row).$promise.then(function (resp) {
+			NormPassService.update(row).$promise.then(function (resp) {
 				angular.extend(row, resp);
 				row.isEditing = false;
 				rowForm.$setPristine();
