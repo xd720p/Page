@@ -41,7 +41,7 @@
 							</div>
 						</td>
 
-						<td data-title="'ФИО'" sortable="'name'"
+						<td data-title="'ФИО'" sortable="'name'" filter="{name: 'text'}" filter="{name: 'text'}"
 								ng-class="name.$dirty ? 'bg-warning' : ''"
 								ng-form="name">
 							<span class="editable-text" ng-hide="row.isEditing">{{row.name}}</span>
@@ -51,7 +51,7 @@
 							</div>
 						</td>
 
-						<td data-title="'Медицинский допуск'" sortable="'medAccess'"
+						<td data-title="'Медицинский допуск'" sortable="'medAccess'" filter="{medAccess: 'text'}"
 								ng-class="medAccess.$dirty ? 'bg-warning' : ''"
 								ng-form="medAccess">
 							<span class="editable-text" ng-hide="row.isEditing">{{row.medAccess}}</span>
@@ -61,7 +61,7 @@
 							</div>
 						</td>
 
-						<td data-title="'Номер группы'" sortable="'groupNumber'"
+						<td data-title="'Номер группы'" sortable="'groupNumber'" filter="{groupNumber: 'number'}"
 								ng-class="groupNumber.$dirty ? 'bg-warning' : ''"
 								ng-form="groupNumber">
 							<span class="editable-text" ng-hide="row.isEditing">{{row.groupNumber}}</span>
@@ -77,7 +77,7 @@
 							</div>
 						</td>
 
-						<td data-title="'ФИО преподавателя'" sortable="'teacherName'"
+						<td data-title="'ФИО преподавателя'" sortable="'teacherName'" filter="{teacherName: 'text'}"
 								ng-class="teacherName.$dirty ? 'bg-warning' : ''"
 								ng-form="teacherName">
 							<span class="editable-text" ng-hide="row.isEditing">{{row.teacherName}}</span>

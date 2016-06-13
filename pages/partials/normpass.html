@@ -34,7 +34,7 @@
 					</colgroup>
 
 					<tr ng-repeat="row in $data" ng-form="rowForm">
-						<td data-title="'Студент'" sortable="'studentName'"
+						<td data-title="'Студент'" sortable="'studentName'" filter="{studentName: 'text'}"
 								ng-class="studentName.$dirty ? 'bg-warning' : ''"
 								ng-form="studentName">
 							<span class="editable-text" ng-hide="row.isEditing">{{row.studentName}}</span>
@@ -44,7 +44,7 @@
 							</div>
 						</td>
 
-						<td data-title="'Название норматива'" sortable="'normName'"
+						<td data-title="'Название норматива'" sortable="'normName'" filter="{normName: 'text'}"
 								ng-class="normName.$dirty ? 'bg-warning' : ''"
 								ng-form="normName">
 							<span class="editable-text" ng-hide="row.isEditing">{{row.normName}}</span>

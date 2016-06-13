@@ -31,7 +31,7 @@
 					</colgroup>
 					<tr ng-repeat="row in $data" ng-form="rowForm">
 
-						<td data-title="'Название'" sortable="'name'"
+						<td data-title="'Название'" sortable="'name'" filter="{name: 'text'}"
 								ng-class="name.$dirty ? 'bg-warning' : ''"
 								ng-form="name">
 							<span class="editable-text" ng-hide="row.isEditing">{{row.name}}</span>
