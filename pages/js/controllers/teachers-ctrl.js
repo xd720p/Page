@@ -78,11 +78,19 @@ myApp.controller('TeachersController', [
 		};
 
 		$scope.save = function(row, rowForm) {
+			var discipline = (function () {
+				if(row.discipline.shortName) {
+					return row.discipline.shortName;
+				} else {
+					return row.discipline;
+				}
+			})();
+
 			var fixedRow = {
 				name: row.name,
 				post: row.post,
 				qualification: row.qualification,
-				discipline: row.discipline.shortName,
+				discipline: discipline,
 				authority: row.authority
 			};
 			TeachersService.update(fixedRow).$promise.then(function (resp) {

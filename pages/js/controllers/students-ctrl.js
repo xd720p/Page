@@ -83,13 +83,30 @@ myApp.controller('StudentsController', [
 		};
 
 		$scope.save = function(row, rowForm) {
+			var group = (function () {
+				if(row.groupNumber.groupNumber) {
+					return row.groupNumber.groupNumber;
+				} else {
+					return row.groupNumber;
+				}
+			})();
+
+			var teacher = (function () {
+				if(row.teacherName.name) {
+					return row.teacherName.name;
+				} else {
+					return row.teacherName;
+				}
+			})();
+
 			var fixedRow = {
 				uniqID: row.uniqID,
 				name: row.name,
 				medAccess: row.medAccess,
-				groupNumber: row.groupNumber.groupNumber,
-				teacherName: row.teacherName.name
+				groupNumber: group,
+				teacherName: teacher
 			};
+
 			StudentsService.update(fixedRow).$promise.then(function (resp) {
 				angular.extend(row, resp);
 				row.isEditing = false;

@@ -101,7 +101,6 @@ myApp.controller('NormPassController', [
 				} else {
 					console.log('error');
 				}
-
 			});
 		};
 
