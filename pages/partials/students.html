@@ -104,7 +104,11 @@
 							<button class="btn btn-default btn-sm" ng-click="row.isEditing = true" ng-if="!row.isEditing">
 								<span class="glyphicon glyphicon-pencil"></span>
 							</button>
-							<button class="btn btn-danger btn-sm" ng-click="del(row)" ng-if="!row.isEditing">
+							<button class="btn btn-danger btn-sm" ng-click="del(row)" ng-if="!row.isEditing"
+											confirm-title="ВНИМАНИЕ!"
+											confirm="Удаление студента приведет к удалению ВСЕХ записей о его посещаемости и успеваемости.
+											Удалить все равно?"
+											confirm-ok="Да, удалить студента" confirm-cancel="Нет, отмена">
 								<span class="glyphicon glyphicon-trash"></span>
 							</button>
 						</td>

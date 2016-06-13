@@ -14,7 +14,9 @@ var myApp = angular.module('myApp', [
 	'ngSanitize',
 	'daterangepicker',
 	'ngAnimate',
-	'underscore'
+	'underscore',
+	'ui.bootstrap',
+	'angular-confirm'
 ]);
 
 myApp.config(['$stateProvider', '$urlRouterProvider',
