@@ -16,7 +16,8 @@ var myApp = angular.module('myApp', [
 	'ngAnimate',
 	'underscore',
 	'ui.bootstrap',
-	'angular-confirm'
+	'angular-confirm',
+	'satellizer'
 ]);
 
 myApp.config(['$stateProvider', '$urlRouterProvider',
@@ -72,13 +73,13 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
 					url: '/studentdate',
 					controller: 'StudentDateController',
 					templateUrl: 'partials/studentdate.html'
-				});
+				})
 
-				/*.state('login', {
-					url: '/login?callbackUrl',
-					controller: 'LoginController',
-					templateUrl: '/m2m/app/login.html'
-				});*/
+			.state('login', {
+				url: '/login',
+				controller: 'LoginController',
+				templateUrl: 'partials/login.html'
+			});
 	}]);
 
 

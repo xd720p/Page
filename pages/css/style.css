@@ -81,3 +81,27 @@
 	padding-top: 4px;
 	padding-bottom: 4px;
 }
+
+.login_form.ng-hide-add,
+.login_form.ng-hide-remove,
+.registration_form.ng-hide-add,
+.registration_form.ng-hide-remove {
+	transition: all linear 0.5s;
+}
+
+.login_form {
+	opacity: 1;
+}
+
+.login_form.ng-hide {
+	opacity: 0;
+}
+
+
+.registration_form.ng-hide {
+	opacity: 0;
+}
+
+.registration_form {
+	opacity: 1;
+}
