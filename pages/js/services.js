@@ -215,32 +215,28 @@ myApp.factory('StudentDateService', ['$resource',
 		var path = '/studentdate';
 
 		return $resource(path, {}, {
-			query: {
+			history: {
+				url: path + '/',
 				method: 'GET',
 				isArray: true,
 				responseType: 'json'
 			},
 
-			add: {
-				url: path + '/add',
-				method: 'POST',
-				isArray: false,
+			query: {
+				url: path + '/',
+				method: 'GET',
+				isArray: true,
 				responseType: 'json'
 			},
 
-			remove: {
-				url: path + '/remove',
+			save: {
+				url: path + '/',
 				method: 'POST',
-				isArray: false,
-				responseType: 'json'
-			},
-
-			update: {
-				url: path + '/update',
-				method: 'PUT',
 				isArray: false,
 				responseType: 'json'
 			}
+
+
 		});
 	}
 ]);

@@ -2,9 +2,12 @@
 		<div class="col-md-3 left_col col-sm-3">
 			<div class="left_col scroll-view">
 				<div class="navbar nav_title" style="border: 0;">
-					<a href="#"><i ></i> <span></span></a>
+					<div class="site_title">
+						<i class="fa fa-futbol-o"></i>
+						<span>АИС кафедры </span>
+						<div style="text-align: right; padding-right: 12px;">физвоспитания</div>
+					</div>
 				</div>
-
 				<div class="clearfix"></div>
 
 				<br />
@@ -34,12 +37,21 @@
 
 						<h3>Личный кабинет</h3>
 						<ul class="nav side-menu">
-							<li><a ng-click="logout()"><i></i> Выйти <span></span></a>
-
+							<li>
+								<div class="user-info">
+									<span>Пользователь</span>
+									<h5>{{currentUser.fio}}</h5>
+								</div>
 							</li>
-							<!--<li><a href="#"><i></i> Зарегистрироваться <span></span></a>
+							<li>
+								<div class="user-info">
+									<span>Дисциплина</span>
+									<h5>{{currentUser.discipline}}</h5>
+								</div>
+							</li>
+							<li><a ng-click="logout()"><i></i> Выйти</a>
+							</li>
 
-							</li>-->
 
 						</ul>
 					</div>

@@ -19,12 +19,50 @@
 			<div class="x_content">
 				<p class="text-muted font-13 m-b-30">
 				</p>
-				<table ng-table="tableParams" id="datatable" class="table table-striped table-bordered">
-					<tr ng-repeat="student in $data">
-						<td data-title="'Номер зачётки'" sortable="'uniqID'">{{student.uniqID}}</td>
-						<td data-title="'ФИО'" sortable="'name'">{{student.name}}</td>
-						<td data-title="'Дата'" sortable="'date'">{{student.date | date:'dd/MM/yyyy'}}</td>
-						<td data-title="'Что-то'" sortable="'visit'">{{student.visit}}</td>
+
+				<div class="row attendance__wrapper">
+					<form name="attendanceForm" ng-submit="getAttendanceInfo(attendance)" novalidate>
+						<div class="data-select col-xs-3">
+							<ui-select ng-model="attendance.faculty" theme="bootstrap" required>
+								<ui-select-match placeholder="Выберите факультет">
+									<span ng-bind="$select.selected"></span>
+								</ui-select-match>
+								<ui-select-choices repeat="faculty in (faculties | filter: $select.search)">
+									<span ng-bind-html="faculty | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select>
+							<i class="icon--close fa fa-times" ng-show="attendance.faculty"
+								 ng-click="attendance.faculty = null;"></i>
+						</div>
+
+						<div class="data-select col-xs-3">
+							<ui-select ng-model="attendance.course" theme="bootstrap" required>
+								<ui-select-match placeholder="Выберите курс">
+									<span ng-bind="$select.selected"></span>
+								</ui-select-match>
+								<ui-select-choices repeat="course in (courses | filter: $select.search)">
+									<span ng-bind-html="course | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select>
+							<i class="icon--close fa fa-times" ng-show="attendance.course"
+								 ng-click="attendance.course = null;"></i>
+						</div>
+
+						<div class="data-select col-xs-3">
+							<input date-range-picker ng-model="datePicker.date" options="datePicker.options" type="text"
+										 class="form-control"
+										 placeholder="Выберите период" required>
+						</div>
+						<div class="col-xs-3">
+							<input type="submit" class="btn btn-primary" value="Запросить" ng-disabled="attendanceForm.$invalid">
+						</div>
+					</form>
+				</div>
+
+
+				<table ng-table-dynamic="tableParams with cols" class="table table-condensed table-striped table-bordered">
+					<tr ng-repeat="row in $data">
+						<td ng-repeat="col in $columns">{{row[col.field]}}</td>
 					</tr>
 				</table>
 

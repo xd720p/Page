@@ -65,6 +65,8 @@ myApp.controller('RootController', [
 				});
 		};
 
+		$rootScope.currentUser = $auth.getPayload();
+
 }]);
 
 

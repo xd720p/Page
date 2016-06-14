@@ -122,8 +122,6 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$authProvider',
 				deferred.resolve();
 			} else {
 				$location.path('/login');
-				/*$state.go('login');*/
-
 			}
 			return deferred.promise;
 		}
