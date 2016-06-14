@@ -40,20 +40,22 @@
 
         <div id="register" class="form registration_form" ng-show="registryForm">
           <section class="login_content">
+
             <form method="post" ng-submit="signup()" name="signupForm" novalidate>
               <h1>Создать аккаунт</h1>
               <div>
-                <input type="text" class="form-control" placeholder="ФИО" required="" />
+                <input ng-model="newUser.fio" type="text" class="form-control" placeholder="ФИО" required="" />
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Email" required="" />
+                <input ng-model="newUser.email" type="email" class="form-control" placeholder="Email" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Пароль" required="" />
+                <input ng-model="newUser.password" type="password" class="form-control" placeholder="Пароль"
+                       required="" />
                 <input type="password" class="form-control" placeholder="Подтвердите пароль" required="" />
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">Зарегистрироваться</a>
+                <input class="btn btn-default submit" type="submit" value="Зарегистрироваться">
               </div>
 
               <div class="clearfix"></div>

@@ -11,6 +11,12 @@ myApp.controller('LoginController', [
 			password: ''
 		};
 
+		$scope.newUser = {
+			fio: '',
+			email: '',
+			password: ''
+		};
+
 		$scope.login = function() {
 			$auth.login($scope.user)
 					.then(function(resp) {
@@ -19,6 +25,18 @@ myApp.controller('LoginController', [
 					})
 					.catch(function(error) {
 						toastr.error(error.data.message, error.status);
+					});
+		};
+
+		$scope.signup = function() {
+			$auth.signup($scope.newUser)
+					.then(function(response) {
+						$auth.setToken(response);
+						$location.path('/');
+						toastr.info('You have successfully created a new account and have been signed-in');
+					})
+					.catch(function(response) {
+						toastr.error(response.data.message);
 					});
 		};
 	}
