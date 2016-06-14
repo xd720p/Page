@@ -19,11 +19,11 @@ var serveStatic = require('serve-static');
 var routes = require('./routes/index');
 
 
-var SequelizeStore = require('connect-session-sequelize')(session.Store);
+
 var Sequelize = require('sequelize');
 var sequelize = require('./database/createModels/connect');
-var ses = require('./database/createModels/createSession');
-var us = require('./database/createModels/createUser');
+
+
 
 var teacher = require('./database/createModels/createTeacher');
 var discipline = require('./database/createModels/createDiscipline');
@@ -33,7 +33,7 @@ var normPass = require('./database/createModels/createNormPass');
 var student = require('./database/createModels/createStudent');
 var studentDate = require('./database/createModels/createStudentDate');
 var User = require('./database/createModels/createUser');
-var sate = require('satellizer');
+//var sate = require('satellizer');
 
 var jwt = require('express-jwt');
 
@@ -74,6 +74,7 @@ function generateJWT(user) {
 
     var payload = {
         sub: user.userName,
+        fio: user.FIO,
         discipline: user.discipline,
         iat: exp.getDate(),
         exp: parseInt(exp.getTime() / 1000)
