@@ -86,7 +86,7 @@ function generateJWT(user) {
 app.post('/auth/signup', function (req, res, next) {
     User.checkPassword(req.body.email, req.body.password, function (callback, err) {
         if (err) {
-            User.createUser(req.body.email, req.body.FIO, req.body.password, function (callback, err) {
+            User.createUser(req.body.email, req.body.fio, req.body.password, function (callback, err) {
                 if (err) res.status(401).send("Ошибка");
                 else res.send({token: generateJWT(callback)});
             })
