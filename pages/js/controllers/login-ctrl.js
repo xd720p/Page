@@ -28,6 +28,7 @@ myApp.controller('LoginController', [
 					});
 		};
 
+
 		$scope.signup = function() {
 			$auth.signup($scope.newUser)
 					.then(function(response) {

@@ -2,10 +2,13 @@
 
 myApp.controller('RootController', [
 	'$scope',
+	'$auth',
+	'$location',
+	'toastr',
 	'$rootScope',
 	'$http',
 	'$timeout',
-	function($scope, $rootScope, $http, $timeout) {
+	function($scope, $auth, $location, toastr, $rootScope, $http, $timeout) {
 
 		$scope.title = 'Teachers page';
 		$scope.faculty = false;
@@ -48,7 +51,20 @@ myApp.controller('RootController', [
 			open: function (index) {
 				this.opened = index;
 			}
-		}
+		};
+
+		$scope.isAuthenticated = function() {
+			return $auth.isAuthenticated();
+		};
+
+		$scope.logout = function () {
+			$auth.logout()
+				.then(function() {
+					toastr.info('You have been logged out');
+					$location.path('/login');
+				});
+		};
+
 }]);
 
 
