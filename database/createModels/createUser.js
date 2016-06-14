@@ -1,19 +1,25 @@
 var Sequelize = require('sequelize');
 var sequelize = require('./connect');
 var crypto = require('crypto');
+var jwt = require('jsonwebtoken');
+var config = require('../../config/config.json')
 
 var user = sequelize.define('user', {
-    name: {
+    userName: {
         type: Sequelize.STRING(90),
-        field: 'name', // Will result in an attribute that is firstName when user facing but first_name in the database
+        field: 'userName', // Will result in an attribute that is firstName when user facing but first_name in the database
         primaryKey: true
     },
+    FIO: {
+        type: Sequelize.STRING(90),
+        field: 'FIO', // Will result in an attribute that is firstName when user facing but first_name in the database
+    },
     hash: {
-        type: Sequelize.STRING(90)
+        type: Sequelize.STRING()
 
     },
     salt: {
-        type: Sequelize.STRING(90)
+        type: Sequelize.STRING()
 
     }
 },{
@@ -26,26 +32,53 @@ var user = sequelize.define('user', {
                 else callback(user, null);
             });
         }*/
-        
-        setPassword: function (password) {
-            this.salt = crypto.randomBytes(16).toString('hex');
+        createUser: function (user, FIO, password, callback) {
 
-            this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+           this.salt = crypto.randomBytes(16).toString('hex');
+           this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+
+            this.create({
+                userName: user,
+                FIO: FIO,
+                salt: this.salt,
+                hash: this.hash
+            }).catch(function (err) {
+                callback(null, err);
+            }).then(function (data) {
+               // this.generateJWT(user);
+                callback(data.dataValues, null);
+            })
+        },
+        checkPassword: function (user, password, callback) {
+            this.findById(user).then(function (data) {
+                if (!data) callback(null, "Пользователь не найден");
+                else {
+                    var hash = crypto.pbkdf2Sync(password, data.salt, 1000, 64).toString('hex');
+                    if (data.hash == hash) {
+                        callback(data.dataValues, null);
+                    } else callback(null, 'wrong password')
+                   // callback(data.hash == hash, null);
+                }
+            })
         }
     }
 });
 
 user.sync({force: false});
-
+/*
+user.createUser("doode dodes", "Иванов Иван Иванович","passwords", function (callback, err) {
+    if (err) console.log(err);
+    else console.log(callback);
+});*/
+/*
+user.checkPassword("DooDe Dodes", "passwords", function (callback, err) {
+    if (err) console.log(err);
+    else console.log(callback);
+});
+*/
 
 module.exports = user;
-/*
-user.checkPassword('Василий', 'Lol', function(user, err){
-    if (err) console.log(err);
-    else {
-        console.log(user);
-    }
-})*/
+
 
 
 

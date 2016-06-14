@@ -32,6 +32,12 @@ var norm = require('./database/createModels/createNorm');
 var normPass = require('./database/createModels/createNormPass');
 var student = require('./database/createModels/createStudent');
 var studentDate = require('./database/createModels/createStudentDate');
+var User = require('./database/createModels/createUser');
+var sate = require('satellizer');
+
+var jwt = require('express-jwt');
+
+
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -39,11 +45,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'pages')));
 
-// view engine setup
-// шаблончики подключение
-//app.engine('ejs', require('ejs-locals'));
+
+
 app.set('views', __dirname + '/pages');
-//app.set('view engine', 'jade');
+
 
 
 
@@ -51,23 +56,6 @@ app.set('views', __dirname + '/pages');
 http.createServer(app).listen(config.get('port'), function () {
     log.info('Express server listening on port ' + config.get('port'));
 });
-/*
- app.use(session({
- // resave: config.get('session:resave'),
- // saveUninitialized: config.get('session:resave'),
- secret: config.get('session:secret'),
- name: config.get('session:name'),
- cookie: config.get('session:cookie'),
- store: new SequelizeStore({
- db: sequelize,
- engine: "mysql"
- }),
- }));
-
- app.use(function (req, res, next) {
- req.session.numberOfVisits = req.session.numberOfVisits + 1 || 1;
- res.send("Visits: " +  req.session.numberOfVisits);
- });*/
 
 
 
@@ -75,6 +63,68 @@ app.get('/', function(req, res, next) {
     //res.sendFile('Development/Projects/web/OPHPprotver/pages/index');
     res.sendFile(path.join(__dirname, './pages', 'index.html'));
 });
+
+
+//authorization
+
+function generateJWT(user) {
+    var today = new Date();
+    var exp = new Date(today);
+    exp.setDate(today.getDate()+60);
+
+    var payload = {
+        sub: user.userName,
+        iat: exp.getDate(),
+        exp: parseInt(exp.getTime() / 1000)
+    }
+
+    return jwt.encode(payload, config.get('TOKEN_SECRET'));
+}
+
+app.post('/auth/signup', function (req, res, next) {
+    User.checkPassword(req.body.email, req.body.password, function (callback, err) {
+        if (err) {
+            User.createUser(req.body.email, req.body.FIO, req.body.password, function (callback, err) {
+                if (err) res.status(401).send("Ошибка");
+                else res.send({token: generateJWT(callback.userName)});
+            })
+        } else res.status(401). send('Такой пользователь уже есть');
+    })
+});
+
+app.post('/auth/login', function (req, res, next) {
+    User.checkPassword(req.body.email, req.body.password, function (callback, err) {
+        if (err) res.status(401).send('Неверный email или пароль');
+        else res.send({token: generateJWT(callback.userName)})
+    })
+});
+
+//authorization
+
+//checkToken
+
+function ensureAuthenticated(req, res, next) {
+    if (!req.header('Authorization')) {
+        return res.status(401).send({ message: 'Please make sure your request has an Authorization header' });
+    }
+    var token = req.header('Authorization').split(' ')[1];
+
+    var payload = null;
+    try {
+        payload = jwt.decode(token, config.get('TOKEN_SECRET'));
+    }
+    catch (err) {
+        return res.status(401).send({ message: err.message });
+    }
+
+    /*if (payload.exp <= exp) {
+        return res.status(401).send({ message: 'Token has expired' });
+    }*/
+    req.user = payload.sub;
+    next();
+}
+
+//checkToken
 
 //allForTeachers
 app.get('/teachers', function(req, res, next) {

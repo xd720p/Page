@@ -4,17 +4,7 @@
   "user": "root:",
   "password": "FALLofreach117",
   "db": "@localhost/ofp",
-  "session": {
-    "secret": "password",
-    "name": "sid",
-    "resave": false,
-   "saveUninitialized": false,
-    "cookie": {
-      "path": "/",
-      "httpOnly": true,
-      "maxAge": null
-    }
-  }
+  "TOKEN_SECRET": "SECRET"
 }
 
 
