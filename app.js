@@ -35,7 +35,7 @@ var studentDate = require('./database/createModels/createStudentDate');
 var User = require('./database/createModels/createUser');
 //var sate = require('satellizer');
 
-var jwt = require('express-jwt');
+var jwt = require('jwt-simple');
 
 
 
@@ -78,9 +78,9 @@ function generateJWT(user) {
         discipline: user.discipline,
         iat: exp.getDate(),
         exp: parseInt(exp.getTime() / 1000)
-    }
+    };
 
-    return jwt.encode(payload, config.get('TOKEN_SECRET'));
+    jwt.encode(payload, config.get('TOKEN_SECRET'));
 }
 
 app.post('/auth/signup', function (req, res, next) {

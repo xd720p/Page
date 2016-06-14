@@ -88,6 +88,7 @@ var studentDate = sequelize.define('studentDate', {
                                     student.getSource(data[i].dataValues.uniqID, function (source, err) {
                                         if (source.faculty == faculty && source.course == course) {
                                             dataval.unshift(data[i].dataValues.name);
+                                            callback(dataval, null);
                                         }
                                     })
                                 }
@@ -95,7 +96,7 @@ var studentDate = sequelize.define('studentDate', {
                         })
                        // dataval.unshift(data[i].dataValues)
                     });
-                callback(dataval, null);
+               // callback(dataval, null);
                 }
             })
         }
