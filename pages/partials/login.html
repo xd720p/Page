@@ -1,0 +1,75 @@
+    <div class="login">
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
+      <div class="login_wrapper">
+        <div class="form login_form" ng-hide="registryForm">
+          <section class="login_content">
+            <form novalidate>
+              <h1>Войти в систему</h1>
+              <div>
+                <input type="text" class="form-control" placeholder="e-mail адрес" required="" />
+              </div>
+              <div>
+                <input type="password" class="form-control" placeholder="Пароль" required="" />
+              </div>
+              <div>
+                <a class="btn btn-default submit">Войти</a>
+                <!--<a class="reset_pass">Lost your password?</a>-->
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">Еще не регистрировались в системе?
+                  <a class="to_register" ng-click="registryForm = true"> Создать аккаунт </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-futbol-o"></i> АИС кафедры физвоспитания</h1>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div id="register" class="form registration_form" ng-show="registryForm">
+          <section class="login_content">
+            <form novalidate>
+              <h1>Создать аккаунт</h1>
+              <div>
+                <input type="text" class="form-control" placeholder="ФИО" required="" />
+              </div>
+              <div>
+                <input type="email" class="form-control" placeholder="Email" required="" />
+              </div>
+              <div>
+                <input type="password" class="form-control" placeholder="Пароль" required="" />
+                <input type="password" class="form-control" placeholder="Подтвердите пароль" required="" />
+              </div>
+              <div>
+                <a class="btn btn-default submit" href="index.html">Зарегистрироваться</a>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">Уже зарегистрированы?
+                  <a class="to_register" ng-click="registryForm = false"> Войти </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-futbol-o"></i> АИС кафедры физвоспитания</h1>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
