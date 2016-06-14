@@ -83,11 +83,11 @@ var user = sequelize.define('user', {
 });
 
 user.sync({force: false});
-
+/*
 user.createUser("doode dodes", "Иванов Иван Иванович","passwords", function (callback, err) {
     if (err) console.log(err);
     else console.log(callback);
-});
+});*/
 /*
 user.checkPassword("DooDe Dodes", "passwords", function (callback, err) {
     if (err) console.log(err);
