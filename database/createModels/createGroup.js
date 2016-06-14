@@ -64,12 +64,25 @@ var group = sequelize.define('group', {
                     else callback(null, "Ошибочка");
                 })
             })
+        },
+        getGroup: function (groupNumber, callback) {
+            this.findById(groupNumber).then(function (data) {
+                if (!data) callback(null, "Нет такой группы");
+                else {
+                    callback(data.dataValues, null)
+                }
+            })
         }
 
     }
 });
 
 group.sync({force: false});
+/*
+group.getSource("2304", function (group, err) {
+    if (err) console.log(err);
+    else console.log(group);
+})*/
 
 /*
  var p = {groupNumber: "2376",

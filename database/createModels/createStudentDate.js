@@ -1,5 +1,6 @@
 var Sequelize = require('sequelize');
 var sequelize = require('./connect');
+var async = require('async');
 
 var studentDate = sequelize.define('studentDate', {
     uniqID: {
@@ -35,7 +36,7 @@ var studentDate = sequelize.define('studentDate', {
                 data.forEach(function (item, i, data) {
                     dataval.unshift(data[i].dataValues)
                 });
-                if (data == null) callback(null, "USERNAME OR PASSWORD NOT MATCH");
+                if (data == null) callback(null, "No Table");
                 else callback(dataval, null);
             })
         },
@@ -72,10 +73,40 @@ var studentDate = sequelize.define('studentDate', {
                     else callback(null, "Ошибочка");
                 })
             })
+        },
+        sendStudentTable: function (discipline, faculty, course, firstDate, lastDate, callback) {
+            this.findAll().then(function (data) {
+                if (!data) callback(null, "Таблица пустая");
+                else {
+                    var dataval = [];
+                    data.forEach(function (item, i, data) {
+                        var student = require('./createStudent');
+                        student.getDiscipline(data[i].dataValues.uniqID, function (disc, err) {
+                            if (err) callback(null, "ошибка в поиске дисциплины");
+                            else {
+                                if (discipline == disc) {
+                                    student.getSource(data[i].dataValues.uniqID, function (source, err) {
+                                        if (source.faculty == faculty && source.course == course) {
+                                            dataval.unshift(data[i].dataValues.name);
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                       // dataval.unshift(data[i].dataValues)
+                    });
+                callback(dataval, null);
+                }
+            })
         }
     }
 });
 
 studentDate.sync({force: false});
+
+/*studentDate.sendStudentTable("Атлетическая подготовка", "ФКТИ", 2, null, null, function (students, err) {
+    if (err) console.log(err);
+    else console.log(students);
+})*/
 module.exports = studentDate;
 

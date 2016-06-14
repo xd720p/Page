@@ -81,6 +81,35 @@ var student = sequelize.define('student', {
                     else callback(null, "Ошибочка");
                 })
             })
+        },
+        getSource: function (uniqID, callback) {
+            this.findById(uniqID).then(function (student) {
+                    var group = require('./createGroup');
+                    group.getGroup(student.groupNumber, function (group, err) {
+                        var source = {faculty: group.faculty, course: group.course}
+                        callback(source, null);
+                    })
+            }).catch(function (err) {
+                callback(null, err);
+            })
+        },
+
+        getDiscipline: function (uniqID, callback) {
+            var teacher = require('./createTeacher');
+
+            this.findById(uniqID).catch().then(function (student, err) {
+                if (err) callback(null, err);
+                else {
+                    teacher.getDiscipline(student.teacherName, function (disc, err) {
+                        if (err) callback(null, err);
+                        else {
+                            callback(disc, null);
+                        }
+                    })
+                }
+            })
+
+
         }
 
     }
@@ -89,8 +118,17 @@ var student = sequelize.define('student', {
 student.sync({force: false});
 
 module.exports = student;
+/*
+student.getDiscipline("2365", function (disc, err) {
+    if (err) console.log(err);
+    else console.log(disc);
+})*/
 
-
+/*
+student.getSource("2365", function (source, err) {
+    if (err) console.log(err);
+    else console.log(source);
+})*/
 /*
  var l = {uniqID: 230506,
  name: "Иван",
