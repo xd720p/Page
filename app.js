@@ -74,6 +74,7 @@ function generateJWT(user) {
 
     var payload = {
         sub: user.userName,
+        discipline: user.discipline,
         iat: exp.getDate(),
         exp: parseInt(exp.getTime() / 1000)
     }
@@ -86,7 +87,7 @@ app.post('/auth/signup', function (req, res, next) {
         if (err) {
             User.createUser(req.body.email, req.body.FIO, req.body.password, function (callback, err) {
                 if (err) res.status(401).send("Ошибка");
-                else res.send({token: generateJWT(callback.userName)});
+                else res.send({token: generateJWT(callback)});
             })
         } else res.status(401). send('Такой пользователь уже есть');
     })
@@ -95,7 +96,7 @@ app.post('/auth/signup', function (req, res, next) {
 app.post('/auth/login', function (req, res, next) {
     User.checkPassword(req.body.email, req.body.password, function (callback, err) {
         if (err) res.status(401).send('Неверный email или пароль');
-        else res.send({token: generateJWT(callback.userName)})
+        else res.send({token: generateJWT(callback)})
     })
 });
 

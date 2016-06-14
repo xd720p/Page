@@ -81,6 +81,14 @@ var teacher = sequelize.define('teacher', {
                     else callback(null, "Ошибочка");
                 })
             })
+        },
+        getDiscipline: function (teacherName, callback) {
+            this.findById(teacherName).then(function (data) {
+                if (!data) callback(null, 'Нет такого препода');
+                else {
+                    callback(data.dataValues.discipline, null);
+                }
+            })
         }
     }
 });

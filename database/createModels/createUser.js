@@ -13,6 +13,12 @@ var user = sequelize.define('user', {
     FIO: {
         type: Sequelize.STRING(90),
         field: 'FIO', // Will result in an attribute that is firstName when user facing but first_name in the database
+        allowNull: false
+    },
+    discipline: {
+        type: Sequelize.STRING(50),
+        field: 'disciplineName', // Will result in an attribute that is firstName when user facing but first_name in the database
+        allowNull: false
     },
     hash: {
         type: Sequelize.STRING()
@@ -37,17 +43,29 @@ var user = sequelize.define('user', {
            this.salt = crypto.randomBytes(16).toString('hex');
            this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
 
-            this.create({
-                userName: user,
-                FIO: FIO,
-                salt: this.salt,
-                hash: this.hash
-            }).catch(function (err) {
-                callback(null, err);
-            }).then(function (data) {
-               // this.generateJWT(user);
-                callback(data.dataValues, null);
-            })
+            var teacher = require('./createTeacher');
+            var disciplineName = null;
+            var userModel = this;
+             teacher.getDiscipline(FIO, function (disc, err) {
+                if (err) callback(null, "Error");
+                else {
+                    userModel.create({
+                        userName: user,
+                        discipline: disc,
+                        FIO: FIO,
+                        salt: userModel.salt,
+                        hash: userModel.hash
+                    }).then(function (data) {
+                        // this.generateJWT(user);
+                        callback(data.dataValues, null);
+                    }).catch(function (err) {
+                        callback(null, err);
+                    })
+                }
+                 
+            });
+
+
         },
         checkPassword: function (user, password, callback) {
             this.findById(user).then(function (data) {
@@ -65,11 +83,11 @@ var user = sequelize.define('user', {
 });
 
 user.sync({force: false});
-/*
+
 user.createUser("doode dodes", "Иванов Иван Иванович","passwords", function (callback, err) {
     if (err) console.log(err);
     else console.log(callback);
-});*/
+});
 /*
 user.checkPassword("DooDe Dodes", "passwords", function (callback, err) {
     if (err) console.log(err);
