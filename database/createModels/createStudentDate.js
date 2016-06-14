@@ -75,28 +75,32 @@ var studentDate = sequelize.define('studentDate', {
             })
         },
         sendStudentTable: function (discipline, faculty, course, firstDate, lastDate, callback) {
+            var dataval = [];
+            var student = require('./createStudent');
             this.findAll().then(function (data) {
                 if (!data) callback(null, "Таблица пустая");
                 else {
-                    var dataval = [];
+
                     data.forEach(function (item, i, data) {
-                        var student = require('./createStudent');
+
                         student.getDiscipline(data[i].dataValues.uniqID, function (disc, err) {
                             if (err) callback(null, "ошибка в поиске дисциплины");
                             else {
                                 if (discipline == disc) {
                                     student.getSource(data[i].dataValues.uniqID, function (source, err) {
-                                        if (source.faculty == faculty && source.course == course) {
-                                            dataval.unshift(data[i].dataValues.name);
-                                            callback(dataval, null);
+                                        if (err) callback (null, "ошибка в чём-то");
+                                        else {
+                                            if (source.faculty == faculty && source.course == course) {
+                                               dataval.push(data[i].dataValues.name);
+                                                callback(data[i].dataValues.name, null);
+                                            }
                                         }
                                     })
-                                }
+                                   }
                             }
                         })
-                       // dataval.unshift(data[i].dataValues)
                     });
-               // callback(dataval, null);
+               //
                 }
             })
         }
@@ -105,9 +109,9 @@ var studentDate = sequelize.define('studentDate', {
 
 studentDate.sync({force: false});
 
-/*studentDate.sendStudentTable("Атлетическая подготовка", "ФКТИ", 2, null, null, function (students, err) {
+studentDate.sendStudentTable("Атлетическая подготовка", "ФКТИ", 2, null, null, function (students, err) {
     if (err) console.log(err);
     else console.log(students);
-})*/
+})
 module.exports = studentDate;
 

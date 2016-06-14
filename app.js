@@ -80,7 +80,7 @@ function generateJWT(user) {
         exp: parseInt(exp.getTime() / 1000)
     };
 
-    jwt.encode(payload, config.get('TOKEN_SECRET'));
+    return jwt.encode(payload, config.get('TOKEN_SECRET'));
 }
 
 app.post('/auth/signup', function (req, res, next) {
