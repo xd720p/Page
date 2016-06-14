@@ -5,16 +5,17 @@
       <div class="login_wrapper">
         <div class="form login_form" ng-hide="registryForm">
           <section class="login_content">
-            <form novalidate>
+
+            <form method="post" name="loginForm" ng-submit="login()" novalidate>
               <h1>Войти в систему</h1>
               <div>
-                <input type="text" class="form-control" placeholder="e-mail адрес" required="" />
+                <input ng-model="user.email" type="text" class="form-control" placeholder="e-mail адрес" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Пароль" required="" />
+                <input ng-model="user.password" type="password" class="form-control" placeholder="Пароль" required="" />
               </div>
               <div>
-                <a class="btn btn-default submit">Войти</a>
+                <input class="btn btn-default submit" type="submit" value="Войти" ng-disabled="loginForm.$invalid">
                 <!--<a class="reset_pass">Lost your password?</a>-->
               </div>
 
@@ -33,12 +34,13 @@
                 </div>
               </div>
             </form>
+
           </section>
         </div>
 
         <div id="register" class="form registration_form" ng-show="registryForm">
           <section class="login_content">
-            <form novalidate>
+            <form method="post" ng-submit="signup()" name="signupForm" novalidate>
               <h1>Создать аккаунт</h1>
               <div>
                 <input type="text" class="form-control" placeholder="ФИО" required="" />

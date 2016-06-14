@@ -17,11 +17,12 @@ var myApp = angular.module('myApp', [
 	'underscore',
 	'ui.bootstrap',
 	'angular-confirm',
-	'satellizer'
+	'satellizer',
+	'toastr'
 ]);
 
-myApp.config(['$stateProvider', '$urlRouterProvider',
-	function($stateProvider, $urlRouterProvider) {
+myApp.config(['$stateProvider', '$urlRouterProvider', '$authProvider',
+	function($stateProvider, $urlRouterProvider, $authProvider) {
 		$urlRouterProvider.otherwise('/teachers');
 
 		$stateProvider
@@ -36,50 +37,96 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
 				.state('root.teachers', {
 					url: '/teachers',
 					controller: 'TeachersController',
-					templateUrl: 'partials/teachers.html'
+					templateUrl: 'partials/teachers.html',
+					resolve: {
+						loginRequired: loginRequired
+					}
 				})
 
 				.state('root.discipline', {
 					url: '/discipline',
 					templateUrl: 'partials/discipline.html',
-					controller: 'DisciplinesController'
+					controller: 'DisciplinesController',
+					resolve: {
+						loginRequired: loginRequired
+					}
 				})
 
 				.state('root.group', {
 					url: '/group',
 					controller: 'GroupsController',
-					templateUrl: 'partials/group.html'
+					templateUrl: 'partials/group.html',
+					resolve: {
+						loginRequired: loginRequired
+					}
 				})
 
 				.state('root.norm', {
 					url: '/norm',
 					controller: 'NormsController',
-					templateUrl: 'partials/norm.html'
+					templateUrl: 'partials/norm.html',
+					resolve: {
+						loginRequired: loginRequired
+					}
 				})
 
 				.state('root.normpass', {
 					url: '/normpass',
 					controller: 'NormPassController',
-					templateUrl: 'partials/normpass.html'
+					templateUrl: 'partials/normpass.html',
+					resolve: {
+						loginRequired: loginRequired
+					}
 				})
 
 				.state('root.students', {
 					url: '/students',
 					controller: 'StudentsController',
-					templateUrl: 'partials/students.html'
+					templateUrl: 'partials/students.html',
+					resolve: {
+						loginRequired: loginRequired
+					}
 				})
 
 				.state('root.studentdate', {
 					url: '/studentdate',
 					controller: 'StudentDateController',
-					templateUrl: 'partials/studentdate.html'
+					templateUrl: 'partials/studentdate.html',
+					resolve: {
+						loginRequired: loginRequired
+					}
 				})
 
 			.state('login', {
 				url: '/login',
 				controller: 'LoginController',
-				templateUrl: 'partials/login.html'
+				templateUrl: 'partials/login.html',
+				resolve: {
+					skipIfLoggedIn: skipIfLoggedIn
+				}
 			});
+
+		function skipIfLoggedIn($q, $auth) {
+			var deferred = $q.defer();
+			if ($auth.isAuthenticated()) {
+				deferred.reject();
+			} else {
+				deferred.resolve();
+			}
+			return deferred.promise;
+		}
+
+		function loginRequired($q, $location, $auth) {
+			var deferred = $q.defer();
+			if ($auth.isAuthenticated()) {
+				deferred.resolve();
+			} else {
+				$location.path('/login');
+				/*$state.go('login');*/
+
+			}
+			return deferred.promise;
+		}
 	}]);
 
 
@@ -98,7 +145,6 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
 
 		if (!Boolean($rootScope.user) && toState.name !== 'login') {
 			event.preventDefault();
-			$state.go('login', {callbackUrl: encodeURIComponent('${webapp.contextPath}/' +  $state.href(toState.name))});
 		}
 	});
 
