@@ -1,6 +1,7 @@
 var Sequelize = require('sequelize');
 var sequelize = require('./connect');
 var async = require('async');
+var moment = require('moment');
 
 var studentDate = sequelize.define('studentDate', {
     uniqID: {
@@ -12,6 +13,12 @@ var studentDate = sequelize.define('studentDate', {
     name: {
         type: Sequelize.STRING(120),
         field: 'name', // Will result in an attribute that is firstName when user facing but first_name in the database
+        allowNull: false
+    },
+    discipline: {
+        type: Sequelize.STRING(50),
+        field: 'discipline', // Will result in an attribute that is firstName when user facing but first_name in the database
+        primaryKey: true,
         allowNull: false
     },
     date: {
@@ -41,19 +48,28 @@ var studentDate = sequelize.define('studentDate', {
             })
         },
         insertRow: function (data, callback) {
-            this.create({
-                uniqID: data.uniqID,
-                name: data.name,
-                date: data.date,
-                visit: data.visit
-            }).then(function (data) {
-                if (data)callback(data.dataValues, null);
-            }).catch(function (err) {
-                if (err.message.indexOf("key constraint fails") != -1)
-                    callback(null, "Нельзя добавить стулента несуществующей группы или с несуществующим преподавателем");
-                if (err.message.indexOf("Validation error") != -1)
-                    callback(null, "Такой студент уже есть");
-            })
+                var student = require('./createStudent');
+                var mod = this;
+                student.getDiscipline(data.uniqID, function (disc, err) {
+                    if (err) callback(null, err);
+                    else {
+                        mod.create({
+                            uniqID: data.uniqID,
+                            name: data.name,
+                            discipline: disc,
+                            date: data.date,
+                            visit: data.visit
+                        }).then(function (data) {
+                            if (data)callback(data.dataValues, null);
+                        }).catch(function (err) {
+                            if (err.message.indexOf("key constraint fails") != -1)
+                                callback(null, "Нельзя добавить стулента несуществующей группы или с несуществующим преподавателем");
+                            if (err.message.indexOf("Validation error") != -1)
+                                callback(null, "Такой студент уже есть");
+                        })
+
+                    }
+                })
         },
         deleteRow: function (row, callback) {
             this.findOne({uniqID: row.uniqID, name: row.name, date: row.date}).then(function (data) {
@@ -74,76 +90,85 @@ var studentDate = sequelize.define('studentDate', {
                 })
             })
         },
-        sendStudentTable: function (discipline, faculty, course, firstDate, lastDate, callback) {
-            var dataval = [];
+        sendTable: function (discipline, faculty, course, firstDate, lastDate, callback) {
             var student = require('./createStudent');
+            var dataval = [];
             this.findAll().then(function (data) {
                 if (!data) {
                     callback(null, "Таблица пустая");
                 } else {
+                    var year = 2014 % 10;
+                    if (moment().quarter() < 3) {
+                        year = year - course;
+                    } else {
+                        year = year - course + 1;
+                    }
+                    year = year * 10 + faculty;
 
-                    var r = data.filter(function (item) {
-                        student.getDiscipline(item.dataValues.uniqID, function (disc, err) {
-
-                            if (err){
-                                callback(null, "ошибка в поиске дисциплины");
-                            } else {
-
-                                if (discipline == disc) {
-
-                                    student.getSource(item.dataValues.uniqID, function (source, err) {
-
-                                        if (err){
-                                            callback (null, "ошибка в чём-то");
-                                        } else {
-
-                                            return (source.faculty == faculty && source.course == course);
-
-                                        }
-                                    })
+                    var temp = null;
+                    var tempVal = new Object();
+                    var first = null;
+                    data.forEach(function(item, i, data) {
+                        var source = ((item.uniqID-item.uniqID%10000)/10000);
+                        if (year == source) {
+                            if (item.discipline == discipline) {
+                                if (temp) {
+                                    if (temp == item.dataValues.name) {
+                                        if (firstDate <= item.dataValues.date <= lastDate)
+                                        tempVal[item.dataValues.date] = item.dataValues.visit;
+                                    } else {
+                                        dataval.push(tempVal);
+                                        tempVal = new Object();
+                                        temp = item.dataValues.name
+                                        tempVal["name"] = item.dataValues.name;
+                                        if (firstDate <= item.dataValues.date <= lastDate)
+                                        tempVal[item.dataValues.date] = item.dataValues.visit;
+                                    }
                                 }
-                            }
-                        });
-                    });
-                    callback(r, null);
 
-                     /*data.forEach(function (item, i, data) {
+                                if (!first) {
+                                    tempVal["name"] = item.dataValues.name;
+                                    if (firstDate <= item.dataValues.date <= lastDate)
+                                    tempVal[item.dataValues.date] = item.dataValues.visit;
 
-                        student.getDiscipline(data[i].dataValues.uniqID, function (disc, err) {
-
-                            if (err){
-                                callback(null, "ошибка в поиске дисциплины");
-                            } else {
-
-                                if (discipline == disc) {
-
-                                    student.getSource(data[i].dataValues.uniqID, function (source, err) {
-
-                                        if (err){
-                                             callback (null, "ошибка в чём-то");
-                                        } else {
-
-                                            if (source.faculty == faculty && source.course == course) {
-                                                 dataval.push(data[i].dataValues.name);
-
-                                            }
-                                        }
-                                    })
+                                    first = true;
+                                    temp = item.dataValues.name;
                                 }
+
+
                             }
-                        });
-                     });*/
+                        }
+                    })
+                    callback(dataval, null);
+
+
                 }
-            });
+
+            })
         }
     }
 });
 
 studentDate.sync({force: false});
 
-studentDate.sendStudentTable("Атлетическая подготовка", "ФКТИ", 2, null, null, function (students, err) {
+var firstDate = new Date(2015, 06, 21);
+var lastDate = new Date(2015, 06, 20);
+
+studentDate.sendTable("Атлетическая подготовка", 3, 2, firstDate, lastDate, function (students, err) {
     if (err) console.log(err);
-    else console.log(students);
+    else {
+       console.log(students);
+    }
 })
+/*
+var p = { uniqID: 238265,
+    name: "Бендер Бендер",
+    date: "2016.06.15",
+    visit: "был"}
+studentDate.insertRow(p, function (row, err) {
+    if (err) console.log(err);
+    else console.log(row);
+})*/
 module.exports = studentDate;
+
 

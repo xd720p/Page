@@ -27,6 +27,12 @@ var student = sequelize.define('student', {
         type: Sequelize.STRING(90),
         field: 'teacherName', // Will result in an attribute that is firstName when user facing but first_name in the database
         allowNull: true
+    },
+    discipline: {
+        type: Sequelize.STRING(50),
+        field: 'discipline', // Will result in an attribute that is firstName when user facing but first_name in the database
+        primaryKey: true,
+        allowNull: false
     }
 
 }, {
@@ -45,20 +51,29 @@ var student = sequelize.define('student', {
             })
         },
         insertRow: function (data, callback) {
-            this.create({
-                uniqID: data.uniqID,
-                name: data.name,
-                medAccess: data.medAccess,
-                groupNumber: data.groupNumber,
-                teacherName: data.teacherName
-            }).then(function (data) {
-                if (data)callback(data.dataValues, null);
-            }).catch(function (err) {
-                if (err.message.indexOf("key constraint fails") != -1)
-                    callback(null, "Нельзя добавить стулента несуществующей группы или с несуществующим преподавателем");
-                if (err.message.indexOf("Validation error") != -1)
-                    callback(null, "Такой студент уже есть");
-            })
+            var teacher = require('./createTeacher');
+            var mod = this;
+                    teacher.getDiscipline(data.teacherName, function (disc, err) {
+                        if (err) callback(null, err);
+                        else {
+                            mod.create({
+                                uniqID: data.uniqID,
+                                name: data.name,
+                                medAccess: data.medAccess,
+                                groupNumber: data.groupNumber,
+                                teacherName: data.teacherName,
+                                discipline: disc
+                            }).then(function (data) {
+                                if (data)callback(data.dataValues, null);
+                            }).catch(function (err) {
+                                if (err.message.indexOf("key constraint fails") != -1)
+                                    callback(null, "Нельзя добавить стулента несуществующей группы или с несуществующим преподавателем");
+                                if (err.message.indexOf("Validation error") != -1)
+                                    callback(null, "Такой студент уже есть");
+                            })
+
+                        }
+                    })
         },
         deleteRow: function (row, callback) {
             this.findById(row.uniqID).then(function (data) {
