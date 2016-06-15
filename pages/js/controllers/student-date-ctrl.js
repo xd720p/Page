@@ -268,8 +268,8 @@ myApp.controller('StudentDateController', [
 						}
 					} else {
 						col = {
-							field: headers[i], //moment(i).format('DD MM'),
-							title: headers[i],
+							field:headers[i], //moment(i).format('DD MM'),
+							title: moment(headers[i]).format('DD/MM'),
 							show: true
 						}
 					}
