@@ -144,3 +144,38 @@ input.has-error {
 	-moz-animation: .7s 1 shake linear;
 	-webkit-animation: 0.7s 1 shake linear;
 }
+
+.file-upload {
+	float: right;
+	width: 500px;
+}
+
+.file-info {
+	display: inline-block;
+}
+
+.thumb {
+	width: 24px;
+	height: 24px;
+	float: none;
+	position: relative;
+	top: 7px;
+}
+
+form .progress {
+	line-height: 15px;
+}
+
+.progress {
+	display: inline-block;
+	width: 100px;
+	border: 3px groove #CCC;
+	vertical-align: middle;
+	margin: 0;
+	margin-left: 10px;
+}
+
+.progress div {
+	font-size: smaller;
+	width: 0;
+}

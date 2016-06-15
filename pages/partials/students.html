@@ -14,6 +14,19 @@
 		<div class="x_panel">
 			<div class="x_title">
 					<h2>Список студентов</h2>
+
+					<div class="file-upload" style="float: right">
+						<button type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="*" ngf-max-height="1000"
+										ngf-max-size="5MB">
+							Выбрать файл</button>
+						<div class="file-info"> Файл {{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+							<span class="progress" ng-show="f.progress >= 0">
+								<div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+							</span>
+						</div>
+						{{errorMsg}}
+					</div>
+
 					<div class="clearfix"></div>
 			</div>
 			<div class="x_content">

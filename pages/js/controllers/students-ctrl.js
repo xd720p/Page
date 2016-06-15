@@ -8,7 +8,8 @@ myApp.controller('StudentsController', [
 	'$http',
 	'$timeout',
 	'NgTableParams',
-	function($scope, $filter, StudentsService, GroupService, TeachersService, $rootScope, $http, $timeout, NgTableParams) {
+	'Upload',
+	function($scope, $filter, StudentsService, GroupService, TeachersService, $rootScope, $http, $timeout, NgTableParams, Upload) {
 
 		$scope.title = 'Студенты';
 		$scope.students = [];
@@ -138,4 +139,32 @@ myApp.controller('StudentsController', [
 				console.log('Ошибка', err);
 			});
 		};
+
+
+		//
+		// UPLOAD FILE
+		//
+
+		$scope.uploadFiles = function(file, errFiles) {
+			$scope.f = file;
+			$scope.errFile = errFiles && errFiles[0];
+			if (file) {
+				file.upload = Upload.upload({
+					url: '/students/upload',
+					data: {file: file}
+				});
+
+				file.upload.then(function (response) {
+					$timeout(function () {
+						file.result = response.data;
+					});
+				}, function (response) {
+					if (response.status > 0)
+						$scope.errorMsg = response.status + ': ' + response.data;
+				}, function (evt) {
+					file.progress = Math.min(100, parseInt(100.0 *
+							evt.loaded / evt.total));
+				});
+			}
+		}
 }]);
