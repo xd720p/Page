@@ -2,6 +2,8 @@ var Sequelize = require('sequelize');
 var sequelize = require('./connect');
 var async = require('async');
 var moment = require('moment');
+//var time = require('moment-timezone');
+
 
 var studentDate = sequelize.define('studentDate', {
     uniqID: {
@@ -91,19 +93,20 @@ var studentDate = sequelize.define('studentDate', {
             })
         },
         sendTable: function (discipline, faculty, course, firstDate, lastDate, callback) {
-            var student = require('./createStudent');
+            //var student = require('./createStudent');
             var dataval = [];
             this.findAll().then(function (data) {
                 if (!data) {
                     callback(null, "Таблица пустая");
                 } else {
-                    var year = 2014 % 10;
+                    var date = new Date();
+                    var year = date.getFullYear() % 10;
                     if (moment().quarter() < 3) {
                         year = year - course;
                     } else {
                         year = year - course + 1;
                     }
-                    year = year * 10 + faculty;
+                    year = year + faculty;
 
                     var temp = null;
                     var tempVal = new Object();
@@ -112,16 +115,19 @@ var studentDate = sequelize.define('studentDate', {
                         var source = ((item.uniqID-item.uniqID%10000)/10000);
                         if (year == source) {
                             if (item.discipline == discipline) {
+
+                                var momDate = moment.parseZone(item.dataValues.date).utc().format();
+
                                 if (temp) {
                                     if (temp == item.dataValues.name) {
-                                        if (moment(item.dataValues.date).isSameOrAfter(firstDate) && moment(item.dataValues.date).isSameOrBefore(lastDate))
+                                        if (moment(momDate).isSameOrAfter(firstDate) && moment(momDate).isSameOrBefore(lastDate))
                                         tempVal[item.dataValues.date] = item.dataValues.visit;
                                     } else {
                                         if (tempVal["name"])
                                             dataval.push(tempVal);
                                         tempVal = new Object();
                                         temp = item.dataValues.name
-                                        if (moment(item.dataValues.date).isSameOrAfter(firstDate) && moment(item.dataValues.date).isSameOrBefore(lastDate)) {
+                                        if (moment(momDate).isSameOrAfter(firstDate) && moment(momDate).isSameOrBefore(lastDate)) {
                                             tempVal["name"] = item.dataValues.name;
                                             tempVal[item.dataValues.date] = item.dataValues.visit;
                                         }
@@ -130,7 +136,7 @@ var studentDate = sequelize.define('studentDate', {
                                 }
 
                                 if (!first) {
-                                    if (moment(item.dataValues.date).isSameOrAfter(firstDate) && moment(item.dataValues.date).isSameOrBefore(lastDate)) {
+                                    if (moment(momDate).isSameOrAfter(firstDate) && moment(momDate).isSameOrBefore(lastDate)) {
                                         tempVal["name"] = item.dataValues.name;
                                         tempVal[item.dataValues.date] = item.dataValues.visit;
                                         first = true;

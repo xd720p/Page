@@ -315,7 +315,7 @@ app.put('/students/update', function(req, res, next) {
 //allForStudentDate
 app.get('/studentdate', function(req, res, next) {
     //res.sendFile('Development/Projects/web/OPHPprotver/pages/index');
-    studentDate.sendTable(discipline, faculty, course, firstDate, lastDate, function (data, err) {
+    studentDate.sendTable(req.query.discipline, req.query.faculty, req.query.course, req.query.firstDate, req.query.lastDate, function (data, err) {
         if (err) res.status(500).send(err);
         else res.send(data);
     })

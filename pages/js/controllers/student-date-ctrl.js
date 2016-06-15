@@ -238,7 +238,7 @@ myApp.controller('StudentDateController', [
 			$scope.attendance.lastDate = $scope.datePicker.date.endDate;
 			$scope.attendance.faculty = $scope.chosenFaculty.value.number;
 
-			StudentDateService.history($scope.attendance).promise.then(function (resp) {
+			StudentDateService.history($scope.attendance).$promise.then(function (resp) {
 				$scope.attendanceHistory = resp;
 
 				var headers = _.keys($scope.attendanceHistory[0]);
