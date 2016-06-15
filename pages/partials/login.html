@@ -43,17 +43,29 @@
 
             <form method="post" ng-submit="signup()" name="signupForm" novalidate>
               <h1>Создать аккаунт</h1>
-              <div>
-                <input ng-model="newUser.fio" type="text" class="form-control" placeholder="ФИО" required="" />
+              <div ng-class="{ 'bad' : signupForm.name.$invalid && signupForm.name.$dirty }">
+                <input ng-model="newUser.fio" type="text" class="form-control"
+                       placeholder="ФИО" name="name"
+                       required />
               </div>
-              <div>
-                <input ng-model="newUser.email" type="email" class="form-control" placeholder="Email" required="" />
+
+              <div ng-class="{ 'bad' : signupForm.email.$invalid && signupForm.email.$dirty }">
+                <input ng-model="newUser.email" type="email" class="form-control"
+                       placeholder="Email" name="email"
+                       required />
               </div>
-              <div>
-                <input ng-model="newUser.password" type="password" class="form-control" placeholder="Пароль"
-                       required="" />
-                <input type="password" class="form-control" placeholder="Подтвердите пароль" required="" />
+
+              <div ng-class="{ 'bad' : signupForm.password.$invalid && signupForm.password.$dirty }">
+                <input ng-model="newUser.password" type="password" class="form-control"
+                       placeholder="Пароль" name="password"
+                       required/>
               </div>
+              <div ng-class="{ 'bad' : signupForm.confirmPassword.$invalid && signupForm.confirmPassword.$dirty }">
+                <input password-match="newUser.password" type="password" class="form-control"
+                       name="confirmPassword" placeholder="Подтвердите пароль" ng-model="confirmPassword"
+                       required />
+              </div>
+
               <div>
                 <input class="btn btn-default submit" type="submit" value="Зарегистрироваться">
               </div>
