@@ -222,7 +222,7 @@ myApp.factory('StudentDateService', ['$resource',
 			},
 
 			query: {
-				url: path + '/',
+				url: path + '/get',
 				method: 'GET',
 				isArray: true,
 				responseType: 'json'
