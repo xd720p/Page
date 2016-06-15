@@ -34,12 +34,12 @@
 							 class="table table-bordered table-hover table-condensed editable-table my-table"
 							 ng-form="tableForm" disable-filter="isAdding">
 					<colgroup>
-						<col width="13%" />
+						<col width="11%" />
 						<col width="25%" />
-						<col width="12%" />
-						<col width="12%" />
+						<col width="18%" />
+						<col width="10%" />
 						<col width="25%" />
-						<col width="13%" />
+						<col width="11%" />
 					</colgroup>
 
 					<tr ng-repeat="row in $data" ng-form="rowForm">
@@ -65,7 +65,7 @@
 						</td>
 
 						<td data-title="'Медицинский допуск'" sortable="'medAccess'" filter="{medAccess: 'text'}"
-								ng-class="medAccess.$dirty ? 'bg-warning' : ''"
+								ng-class="row.medAccess === 'Нет' ? 'bg-warning' : ''"
 								ng-form="medAccess">
 							<span class="editable-text" ng-hide="row.isEditing">{{row.medAccess}}</span>
 							<div class="controls" ng-show="row.isEditing" ng-class="medAccess.$invalid && medAccess.$dirty ? 'has-error' : ''">
