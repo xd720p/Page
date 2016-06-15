@@ -179,12 +179,12 @@ var student = sequelize.define('student', {
 
 student.sync({force: false});
 
-student.sendCreateTable("Атлетическая подготовка", 3, 4,  function (students, err){
+/*student.sendCreateTable("Атлетическая подготовка", 3, 4,  function (students, err){
     if (err) console.log(err);
     else {
         console.log(students);
     }
-})
+})*/
 
 module.exports = student;
 /*

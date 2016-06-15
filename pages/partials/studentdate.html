@@ -104,15 +104,17 @@
 								 ng-click="attendance.course = null;"></i>
 						</div>
 
+
 						<div class="col-xs-3">
-							<input date-range-picker ng-model="singleDatePicker.date" options="singleDatePicker.options" type="text"
-										 class="form-control"
-										 placeholder="Дата" required>
-						</div>
-						<div class="col-xs-3">
-							<input type="submit" class="btn btn-success" value="Запросить" ng-disabled="attendanceForm.$invalid">
+							<input type="submit" class="btn btn-success" value="Запросить" ng-disabled="setAttendanceForm.$invalid">
 						</div>
 					</form>
+				</div>
+
+				<div class="col-xs-3">
+					<input date-range-picker ng-model="singleDatePicker.date" options="singleDatePicker.options" type="text"
+								 class="form-control"
+								 placeholder="Дата" required>
 				</div>
 
 				<table ng-table="tableParams" class="table table-condensed table-bordered table-striped">

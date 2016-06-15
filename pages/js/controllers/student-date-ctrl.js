@@ -139,9 +139,7 @@ myApp.controller('StudentDateController', [
 		$scope.getStudents = function () {
 			$scope.setAttendance.discipline = $rootScope.currentUser.discipline;
 			$scope.setAttendance.faculty = $scope.chosenFaculty.value.number;
-		};
 
-		$scope.setAttendanceInfo = function () {
 			StudentDateService.query($scope.setAttendance).$promise.then(function (resp) {
 				$scope.students = resp;
 
@@ -156,6 +154,9 @@ myApp.controller('StudentDateController', [
 						}
 				);
 			});
+		};
+
+		$scope.setAttendanceInfo = function () {
 
 		};
 }]);
