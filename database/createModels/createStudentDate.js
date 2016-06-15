@@ -116,7 +116,7 @@ var studentDate = sequelize.define('studentDate', {
                         if (year == source) {
                             if (item.discipline == discipline) {
 
-                                var momDate = moment.parseZone(item.dataValues.date).utc().format("");
+                                var momDate = moment.parseZone(item.dataValues.date).utc().format();
 
 
                                 if (temp) {
