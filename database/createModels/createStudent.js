@@ -139,7 +139,7 @@ var student = sequelize.define('student', {
         sendCreateTable:  function (discipline, faculty, course, callback) {
     //var student = require('./createStudent');
     var dataval = [];
-    var tempval = [];
+    var tempval = new Object();
     this.findAll().then(function (data) {
         if (!data) {
             callback(null, "Таблица пустая");
@@ -151,7 +151,7 @@ var student = sequelize.define('student', {
             } else {
                 year = year - course + 1;
             }
-            year = year * 10 + faculty;
+            year = year  + faculty;
 
             data.forEach(function(item, i, data) {
                 var source = ((item.uniqID-item.uniqID%10000)/10000);
