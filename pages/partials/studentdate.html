@@ -117,27 +117,37 @@
 								 placeholder="Дата" required>
 				</div>
 
-				<table ng-table="tableParams" class="table table-condensed table-bordered table-striped">
-					<tr ng-repeat="row in $data">
-						<td data-title="'Студент'" filter="{studentName: 'text'}" sortable="'studentName'">{{row.name}}</td>
+				<form name="myForm">
+					<table ng-table="tableParams" class="table table-condensed table-bordered table-striped">
+						<colgroup>
+							<col width="40%" />
+							<col width="40%" />
+							<col width="20%" />
+						</colgroup>
 
-						<td data-title="'Преподаватель'" filter="{teacherName: 'text'}" sortable="'teacherName'">{{row.teacherName}}</td>
+						<tr ng-repeat="row in $data">
+							<td data-title="'Студент'" filter="{studentName: 'text'}" sortable="'studentName'">{{row.studentName}}</td>
 
-						<td data-title="chosenDate">
-							<ui-select ng-model="row.visit" theme="bootstrap" required>
-								<ui-select-match placeholder="Отметка о посещаемости">
-									<span ng-bind="$select.selected"></span>
-								</ui-select-match>
-								<ui-select-choices repeat="visit in (visitStatus | filter: $select.search)">
-									<span ng-bind-html="visit | highlight: $select.search"></span>
-								</ui-select-choices>
-							</ui-select>
-						</td>
+							<td data-title="'Преподаватель'" filter="{teacherName: 'text'}" sortable="'teacherName'">{{row.teacherName}}</td>
 
-					</tr>
-				</table>
+							<td data-title="chosenDate">
+								<ui-select ng-model="row.visit" theme="bootstrap" required>
+									<ui-select-match placeholder="Посещаемость">
+										<span ng-bind="$select.selected"></span>
+									</ui-select-match>
+									<ui-select-choices repeat="visit in (visitStatus | filter: $select.search)">
+										<span ng-bind-html="visit | highlight: $select.search"></span>
+									</ui-select-choices>
+								</ui-select>
+							</td>
 
+						</tr>
+					</table>
+					<input type="submit" ng-click="setAttendanceInfo();" class="btn btn-primary btn-form" value="Сохранить"
+								 ng-disabled="myForm.$invalid">
+				</form>
 
+				{{students}}
 
 			</div>
 		</div>

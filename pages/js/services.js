@@ -229,7 +229,7 @@ myApp.factory('StudentDateService', ['$resource',
 			},
 
 			save: {
-				url: path + '/',
+				url: path + '/add',
 				method: 'POST',
 				isArray: false,
 				responseType: 'json'

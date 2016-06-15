@@ -6,7 +6,8 @@ myApp.controller('StudentDateController', [
 	'$http',
 	'$timeout',
 	'NgTableParams',
-	function($scope, $filter, StudentDateService, $rootScope, $http, $timeout, NgTableParams) {
+	'toastr',
+	function($scope, $filter, StudentDateService, $rootScope, $http, $timeout, NgTableParams, toastr) {
 
 		$scope.title = 'Журнал посещаемости';
 		$scope.students = [];
@@ -134,6 +135,7 @@ myApp.controller('StudentDateController', [
 		};
 
 		$scope.chosenDate = {};
+		$scope.sendedDate = '';
 
 		$scope.visitStatus = ['П', 'Н', 'Б', 'У'];
 
@@ -146,7 +148,7 @@ myApp.controller('StudentDateController', [
 
 				$scope.tableParams = new NgTableParams({
 							sorting: {
-								name: 'asc'
+								studentName: 'asc'
 							}
 							//count: 100
 						}, {
@@ -163,6 +165,18 @@ myApp.controller('StudentDateController', [
 		});
 
 		$scope.setAttendanceInfo = function () {
+			var plus3date = moment($scope.singleDatePicker.date).add(3, 'hours');
+			$scope.sendedDate = moment.parseZone(plus3date).utc().format();
 
+			$scope.students.forEach(function (item, i, arr) {
+				item.date = $scope.sendedDate;
+			});
+			console.log($scope.students);
+
+			StudentDateService.save($scope.students).$promise.then(function () {
+				toastr.success('Данные о посещаемости сохранены!');
+			}, function (error) {
+				toastr.error(error.data.message, error.status);
+			});
 		};
 }]);
