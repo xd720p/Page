@@ -52,26 +52,30 @@ var studentDate = sequelize.define('studentDate', {
         insertRow: function (data, callback) {
                 var student = require('./createStudent');
                 var mod = this;
-                student.getDiscipline(data.uniqID, function (disc, err) {
-                    if (err) callback(null, err);
-                    else {
-                        mod.create({
-                            uniqID: data.uniqID,
-                            name: data.name,
-                            discipline: disc,
-                            date: data.date,
-                            visit: data.visit
-                        }).then(function (data) {
-                            if (data)callback(data.dataValues, null);
-                        }).catch(function (err) {
-                            if (err.message.indexOf("key constraint fails") != -1)
-                                callback(null, "Нельзя добавить стулента несуществующей группы или с несуществующим преподавателем");
-                            if (err.message.indexOf("Validation error") != -1)
-                                callback(null, "Такой студент уже есть");
-                        })
 
-                    }
-                })
+                data.forEach(function(item, i, data) {
+                    student.getDiscipline(item.uniqID, function (disc, err) {
+                        if (err) callback(null, err);
+                        else {
+                            mod.create({
+                                uniqID: item.uniqID,
+                                name: item.name,
+                                discipline: disc,
+                                date: item.date,
+                                visit: item.visit
+                            }).then(function (data) {
+                               // if (data)callback(data.dataValues, null);
+                            }).catch(function (err) {
+                                if (err.message.indexOf("key constraint fails") != -1)
+                                    callback(null, "Нельзя добавить стулента несуществующей группы или с несуществующим преподавателем");
+                                if (err.message.indexOf("Validation error") != -1)
+                                    callback(null, "Такой студент уже есть");
+                            })
+
+                        }
+                    })
+                });
+
         },
         deleteRow: function (row, callback) {
             this.findOne({uniqID: row.uniqID, name: row.name, date: row.date}).then(function (data) {
@@ -175,10 +179,20 @@ studentDate.sendTable("Атлетическая подготовка", 3, 2, fir
 
 
 /*
-var p = { uniqID: 238265,
+var p = [{
+    uniqID: 238265,
     name: "Бендер Бендер",
     date: "2016.06.15",
-    visit: "был"}
+    visit: "был"}, {
+    uniqID: 238265,
+    name: "Бендер Бендер",
+    date: "2016.06.16",
+    visit: "был"}, {
+    uniqID: 238265,
+    name: "Бендер Бендер",
+    date: "2016.06.17",
+    visit: "был"}]
+
 studentDate.insertRow(p, function (row, err) {
     if (err) console.log(err);
     else console.log(row);

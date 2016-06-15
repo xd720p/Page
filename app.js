@@ -329,12 +329,13 @@ app.get('/studentdate/get', function (req, res, next) {
     });
 })
 
-app.post('/studentdate/add', function(req, res, next) {
-    studentDate.insertRow(req.body, function (data, err) {
+app.post('studentdate/add', function (req, res, next) {
+    studentDate.insertRow(req.body, function (callback, err) {
         if (err) res.status(500).send(err);
-        else res.send(data);
+        else res.status(200).send("OK");
     })
-});
+})
+
 
 app.post('/studentdate/remove', function(req, res, next) {
     studentDate.deleteRow(req.body, function (data, err) {
