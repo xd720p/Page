@@ -22,7 +22,7 @@ myApp.controller('NormPassController', [
 		$scope.selectedNorm = { value: ''};
 
 		$scope.datePicker = {
-			date: moment(),
+			date: moment().startOf('day'),
 			options: {
 				singleDatePicker: true,
 				parentEl: '.right_col',

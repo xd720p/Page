@@ -19,7 +19,7 @@ myApp.controller('StudentDateController', [
 		$scope.attendanceHistory = [];
 		$scope.cols = [];
 
-		StudentDateService.query().$promise.then(function (resp) {
+		/*StudentDateService.query().$promise.then(function (resp) {
 			$scope.students = resp;
 
 			$scope.tableParams = new NgTableParams({
@@ -42,12 +42,12 @@ myApp.controller('StudentDateController', [
 				$scope.student = {};
 				$scope.formShown = false;
 			});
-		};
+		};*/
 
 
 		$scope.datePicker = {
 			date: {
-				startDate: moment(),
+				startDate: moment().startOf('day'),
 				endDate: moment()
 			},
 			options: {
@@ -58,7 +58,8 @@ myApp.controller('StudentDateController', [
 				},
 				locale: {
 					cancelLabel: 'Очистить',
-					applyLabel: 'Сохранить'
+					applyLabel: 'Сохранить',
+					format: 'DD/MM/YYYY'
 				}
 			}
 		};
@@ -83,7 +84,7 @@ myApp.controller('StudentDateController', [
 						}
 					} else {
 						col = {
-							field: i,
+							field: moment(i).format('DD MM'),
 							title: i,
 							show: true
 						}
