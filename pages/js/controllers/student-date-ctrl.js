@@ -13,6 +13,7 @@ myApp.controller('StudentDateController', [
 		$scope.formShown = false;
 		$scope.student = {};
 		$scope.attendance = {};
+		$scope.setAttendance = {};
 		$scope.chosenFaculty = {
 			value: ''
 		};
@@ -51,7 +52,6 @@ myApp.controller('StudentDateController', [
 		$scope.courses = [1, 2, 3, 4, 5, 6];
 		$scope.attendanceHistory = [];
 		$scope.cols = [];
-
 
 		$scope.datePicker = {
 			date: {
@@ -120,5 +120,42 @@ myApp.controller('StudentDateController', [
 				}
 				);
 			});
+		};
+
+
+
+
+		$scope.singleDatePicker = {
+			date: moment().startOf('day'),
+			options: {
+				singleDatePicker: true,
+				parentEl: '.right_col',
+				drops: 'up'
+			}
+		};
+
+		$scope.visitStatus = ['П', 'Н', 'Б', 'У'];
+
+		$scope.getStudents = function () {
+			$scope.setAttendance.discipline = $rootScope.currentUser.discipline;
+			$scope.setAttendance.faculty = $scope.chosenFaculty.value.number;
+		};
+
+		$scope.setAttendanceInfo = function () {
+			StudentDateService.query($scope.setAttendance).$promise.then(function (resp) {
+				$scope.students = resp;
+
+				$scope.tableParams = new NgTableParams({
+							sorting: {
+								name: 'asc'
+							}
+							//count: 100
+						}, {
+							dataset: $scope.students,
+							counts: []
+						}
+				);
+			});
+
 		};
 }]);

@@ -77,7 +77,7 @@
 			<div class="x_content" ng-show="isSet(2)">
 
 				<div class="row attendance__wrapper">
-					<form name="attendanceForm" ng-submit="getAttendanceInfo(attendance)" novalidate>
+					<form name="setAttendanceForm" ng-submit="getStudents()" novalidate>
 						<div class="data-select col-xs-3">
 							<ui-select ng-model="chosenFaculty.value" theme="bootstrap" required>
 								<ui-select-match placeholder="Выберите факультет">
@@ -92,7 +92,7 @@
 						</div>
 
 						<div class="data-select col-xs-3">
-							<ui-select ng-model="attendance.course" theme="bootstrap" required>
+							<ui-select ng-model="setAttendance.course" theme="bootstrap" required>
 								<ui-select-match placeholder="Выберите курс">
 									<span ng-bind="$select.selected"></span>
 								</ui-select-match>
@@ -104,10 +104,10 @@
 								 ng-click="attendance.course = null;"></i>
 						</div>
 
-						<div class="data-select col-xs-3">
-							<input date-range-picker ng-model="datePicker.date" options="datePicker.options" type="text"
+						<div class="col-xs-3">
+							<input date-range-picker ng-model="singleDatePicker.date" options="singleDatePicker.options" type="text"
 										 class="form-control"
-										 placeholder="Выберите период" required>
+										 placeholder="Дата" required>
 						</div>
 						<div class="col-xs-3">
 							<input type="submit" class="btn btn-success" value="Запросить" ng-disabled="attendanceForm.$invalid">
@@ -115,60 +115,28 @@
 					</form>
 				</div>
 
-
-				<table ng-table-dynamic="tableParams with cols" class="table table-condensed table-striped table-bordered">
+				<table ng-table="tableParams" class="table table-condensed table-bordered table-striped">
 					<tr ng-repeat="row in $data">
-						<td ng-repeat="col in $columns">{{row[col.field]}}</td>
+						<td data-title="'Студент'" filter="{name: 'text'}" sortable="'name'">{{row.name}}</td>
+
+						<td data-title="'Преподаватель'" filter="{teacherName: 'text'}" sortable="'teacherName'">{{row.teacherName}}</td>
+
+						<td data-title="'singleDatePicker.date'">
+							<ui-select ng-model="row.visit" theme="bootstrap" required>
+								<ui-select-match placeholder="Отметка о посещаемости">
+									<span ng-bind="$select.selected"></span>
+								</ui-select-match>
+								<ui-select-choices repeat="visit in (visitStatus | filter: $select.search)">
+									<span ng-bind-html="visit | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select>
+						</td>
+
 					</tr>
 				</table>
 
-				<!--<a class="btn btn-default" ng-click="formShown = !formShown">
-					<span ng-hide="formShown">Добавить преподавателя</span>
-					<span ng-show="formShown">Скрыть форму</span>
-				</a>
 
-				<form ng-show="formShown" class="form-horizontal" ng-submit="addTeacher(teacher)">
-					<div class="form-group">
-						<label for="name"></label>
-						<div class="col-xs-6">
-							<input ng-model="teacher.name" type="text" class="form-control" id="name" placeholder="ФИО полностью" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="post"></label>
-						<div class="col-xs-6">
-								<input ng-model="teacher.post" type="text" class="form-control" id="post" placeholder="Должность" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="qualification"></label>
-						<div class="col-xs-6">
-							<input ng-model="teacher.qualification" type="text" class="form-control" id="qualification" placeholder="Квалификация" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="discipline"></label>
-						<div class="col-xs-6">
-							<input ng-model="teacher.discipline" type="text" class="form-control" id="discipline" placeholder="Дисциплина" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<p>Осуществляет руководство?</p>
-							<label class="radio-inline">
-								<input ng-model="teacher.authority" type="radio" name="authority"
-																	 value="true"
-																	 required> Да
-							</label>
-							<label class="radio-inline">
-								<input ng-model="teacher.authority" type="radio" name="authority"
-																	 value="false"
-																	 required>
-														Нет
-							</label>
-					</div>
 
-					<input type="submit" class="btn btn-primary" value="Добавить преподавателя">
-				</form>-->
 			</div>
 		</div>
 	</div>
