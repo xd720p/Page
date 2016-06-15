@@ -119,11 +119,11 @@
 
 				<table ng-table="tableParams" class="table table-condensed table-bordered table-striped">
 					<tr ng-repeat="row in $data">
-						<td data-title="'Студент'" filter="{name: 'text'}" sortable="'name'">{{row.name}}</td>
+						<td data-title="'Студент'" filter="{studentName: 'text'}" sortable="'studentName'">{{row.name}}</td>
 
 						<td data-title="'Преподаватель'" filter="{teacherName: 'text'}" sortable="'teacherName'">{{row.teacherName}}</td>
 
-						<td data-title="'singleDatePicker.date'">
+						<td data-title="chosenDate">
 							<ui-select ng-model="row.visit" theme="bootstrap" required>
 								<ui-select-match placeholder="Отметка о посещаемости">
 									<span ng-bind="$select.selected"></span>

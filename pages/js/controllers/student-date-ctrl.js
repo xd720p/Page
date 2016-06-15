@@ -129,10 +129,11 @@ myApp.controller('StudentDateController', [
 			date: moment().startOf('day'),
 			options: {
 				singleDatePicker: true,
-				parentEl: '.right_col',
-				drops: 'up'
+				parentEl: '.right_col'
 			}
 		};
+
+		$scope.chosenDate = {};
 
 		$scope.visitStatus = ['П', 'Н', 'Б', 'У'];
 
@@ -155,6 +156,11 @@ myApp.controller('StudentDateController', [
 				);
 			});
 		};
+
+		$scope.$watchCollection('singleDatePicker', function () {
+			var date = $scope.singleDatePicker.date;
+			$scope.chosenDate = moment(date).format('DD/MM/YYYY');
+		});
 
 		$scope.setAttendanceInfo = function () {
 
