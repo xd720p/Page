@@ -322,7 +322,7 @@ app.get('/studentdate', function(req, res, next) {
     // res.sendFile(path.join(__dirname, './pages', 'teachers.html'));
 });
 
-app.get('/studentdateget', function (req, res, next) {
+app.get('/studentdate/get', function (req, res, next) {
     student.sendCreateTable(req.query.discipline, req.query.faculty, req.query.course, function (students, err) {
         if (err) res.status(500).send(err);
         else res.send(students);
