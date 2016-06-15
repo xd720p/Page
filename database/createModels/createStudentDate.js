@@ -114,21 +114,21 @@ var studentDate = sequelize.define('studentDate', {
                             if (item.discipline == discipline) {
                                 if (temp) {
                                     if (temp == item.dataValues.name) {
-                                        if (firstDate <= item.dataValues.date <= lastDate)
+                                        //if (firstDate <= item.dataValues.date <= lastDate)
                                         tempVal[item.dataValues.date] = item.dataValues.visit;
                                     } else {
                                         dataval.push(tempVal);
                                         tempVal = new Object();
                                         temp = item.dataValues.name
                                         tempVal["name"] = item.dataValues.name;
-                                        if (firstDate <= item.dataValues.date <= lastDate)
+                                        //if (firstDate <= item.dataValues.date <= lastDate)
                                         tempVal[item.dataValues.date] = item.dataValues.visit;
                                     }
                                 }
 
                                 if (!first) {
                                     tempVal["name"] = item.dataValues.name;
-                                    if (firstDate <= item.dataValues.date <= lastDate)
+                                   // if (firstDate <= item.dataValues.date <= lastDate)
                                     tempVal[item.dataValues.date] = item.dataValues.visit;
 
                                     first = true;
