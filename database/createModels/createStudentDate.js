@@ -154,16 +154,16 @@ var studentDate = sequelize.define('studentDate', {
 });
 
 studentDate.sync({force: false});
-/*
-var firstDate = new Date(2013, 06, 21);
-var lastDate = new Date(2015, 06, 20);
+
+var firstDate = new Date(2016, 04, 21);
+var lastDate = new Date(2016, 05, 20);
 
 studentDate.sendTable("Атлетическая подготовка", 3, 2, firstDate, lastDate, function (students, err) {
     if (err) console.log(err);
     else {
        console.log(students);
     }
-})*/
+})
 /*
 var p = { uniqID: 238265,
     name: "Бендер Бендер",
