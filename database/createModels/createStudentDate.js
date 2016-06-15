@@ -116,20 +116,19 @@ var studentDate = sequelize.define('studentDate', {
                         if (year == source) {
                             if (item.discipline == discipline) {
 
-                                var momDate = moment.parseZone(item.dataValues.date).utc().format();
-                              //  var newFirstDate =  moment.parseZone(firstDate.toString()).format("YYYY-MM-DD");
-                               // var newLastDate =  moment.parseZone(lastDate.toString()).format("YYYY-MM-DD");
+                                var momDate = moment.parseZone(item.dataValues.date).utc().format("");
+
 
                                 if (temp) {
                                     if (temp == item.dataValues.name) {
-                                        if (moment(momDate).isSameOrAfter(newFirstDate) && moment(momDate).isSameOrBefore(newLastDate))
+                                        if (moment(momDate).isSameOrAfter(firstDate) && moment(momDate).isSameOrBefore(lastDate))
                                         tempVal[item.dataValues.date] = item.dataValues.visit;
                                     } else {
                                         if (tempVal["name"])
                                             dataval.push(tempVal);
                                         tempVal = new Object();
                                         temp = item.dataValues.name
-                                        if (moment(momDate).isSameOrAfter(newFirstDate) && moment(momDate).isSameOrBefore(newLastDate)) {
+                                        if (moment(momDate).isSameOrAfter(firstDate) && moment(momDate).isSameOrBefore(lastDate)) {
                                             tempVal["name"] = item.dataValues.name;
                                             tempVal[item.dataValues.date] = item.dataValues.visit;
                                         }
@@ -138,7 +137,7 @@ var studentDate = sequelize.define('studentDate', {
                                 }
 
                                 if (!first) {
-                                    if (moment(momDate).isSameOrAfter(newFirstDate) && moment(momDate).isSameOrBefore(newLastDate)) {
+                                    if (moment(momDate).isSameOrAfter(firstDate) && moment(momDate).isSameOrBefore(lastDate)) {
                                         tempVal["name"] = item.dataValues.name;
                                         tempVal[item.dataValues.date] = item.dataValues.visit;
                                         first = true;
