@@ -64,7 +64,7 @@ var studentDate = sequelize.define('studentDate', {
                                 date: item.date,
                                 visit: item.visit
                             }).then(function (data) {
-                               // if (data)callback(data.dataValues, null);
+                               if (data)callback(200, null);
                             }).catch(function (err) {
                                 if (err.message.indexOf("key constraint fails") != -1)
                                     callback(null, "Нельзя добавить стулента несуществующей группы или с несуществующим преподавателем");
