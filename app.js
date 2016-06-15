@@ -322,6 +322,12 @@ app.get('/studentdate', function(req, res, next) {
     // res.sendFile(path.join(__dirname, './pages', 'teachers.html'));
 });
 
+app.get('/studentdateget', function (req, res, next) {
+    student.sendCreateTable(req.query.discipline, req.query.faculty, req.query.course, function (students, err) {
+        if (err) res.status(500).send(err);
+        else res.send(students);
+    });
+})
 
 app.post('/studentdate/add', function(req, res, next) {
     studentDate.insertRow(req.body, function (data, err) {

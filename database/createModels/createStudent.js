@@ -1,5 +1,6 @@
 var Sequelize = require('sequelize');
 var sequelize = require('./connect');
+var moment = require('moment');
 
 var student = sequelize.define('student', {
     uniqID: {
@@ -125,12 +126,65 @@ var student = sequelize.define('student', {
             })
 
 
+        },
+        getTeacher: function (uniqID, callback) {
+
+            this.findById(uniqID).catch().then(function (student, err) {
+                if (err) callback(null, err);
+                else {
+                    callback(student.teacherName, null);
+                }
+            })
+        },
+        sendCreateTable:  function (discipline, faculty, course, callback) {
+    //var student = require('./createStudent');
+    var dataval = [];
+    var tempval = [];
+    this.findAll().then(function (data) {
+        if (!data) {
+            callback(null, "Таблица пустая");
+        } else {
+            var date = new Date();
+            var year = date.getFullYear() % 10;
+            if (moment().quarter() < 3) {
+                year = year - course;
+            } else {
+                year = year - course + 1;
+            }
+            year = year * 10 + faculty;
+
+            data.forEach(function(item, i, data) {
+                var source = ((item.uniqID-item.uniqID%10000)/10000);
+                if (year == source) {
+                    if (item.discipline == discipline) {
+                        tempval["uniqID"] = item.uniqID;
+                        tempval["studentName"] = item.name;
+                        tempval["teacherName"] = item.teacherName;
+                        dataval.push(tempval);
+                        tempval = new Object();
+
+                    }
+                }
+            })
+            callback(dataval, null);
+
+
         }
+
+    })
+}
 
     }
 });
 
 student.sync({force: false});
+
+student.sendCreateTable("Атлетическая подготовка", 3, 4,  function (students, err){
+    if (err) console.log(err);
+    else {
+        console.log(students);
+    }
+})
 
 module.exports = student;
 /*

@@ -157,6 +157,7 @@ var studentDate = sequelize.define('studentDate', {
 
             })
         }
+        
     }
 });
 
@@ -171,6 +172,8 @@ studentDate.sendTable("Атлетическая подготовка", 3, 2, fir
        console.log(students);
     }
 })*/
+
+
 /*
 var p = { uniqID: 238265,
     name: "Бендер Бендер",
