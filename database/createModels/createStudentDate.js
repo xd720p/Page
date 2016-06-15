@@ -78,31 +78,63 @@ var studentDate = sequelize.define('studentDate', {
             var dataval = [];
             var student = require('./createStudent');
             this.findAll().then(function (data) {
-                if (!data) callback(null, "Таблица пустая");
-                else {
+                if (!data) {
+                    callback(null, "Таблица пустая");
+                } else {
 
-                    data.forEach(function (item, i, data) {
+                    var r = data.filter(function (item) {
+                        student.getDiscipline(item.dataValues.uniqID, function (disc, err) {
+
+                            if (err){
+                                callback(null, "ошибка в поиске дисциплины");
+                            } else {
+
+                                if (discipline == disc) {
+
+                                    student.getSource(item.dataValues.uniqID, function (source, err) {
+
+                                        if (err){
+                                            callback (null, "ошибка в чём-то");
+                                        } else {
+
+                                            return (source.faculty == faculty && source.course == course);
+
+                                        }
+                                    })
+                                }
+                            }
+                        });
+                    });
+                    callback(r, null);
+
+                     /*data.forEach(function (item, i, data) {
 
                         student.getDiscipline(data[i].dataValues.uniqID, function (disc, err) {
-                            if (err) callback(null, "ошибка в поиске дисциплины");
-                            else {
+
+                            if (err){
+                                callback(null, "ошибка в поиске дисциплины");
+                            } else {
+
                                 if (discipline == disc) {
+
                                     student.getSource(data[i].dataValues.uniqID, function (source, err) {
-                                        if (err) callback (null, "ошибка в чём-то");
-                                        else {
+
+                                        if (err){
+                                             callback (null, "ошибка в чём-то");
+                                        } else {
+
                                             if (source.faculty == faculty && source.course == course) {
-                                               dataval.push(data[i].dataValues.name);
-                                                callback(data[i].dataValues.name, null);
+                                                 dataval.push(data[i].dataValues.name);
+
                                             }
                                         }
                                     })
-                                   }
+                                }
                             }
-                        })
-                    });
-               //
+                        });
+                     });*/
                 }
-            })
+            });
         }
     }
 });
