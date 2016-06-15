@@ -65,6 +65,17 @@ app.get('/', function(req, res, next) {
 });
 
 
+//downloading
+
+multiparty = require('connect-multiparty');
+    multipartyMiddleware = multiparty(),
+
+// Requires controller
+UserController = require('./controllers/UserController');
+
+app.post('/students/upload', multipartyMiddleware, UserController.uploadFile)
+//downloading
+
 //authorization
 
 function generateJWT(user) {
