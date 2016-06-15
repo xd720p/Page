@@ -31,6 +31,7 @@
     "serve-favicon": "~2.3.0",
     "serve-static": "latest",
     "winston": "latest",
-    "moment": "latest"
+    "moment": "latest",
+    "moment-timezone": "latest"
   }
 }
