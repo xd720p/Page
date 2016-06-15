@@ -18,7 +18,8 @@ var myApp = angular.module('myApp', [
 	'ui.bootstrap',
 	'angular-confirm',
 	'satellizer',
-	'toastr'
+	'toastr',
+	'ngFileUpload'
 ]);
 
 myApp.config(['$stateProvider', '$urlRouterProvider', '$authProvider',
