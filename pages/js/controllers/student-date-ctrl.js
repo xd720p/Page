@@ -172,9 +172,10 @@ myApp.controller('StudentDateController', [
 			console.log($scope.students);
 
 			StudentDateService.save($scope.students).$promise.then(function (resp) {
-				toastr.success('Данные о посещаемости сохранены!');
+				toastr.success('Данные о посещаемости сохранены! Вы можете выбрать другую дату и сохранить сведения' +
+						' для отметки посещаемости выбранных студентов');
 			}, function (error) {
-				toastr.error(error.data.message, error.status);
+				toastr.error('Данные о посещаемости на выбранное число уже существуют!');
 			});
 		};
 }]);
