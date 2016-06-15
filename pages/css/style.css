@@ -119,10 +119,28 @@
 }
 
 .x_title h2.attendance__title {
-	margin-right: 50px;
+	margin: 0;
+	margin-bottom: 5px;
 	cursor: pointer;
+	height: 40px;
+	line-height: 40px;
+	width: 50%;
+	text-align: center;
+}
+
+.x_title h2.attendance__title:hover {
+	color: #2A3F54;
 }
 
 .attendance__title--active {
 	background-color: #F7F7F7;
+}
+
+input.has-error {
+	border: 1px solid #CE5454;
+	box-shadow: 0 0 4px -2px #CE5454;
+	position: relative;
+	left: 0;
+	-moz-animation: .7s 1 shake linear;
+	-webkit-animation: 0.7s 1 shake linear;
 }

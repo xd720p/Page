@@ -20,6 +20,8 @@
 					<div class="clearfix"></div>
 			</div>
 
+
+			<!-- TAB 1-->
 			<div class="x_content" ng-show="isSet(1)">
 
 				<div class="row attendance__wrapper">
@@ -56,7 +58,7 @@
 										 placeholder="Выберите период" required>
 						</div>
 						<div class="col-xs-3">
-							<input type="submit" class="btn btn-primary" value="Запросить" ng-disabled="attendanceForm.$invalid">
+							<input type="submit" class="btn btn-success" value="Запросить" ng-disabled="attendanceForm.$invalid">
 						</div>
 					</form>
 				</div>
@@ -67,59 +69,14 @@
 						<td ng-repeat="col in $columns">{{row[col.field]}}</td>
 					</tr>
 				</table>
-
-				<!--<a class="btn btn-default" ng-click="formShown = !formShown">
-					<span ng-hide="formShown">Добавить преподавателя</span>
-					<span ng-show="formShown">Скрыть форму</span>
-				</a>
-
-				<form ng-show="formShown" class="form-horizontal" ng-submit="addTeacher(teacher)">
-					<div class="form-group">
-						<label for="name"></label>
-						<div class="col-xs-6">
-							<input ng-model="teacher.name" type="text" class="form-control" id="name" placeholder="ФИО полностью" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="post"></label>
-						<div class="col-xs-6">
-								<input ng-model="teacher.post" type="text" class="form-control" id="post" placeholder="Должность" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="qualification"></label>
-						<div class="col-xs-6">
-							<input ng-model="teacher.qualification" type="text" class="form-control" id="qualification" placeholder="Квалификация" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="discipline"></label>
-						<div class="col-xs-6">
-							<input ng-model="teacher.discipline" type="text" class="form-control" id="discipline" placeholder="Дисциплина" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<p>Осуществляет руководство?</p>
-							<label class="radio-inline">
-								<input ng-model="teacher.authority" type="radio" name="authority"
-																	 value="true"
-																	 required> Да
-							</label>
-							<label class="radio-inline">
-								<input ng-model="teacher.authority" type="radio" name="authority"
-																	 value="false"
-																	 required>
-														Нет
-							</label>
-					</div>
-
-					<input type="submit" class="btn btn-primary" value="Добавить преподавателя">
-				</form>-->
 			</div>
+
+
+			<!-- TAB 2-->
 
 			<div class="x_content" ng-show="isSet(2)">
 
-				<!--<div class="row attendance__wrapper">
+				<div class="row attendance__wrapper">
 					<form name="attendanceForm" ng-submit="getAttendanceInfo(attendance)" novalidate>
 						<div class="data-select col-xs-3">
 							<ui-select ng-model="chosenFaculty.value" theme="bootstrap" required>
@@ -153,10 +110,10 @@
 										 placeholder="Выберите период" required>
 						</div>
 						<div class="col-xs-3">
-							<input type="submit" class="btn btn-primary" value="Запросить" ng-disabled="attendanceForm.$invalid">
+							<input type="submit" class="btn btn-success" value="Запросить" ng-disabled="attendanceForm.$invalid">
 						</div>
 					</form>
-				</div>-->
+				</div>
 
 
 				<table ng-table-dynamic="tableParams with cols" class="table table-condensed table-striped table-bordered">
