@@ -56,8 +56,18 @@
 								ng-form="medAccess">
 							<span class="editable-text" ng-hide="row.isEditing">{{row.medAccess}}</span>
 							<div class="controls" ng-show="row.isEditing" ng-class="medAccess.$invalid && medAccess.$dirty ? 'has-error' : ''">
-								<input type="text" name="medAccess" ng-model="row.medAccess"
-											 class="editable-input form-control input-sm" />
+
+								<ui-select ng-model="row.medAccess" theme="bootstrap" required>
+										<ui-select-match>
+											<span ng-bind="$select.selected.name || row.medAccess"></span>
+										</ui-select-match>
+										<ui-select-choices repeat="medAccess in (medAccesses | filter: $select.search)">
+											<span ng-bind-html="medAccess.name | highlight: $select.search"></span>
+										</ui-select-choices>
+								</ui-select>
+
+								<!--<input type="text" name="medAccess" ng-model="row.medAccess"
+											 class="editable-input form-control input-sm" />-->
 							</div>
 						</td>
 
@@ -120,6 +130,9 @@
 					<span ng-show="formShown">Скрыть форму</span>
 				</a>
 
+
+				<!--ADDING FORM-->
+
 				<form ng-show="formShown" class="form-horizontal" ng-submit="addStudent(student)">
 					<div class="form-group">
 						<div class="col-xs-6">
@@ -133,7 +146,16 @@
 					</div>
 					<div class="form-group">
 						<div class="col-xs-6">
-							<input ng-model="student.medAccess" type="text" class="form-control" placeholder="Медицинский допуск">
+							<ui-select ng-model="selectedAccess.value" theme="bootstrap" required>
+								<ui-select-match placeholder="Медицинский допуск">
+									<span ng-bind="$select.selected.name"></span>
+								</ui-select-match>
+								<ui-select-choices repeat="medAccess in (medAccesses | filter: $select.search)">
+									<span ng-bind-html="medAccess.name | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select>
+							<i class="icon--close fa fa-times" ng-show="selectedAccess.value"
+								 ng-click="selectedAccess.value = null;"></i>
 						</div>
 					</div>
 					<div class="form-group">

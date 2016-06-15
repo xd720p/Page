@@ -21,6 +21,16 @@ myApp.controller('StudentsController', [
 		$scope.groups = [];
 		$scope.selectedGroup = { value: '' };
 
+		$scope.medAccesses = [
+			{name: 'Основной'},
+			{name: 'Подготовительный'},
+			{name: 'Специальный'},
+			{name: 'Освобождён'},
+			{name: 'Нет'}
+		];
+
+		$scope.selectedAccess = { value: '' };
+
 		StudentsService.query().$promise.then(function (resp) {
 			$scope.students = resp;
 			$scope.originalData = angular.copy($scope.students);
@@ -48,6 +58,10 @@ myApp.controller('StudentsController', [
 
 		$scope.$watchCollection('selectedGroup', function (newValue, oldValue, scope) {
 			scope.student.groupNumber = scope.selectedGroup.value.groupNumber;
+		});
+
+		$scope.$watchCollection('selectedAccess', function (newValue, oldValue, scope) {
+			scope.student.medAccess = scope.selectedAccess.value.name;
 		});
 
 		$scope.addStudent = function (student) {
@@ -99,10 +113,18 @@ myApp.controller('StudentsController', [
 				}
 			})();
 
+			var medAccess = (function () {
+				if(row.medAccess.name) {
+					return row.medAccess.name;
+				} else {
+					return row.medAccess;
+				}
+			})();
+
 			var fixedRow = {
 				uniqID: row.uniqID,
 				name: row.name,
-				medAccess: row.medAccess,
+				medAccess: medAccess,
 				groupNumber: group,
 				teacherName: teacher
 			};
