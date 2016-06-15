@@ -329,7 +329,7 @@ app.get('/studentdate/get', function (req, res, next) {
     });
 })
 
-app.post('studentdate/add', function (req, res, next) {
+app.post('/studentdate/add', function (req, res, next) {
     studentDate.insertRow(req.body, function (callback, err) {
         if (err) res.status(500).send(err);
         else res.status(200).send("OK");

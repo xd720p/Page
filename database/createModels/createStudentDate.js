@@ -59,7 +59,7 @@ var studentDate = sequelize.define('studentDate', {
                         else {
                             mod.create({
                                 uniqID: item.uniqID,
-                                name: item.name,
+                                name: item.studentName,
                                 discipline: disc,
                                 date: item.date,
                                 visit: item.visit
