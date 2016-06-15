@@ -315,7 +315,7 @@ app.put('/students/update', function(req, res, next) {
 //allForStudentDate
 app.get('/studentdate', function(req, res, next) {
     //res.sendFile('Development/Projects/web/OPHPprotver/pages/index');
-    studentDate.getTable(function (data, err) {
+    studentDate.sendTable(function (data, err) {
         if (err) res.status(500).send(err);
         else res.send(data);
     })
@@ -344,6 +344,8 @@ app.put('/studentdate/update', function(req, res, next) {
     })
 });
 //allForStudentDate
+
+
 
 
 app.get('/login', function (req, res, next) {
