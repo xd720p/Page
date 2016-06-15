@@ -13,12 +13,14 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-					<h2>Журнал посещаемости</h2>
+					<h2 class="attendance__title" ng-click="setTab(1)"
+							ng-class="{'attendance__title--active': isSet(1)}">Просмотреть посещаемость</h2>
+					<h2 class="attendance__title" ng-click="setTab(2)"
+							ng-class="{'attendance__title--active': isSet(2)}">Добавить сведения</h2>
 					<div class="clearfix"></div>
 			</div>
-			<div class="x_content">
-				<p class="text-muted font-13 m-b-30">
-				</p>
+
+			<div class="x_content" ng-show="isSet(1)">
 
 				<div class="row attendance__wrapper">
 					<form name="attendanceForm" ng-submit="getAttendanceInfo(attendance)" novalidate>
@@ -58,6 +60,103 @@
 						</div>
 					</form>
 				</div>
+
+
+				<table ng-table-dynamic="tableParams with cols" class="table table-condensed table-striped table-bordered">
+					<tr ng-repeat="row in $data">
+						<td ng-repeat="col in $columns">{{row[col.field]}}</td>
+					</tr>
+				</table>
+
+				<!--<a class="btn btn-default" ng-click="formShown = !formShown">
+					<span ng-hide="formShown">Добавить преподавателя</span>
+					<span ng-show="formShown">Скрыть форму</span>
+				</a>
+
+				<form ng-show="formShown" class="form-horizontal" ng-submit="addTeacher(teacher)">
+					<div class="form-group">
+						<label for="name"></label>
+						<div class="col-xs-6">
+							<input ng-model="teacher.name" type="text" class="form-control" id="name" placeholder="ФИО полностью" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="post"></label>
+						<div class="col-xs-6">
+								<input ng-model="teacher.post" type="text" class="form-control" id="post" placeholder="Должность" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="qualification"></label>
+						<div class="col-xs-6">
+							<input ng-model="teacher.qualification" type="text" class="form-control" id="qualification" placeholder="Квалификация" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="discipline"></label>
+						<div class="col-xs-6">
+							<input ng-model="teacher.discipline" type="text" class="form-control" id="discipline" placeholder="Дисциплина" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<p>Осуществляет руководство?</p>
+							<label class="radio-inline">
+								<input ng-model="teacher.authority" type="radio" name="authority"
+																	 value="true"
+																	 required> Да
+							</label>
+							<label class="radio-inline">
+								<input ng-model="teacher.authority" type="radio" name="authority"
+																	 value="false"
+																	 required>
+														Нет
+							</label>
+					</div>
+
+					<input type="submit" class="btn btn-primary" value="Добавить преподавателя">
+				</form>-->
+			</div>
+
+			<div class="x_content" ng-show="isSet(2)">
+
+				<!--<div class="row attendance__wrapper">
+					<form name="attendanceForm" ng-submit="getAttendanceInfo(attendance)" novalidate>
+						<div class="data-select col-xs-3">
+							<ui-select ng-model="chosenFaculty.value" theme="bootstrap" required>
+								<ui-select-match placeholder="Выберите факультет">
+									<span ng-bind="$select.selected.name"></span>
+								</ui-select-match>
+								<ui-select-choices repeat="faculty in (faculties | filter: $select.search)">
+									<span ng-bind-html="faculty.name | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select>
+							<i class="icon&#45;&#45;close fa fa-times" ng-show="attendance.faculty"
+								 ng-click="attendance.faculty = {};"></i>
+						</div>
+
+						<div class="data-select col-xs-3">
+							<ui-select ng-model="attendance.course" theme="bootstrap" required>
+								<ui-select-match placeholder="Выберите курс">
+									<span ng-bind="$select.selected"></span>
+								</ui-select-match>
+								<ui-select-choices repeat="course in (courses | filter: $select.search)">
+									<span ng-bind-html="course | highlight: $select.search"></span>
+								</ui-select-choices>
+							</ui-select>
+							<i class="icon&#45;&#45;close fa fa-times" ng-show="attendance.course"
+								 ng-click="attendance.course = null;"></i>
+						</div>
+
+						<div class="data-select col-xs-3">
+							<input date-range-picker ng-model="datePicker.date" options="datePicker.options" type="text"
+										 class="form-control"
+										 placeholder="Выберите период" required>
+						</div>
+						<div class="col-xs-3">
+							<input type="submit" class="btn btn-primary" value="Запросить" ng-disabled="attendanceForm.$invalid">
+						</div>
+					</form>
+				</div>-->
 
 
 				<table ng-table-dynamic="tableParams with cols" class="table table-condensed table-striped table-bordered">

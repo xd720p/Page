@@ -17,6 +17,16 @@ myApp.controller('StudentDateController', [
 			value: ''
 		};
 
+		$scope.tab = 1;
+		$scope.isSet = function(checkTab) {
+			return $scope.tab === checkTab;
+		};
+
+		$scope.setTab = function(setTab) {
+			$scope.tab = setTab;
+		};
+
+
 		$scope.faculties = [{
 			number: 1,
 			name:'ФРТ'
@@ -71,7 +81,7 @@ myApp.controller('StudentDateController', [
 
 		$scope.datePicker = {
 			date: {
-				startDate: moment().startOf('day'),
+				startDate: moment(),
 				endDate: moment()
 			},
 			options: {
@@ -234,11 +244,15 @@ myApp.controller('StudentDateController', [
 
 		$scope.getAttendanceInfo = function () {
 			$scope.attendance.discipline = $rootScope.currentUser.discipline;
-			$scope.attendance.firstDate = $scope.datePicker.date.startDate;
-			$scope.attendance.lastDate = $scope.datePicker.date.endDate;
 			$scope.attendance.faculty = $scope.chosenFaculty.value.number;
 
-			StudentDateService.history($scope.attendance).promise.then(function (resp) {
+			var plus3start = moment($scope.datePicker.date.startDate).add(3, 'hours');
+			var plus3end = moment($scope.datePicker.date.endDate).add(3, 'hours');
+
+			$scope.attendance.firstDate = moment.parseZone(plus3start).utc().format('YYYY-MM-DD');
+			$scope.attendance.lastDate = moment.parseZone(plus3end).utc().format('YYYY-MM-DD');
+
+			StudentDateService.history($scope.attendance).$promise.then(function (resp) {
 				$scope.attendanceHistory = resp;
 
 				var headers = _.keys($scope.attendanceHistory[0]);

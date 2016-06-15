@@ -117,3 +117,12 @@
 	margin-bottom: 30px;
 	margin-top: 15px;
 }
+
+.x_title h2.attendance__title {
+	margin-right: 50px;
+	cursor: pointer;
+}
+
+.attendance__title--active {
+	background-color: #F7F7F7;
+}
