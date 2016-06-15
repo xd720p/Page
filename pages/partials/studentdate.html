@@ -13,7 +13,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-					<h2 class="attendance__title" ng-click="setTab(1)"
+					<h2 class="attendance__title" ng-click="setTab(1);"
 							ng-class="{'attendance__title--active': isSet(1)}">Просмотреть посещаемость</h2>
 					<h2 class="attendance__title" ng-click="setTab(2)"
 							ng-class="{'attendance__title--active': isSet(2)}">Добавить сведения</h2>
@@ -111,14 +111,19 @@
 					</form>
 				</div>
 
-				<div class="col-xs-3">
-					<input date-range-picker ng-model="singleDatePicker.date" options="singleDatePicker.options" type="text"
-								 class="form-control"
-								 placeholder="Дата" required>
+				<div class="row" style="margin-bottom: 20px">
+					<div class="col-xs-3 col-xs-offset-6" style="text-align: right; line-height: 34px ">
+						Выберите дату:
+					</div>
+					<div class="col-xs-3">
+						<input date-range-picker ng-model="singleDatePicker.date" options="singleDatePicker.options" type="text"
+									 class="form-control"
+									 placeholder="Дата" required>
+					</div>
 				</div>
 
 				<form name="myForm">
-					<table ng-table="tableParams" class="table table-condensed table-bordered table-striped">
+					<table ng-table="studentsTableParams" class="table table-condensed table-bordered table-striped">
 						<colgroup>
 							<col width="40%" />
 							<col width="40%" />
@@ -146,8 +151,6 @@
 					<input type="submit" ng-click="setAttendanceInfo();" class="btn btn-primary btn-form" value="Сохранить"
 								 ng-disabled="myForm.$invalid">
 				</form>
-
-				{{students}}
 
 			</div>
 		</div>

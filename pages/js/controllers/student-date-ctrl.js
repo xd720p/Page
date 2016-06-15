@@ -80,7 +80,7 @@ myApp.controller('StudentDateController', [
 			$scope.attendance.faculty = $scope.chosenFaculty.value.number;
 
 			var plus3start = moment($scope.datePicker.date.startDate).add(3, 'hours');
-			var plus3end = moment($scope.datePicker.date.endDate).add(3, 'hours');
+			var plus3end = moment($scope.datePicker.date.endDate).add({days: 1, hours: 3});
 
 			$scope.attendance.firstDate = moment.parseZone(plus3start).utc().format('YYYY-MM-DD');
 			$scope.attendance.lastDate = moment.parseZone(plus3end).utc().format('YYYY-MM-DD');
@@ -124,8 +124,6 @@ myApp.controller('StudentDateController', [
 		};
 
 
-
-
 		$scope.singleDatePicker = {
 			date: moment().startOf('day'),
 			options: {
@@ -146,7 +144,7 @@ myApp.controller('StudentDateController', [
 			StudentDateService.query($scope.setAttendance).$promise.then(function (resp) {
 				$scope.students = resp;
 
-				$scope.tableParams = new NgTableParams({
+				$scope.studentsTableParams = new NgTableParams({
 							sorting: {
 								studentName: 'asc'
 							}
@@ -173,7 +171,7 @@ myApp.controller('StudentDateController', [
 			});
 			console.log($scope.students);
 
-			StudentDateService.save($scope.students).$promise.then(function () {
+			StudentDateService.save($scope.students).$promise.then(function (resp) {
 				toastr.success('Данные о посещаемости сохранены!');
 			}, function (error) {
 				toastr.error(error.data.message, error.status);
