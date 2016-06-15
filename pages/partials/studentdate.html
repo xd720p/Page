@@ -23,16 +23,16 @@
 				<div class="row attendance__wrapper">
 					<form name="attendanceForm" ng-submit="getAttendanceInfo(attendance)" novalidate>
 						<div class="data-select col-xs-3">
-							<ui-select ng-model="attendance.faculty" theme="bootstrap" required>
+							<ui-select ng-model="chosenFaculty.value" theme="bootstrap" required>
 								<ui-select-match placeholder="Выберите факультет">
-									<span ng-bind="$select.selected"></span>
+									<span ng-bind="$select.selected.name"></span>
 								</ui-select-match>
 								<ui-select-choices repeat="faculty in (faculties | filter: $select.search)">
-									<span ng-bind-html="faculty | highlight: $select.search"></span>
+									<span ng-bind-html="faculty.name | highlight: $select.search"></span>
 								</ui-select-choices>
 							</ui-select>
 							<i class="icon--close fa fa-times" ng-show="attendance.faculty"
-								 ng-click="attendance.faculty = null;"></i>
+								 ng-click="attendance.faculty = {};"></i>
 						</div>
 
 						<div class="data-select col-xs-3">

@@ -216,7 +216,6 @@ myApp.factory('StudentDateService', ['$resource',
 
 		return $resource(path, {}, {
 			history: {
-				url: path + '/',
 				method: 'GET',
 				isArray: true,
 				responseType: 'json'

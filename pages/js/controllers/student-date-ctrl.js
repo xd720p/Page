@@ -13,8 +13,32 @@ myApp.controller('StudentDateController', [
 		$scope.formShown = false;
 		$scope.student = {};
 		$scope.attendance = {};
+		$scope.chosenFaculty = {
+			value: ''
+		};
 
-		$scope.faculties = ['ФРТ', 'ФЭЛ', 'ФКТИ', 'ФЭА', 'ФИБС', 'ФЭМ', 'ГФ'];
+		$scope.faculties = [{
+			number: 1,
+			name:'ФРТ'
+		}, {
+			number: 2,
+			name:'ФЭЛ'
+		}, {
+			number: 3,
+			name:'ФКТИ'
+		}, {
+			number: 4,
+			name:'ФЭА'
+		}, {
+			number: 5,
+			name:'ФИБС'
+		}, {
+			number: 6,
+			name:'ФЭМ'
+		}, {
+			number: 7,
+			name:'ГФ'
+		}];
 		$scope.courses = [1, 2, 3, 4, 5, 6];
 		$scope.attendanceHistory = [];
 		$scope.cols = [];
@@ -64,7 +88,7 @@ myApp.controller('StudentDateController', [
 			}
 		};
 
-		$scope.attendanceHistory = [
+		/*$scope.attendanceHistory = [
 			{
 				name: 'Козлов Пётр',
 				'16.09': 'был',
@@ -170,11 +194,11 @@ myApp.controller('StudentDateController', [
 				'08.11': 'был',
 				'12.11': 'не был'
 			}
-		];
+		];*/
 
-		$scope.getAttendanceInfo = function () {
+		/*$scope.getAttendanceInfo = function () {
 				var headers = _.keys($scope.attendanceHistory[0]);
-			console.log(headers);
+
 				for(var i = 0; i < headers.length; i++ ) {
 					var col;
 					if (i === 0) {
@@ -198,23 +222,23 @@ myApp.controller('StudentDateController', [
 				$scope.tableParams = new NgTableParams({
 							sorting: {
 								name: 'asc'
-							},
-
+							}
 							//count: 100
 						}, {
 							dataset: $scope.attendanceHistory
 							//counts: []
 						}
 				);
-		};
+		};*/
 
 
-		/*$scope.getAttendanceInfo = function () {
+		$scope.getAttendanceInfo = function () {
 			$scope.attendance.discipline = $rootScope.currentUser.discipline;
-			$scope.attendance.from = $scope.datePicker.date.startDate;
-			$scope.attendance.to = $scope.datePicker.date.endDate;
+			$scope.attendance.firstDate = $scope.datePicker.date.startDate;
+			$scope.attendance.lastDate = $scope.datePicker.date.endDate;
+			$scope.attendance.faculty = $scope.chosenFaculty.value.number;
 
-			StudentDateService.history(attendance).promise.then(function (resp) {
+			StudentDateService.history($scope.attendance).promise.then(function (resp) {
 				$scope.attendanceHistory = resp;
 
 				var headers = _.keys($scope.attendanceHistory[0]);
@@ -222,15 +246,16 @@ myApp.controller('StudentDateController', [
 					var col;
 					if (i === 0) {
 						col = {
-							field: i,
-							title: i,
-							sortable: i,
+							field: headers[i],
+							title: 'Студент',
+							sortable: headers[i],
+							filter: { name: "text" },
 							show: true
 						}
 					} else {
 						col = {
-							field: moment(i).format('DD MM'),
-							title: i,
+							field: headers[i], //moment(i).format('DD MM'),
+							title: headers[i],
 							show: true
 						}
 					}
@@ -239,16 +264,15 @@ myApp.controller('StudentDateController', [
 				}
 
 				$scope.tableParams = new NgTableParams({
-							sorting: {
-								name: 'asc'
-							},
-							filter: { name: ''},
-							count: 100
-						}, {
-					dataset: $scope.attendanceHistory,
-					counts: []
+					sorting: {
+						name: 'asc'
+					}
+					//count: 100
+				}, {
+					dataset: $scope.attendanceHistory
+					//counts: []
 				}
 				);
 			});
-		};*/
+		};
 }]);
