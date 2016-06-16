@@ -9,7 +9,8 @@ myApp.controller('StudentsController', [
 	'$timeout',
 	'NgTableParams',
 	'Upload',
-	function($scope, $filter, StudentsService, GroupService, TeachersService, $rootScope, $http, $timeout, NgTableParams, Upload) {
+	'toastr',
+	function($scope, $filter, StudentsService, GroupService, TeachersService, $rootScope, $http, $timeout, NgTableParams, Upload, toastr) {
 
 		$scope.title = 'Студенты';
 		$scope.students = [];
@@ -157,6 +158,7 @@ myApp.controller('StudentsController', [
 				file.upload.then(function (response) {
 					$timeout(function () {
 						file.result = response.data;
+						toastr.success('You have successfully signed in!');
 					});
 				}, function (response) {
 					if (response.status > 0)
