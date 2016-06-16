@@ -135,6 +135,9 @@ var studentDate = sequelize.define('studentDate', {
                                         if (moment(momDate).isSameOrAfter(firstDate) && moment(momDate).isSameOrBefore(lastDate)) {
                                             tempVal["name"] = item.dataValues.name;
                                             tempVal[item.dataValues.date] = item.dataValues.visit;
+                                            if (i == data.length-1) {
+                                                dataval.push(tempVal);
+                                            }
                                         }
 
                                     }

@@ -32,7 +32,6 @@ var student = sequelize.define('student', {
     discipline: {
         type: Sequelize.STRING(50),
         field: 'discipline', // Will result in an attribute that is firstName when user facing but first_name in the database
-        primaryKey: true,
         allowNull: false
     }
 
@@ -103,17 +102,37 @@ var student = sequelize.define('student', {
             })
         },
         updateRow: function (row, callback) {
+            var teacher = require('./createTeacher');
             this.findById(row.uniqID).then(function (data) {
                 if (!data) callback(null, "Нет такой записи");
-                else data.update({
-                    name: row.name,
-                    medAccess: row.medAccess,
-                    groupNumber: row.groupNumber,
-                    teacherName: row.teacherName
-                }).then( function (data) {
-                    if (data) callback(data.dataValues, null);
-                    else callback(null, "Ошибочка");
-                })
+                else {
+                    if (row.teacherName) {
+                        teacher.getDiscipline(row.teacherName, function (disc, err) {
+                            data.update({
+                                name: row.name,
+                                medAccess: row.medAccess,
+                                groupNumber: row.groupNumber,
+                                teacherName: row.teacherName,
+                                discipline: disc
+                            }).then(function (data) {
+                                if (data) callback(data.dataValues, null);
+                                else callback(null, "Ошибочка");
+                            })
+                        })
+                    } else{
+                        data.update({
+                            name: row.name,
+                            medAccess: row.medAccess,
+                            groupNumber: row.groupNumber,
+                            teacherName: row.teacherName
+                        }).then(function (data) {
+                            if (data) callback(data.dataValues, null);
+                            else callback(null, "Ошибочка");
+                        })
+                    }
+
+
+                }
             })
         },
         getSource: function (uniqID, callback) {

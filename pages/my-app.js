@@ -24,7 +24,7 @@ var myApp = angular.module('myApp', [
 
 myApp.config(['$stateProvider', '$urlRouterProvider', '$authProvider',
 	function($stateProvider, $urlRouterProvider, $authProvider) {
-		$urlRouterProvider.otherwise('/teachers');
+		$urlRouterProvider.otherwise('/students');
 
 		$stateProvider
 

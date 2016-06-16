@@ -158,7 +158,7 @@ myApp.controller('StudentsController', [
 				file.upload.then(function (response) {
 					$timeout(function () {
 						file.result = response.data;
-						toastr.success('You have successfully signed in!');
+						toastr.success('Студенты загружены, обновите страницу');
 					});
 				}, function (response) {
 					if (response.status > 0)
