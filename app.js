@@ -68,7 +68,7 @@ app.get('/', function(req, res, next) {
 //downloading
 
 multiparty = require('connect-multiparty');
-    multipartyMiddleware = multiparty(),
+    multipartyMiddleware = multiparty();
 
 // Requires controller
 UserController = require('./controllers/UserController');

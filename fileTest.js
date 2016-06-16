@@ -1,6 +1,6 @@
 var Parser = require('node-dbf');
+var parser = new Parser('./downloads/GRP461.dbf');
 
-var parser = new Parser('./download/GRP46.dbf');
 
 parser.on('start', function(p) {
     console.log('dBase file parsing has started');

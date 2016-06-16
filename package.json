@@ -19,6 +19,8 @@
     "express-session": "latest",
     "jsonwebtoken": "^7.0.0",
     "jwt-simple": "^0.5.0",
+    "koi8-r": "^0.1.2",
+    "koi8-u": "^0.1.2",
     "method-override": "latest",
     "moment": "latest",
     "moment-timezone": "latest",
@@ -34,6 +36,8 @@
     "sequelize": "^3.23.3",
     "serve-favicon": "~2.3.0",
     "serve-static": "latest",
+    "utf8": "^2.1.1",
+    "windows-1251": "^0.1.2",
     "winston": "latest"
   }
 }

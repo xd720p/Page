@@ -54,27 +54,45 @@ var student = sequelize.define('student', {
         insertRow: function (data, callback) {
             var teacher = require('./createTeacher');
             var mod = this;
-                    teacher.getDiscipline(data.teacherName, function (disc, err) {
-                        if (err) callback(null, err);
-                        else {
-                            mod.create({
-                                uniqID: data.uniqID,
-                                name: data.name,
-                                medAccess: data.medAccess,
-                                groupNumber: data.groupNumber,
-                                teacherName: data.teacherName,
-                                discipline: disc
-                            }).then(function (data) {
-                                if (data)callback(data.dataValues, null);
-                            }).catch(function (err) {
-                                if (err.message.indexOf("key constraint fails") != -1)
-                                    callback(null, "Нельзя добавить стулента несуществующей группы или с несуществующим преподавателем");
-                                if (err.message.indexOf("Validation error") != -1)
-                                    callback(null, "Такой студент уже есть");
-                            })
+            if (data.teacherName) {
+                teacher.getDiscipline(data.teacherName, function (disc, err) {
+                    if (err) callback(null, err);
+                    else {
+                        mod.create({
+                            uniqID: data.uniqID,
+                            name: data.name,
+                            medAccess: data.medAccess,
+                            groupNumber: data.groupNumber,
+                            teacherName: data.teacherName,
+                            discipline: disc
+                        }).then(function (data) {
+                            if (data)callback(data.dataValues, null);
+                        }).catch(function (err) {
+                            if (err.message.indexOf("key constraint fails") != -1)
+                                callback(null, "Нельзя добавить стулента несуществующей группы или с несуществующим преподавателем");
+                            if (err.message.indexOf("Validation error") != -1)
+                                callback(null, "Такой студент уже есть");
+                        })
 
-                        }
-                    })
+                    }
+                })
+            } else {
+                mod.create({
+                    uniqID: data.uniqID,
+                    name: data.name,
+                    medAccess: data.medAccess,
+                    groupNumber: data.groupNumber,
+                    teacherName: data.teacherName,
+                    discipline: data.discipline
+                }).then(function (data) {
+                    if (data)callback(data.dataValues, null);
+                }).catch(function (err) {
+                    if (err.message.indexOf("key constraint fails") != -1)
+                        callback(null, "Нельзя добавить стулента несуществующей группы или с несуществующим преподавателем");
+                    if (err.message.indexOf("Validation error") != -1)
+                        callback(null, "Такой студент уже есть");
+                })
+            }
         },
         deleteRow: function (row, callback) {
             this.findById(row.uniqID).then(function (data) {
