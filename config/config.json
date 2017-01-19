@@ -2,7 +2,7 @@
   "port": 322,
   "drive": "mysql://",
   "user": "root:",
-  "password": "FALLofreach117",
+  "password": "password",
   "db": "@localhost/ofp",
   "TOKEN_SECRET": "SECRET"
 }
